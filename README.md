@@ -18,9 +18,11 @@
 		<em>Developed with the software and tools below.</em>
 </p>
 <p align="center">
+	<img src="https://img.shields.io/badge/C%23-256860?style=flat&logo=c-sharp&logoColor=white"/>
+	<img src="https://img.shields.io/badge/Microsoft_SQL_Server-CC2927?style=flat&logo=microsoft-sql-server&logoColor=white"/>
 	<img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat&logo=JavaScript&logoColor=black" alt="JavaScript">
 	<img src="https://img.shields.io/badge/YAML-CB171E.svg?style=flat&logo=YAML&logoColor=white" alt="YAML">
-	<img src="https://img.shields.io/badge/JSON-000000.svg?style=flat&logo=JSON&logoColor=white" alt="JSON">
+	<img src="https://img.shields.io/badge/JSON-245567.svg?style=flat&logo=JSON&logoColor=white" alt="JSON">
 </p>
 <hr>
 
