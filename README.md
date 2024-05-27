@@ -10,9 +10,9 @@
 </p>
 <p align="center">
 	<img src="https://img.shields.io/github/license/RRaleBG/AutoOglasi?style=flat&color=0080ff" alt="license">
-	<img src="https://img.shields.io/github/last-commit/RRaleBG/AutoOglasi?style=flat&logo=git&logoColor=white&color=0080ff" alt="last-commit">
+	<img src="https://img.shields.io/github/last-commit/RRaleBG/AutoOglasi?style=flat&logo=git&logoColor=white&color=3280ff" alt="last-commit">
 	<img src="https://img.shields.io/github/languages/top/RRaleBG/AutoOglasi?style=flat&color=0080ff" alt="repo-top-language">
-	<img src="https://img.shields.io/github/languages/count/RRaleBG/AutoOglasi?style=flat&color=0080ff" alt="repo-language-count">
+	<img src="https://img.shields.io/github/languages/count/RRaleBG/AutoOglasi?style=flat&color=2382ff" alt="repo-language-count">
 <p>
 <p align="center">
 		<em>Developed with the software and tools below.</em>
