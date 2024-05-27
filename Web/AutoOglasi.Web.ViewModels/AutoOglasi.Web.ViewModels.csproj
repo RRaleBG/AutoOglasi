@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="bootstrap" Version="5.3.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.14" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\AutoOglasi.Data.Common\AutoOglasi.Data.Common.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\AutoOglasi.CustomAttributes\AutoOglasi.CustomAttributes.csproj" />
+  </ItemGroup>
+</Project>

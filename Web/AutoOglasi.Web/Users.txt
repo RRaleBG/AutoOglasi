@@ -1,0 +1,39 @@
+ 
+
+ Master:
+ --------------------------
+ 1.
+ username: "master@maser.rs"
+ password: "Master123"
+
+ 2.
+ username:
+ password:
+ ---------------------------
+
+
+
+ Administrators:
+ --------------------------
+ 1. 
+ username = "admin@admin.rs";
+ password = "Admin123";
+ 
+ 2.
+ username = 
+ password = 
+
+---------------------------
+
+
+ Users
+---------------------------
+ 1.
+ username = 'user@user.sr'
+ password = 'User123'
+
+ 2.
+ username = user2@user.rs 
+ password = User2123
+
+ ---------------------------

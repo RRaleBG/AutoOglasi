@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\AutoOglasi.Data.Models\AutoOglasi.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Services\AutoOglasi.Services\AutoOglasi.Services.csproj" />
+    <ProjectReference Include="..\..\Web\AutoOglasi.Web.ViewModels\AutoOglasi.Web.ViewModels.csproj" />
+  </ItemGroup>
+</Project>

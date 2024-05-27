@@ -1,0 +1,51 @@
+﻿@model AutoOglasi.Web.ViewModels.Posts.PostByUserViewModel
+
+@{
+    ViewData["Title"] = "Delete post";
+}
+
+<h3 class="text-center text-danger my-2">Confirm delete ?</h3>
+
+<div class="row text-center">
+    <div class="col-md-8 offset-md-2">
+        <table class="table table-borderless my-2">
+            <thead>
+            <tr class="border-bottom border-danger py-3">
+                <th scope="col">@Html.DisplayNameFor(model => model.Car.Make)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Car.Model)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Car.Year)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Car.Price)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>@Model.Car.Make</td>
+                <td>@Model.Car.Model</td>
+                <td>@Model.Car.Year</td>
+                <td>€@Model.Car.Price.ToString("N", CultureInfo.InvariantCulture).Replace(".00", string.Empty)</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-8 offset-md-2 rounded-3">
+        <img src="@Model.Car.CoverImage" class="img-fluid img-thumbnail shadow rounded-3" style="width: 100vw; height:26em;" alt="image" type="image/webp" />
+    </div> 
+
+</div>
+
+<div class="row text-center my-2">
+    <form class="my-3" asp-action="Delete">
+        <input type="hidden" asp-for="@Model.Car.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        @if (this.User.IsInRole("Administrator"))
+        {
+            <a asp-area="Admin" asp-controller="Posts" asp-action="All" class="btn btn-outline-warning" role="button">Cancel</a>
+        }
+        else
+        {
+            <a asp-action="Mine" class="btn btn-outline-warning" role="button">Cancel</a>
+        }
+
+    </form>
+    <hr class="my-3 border-danger" />
+</div>

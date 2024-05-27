@@ -1,0 +1,73 @@
+﻿@model AutoOglasi.Web.ViewModels.Posts.PostsByUserViewModel
+
+@{
+    this.ViewData["Title"] = "My cars";
+}
+
+<h1 class="text-center">@(Model.PagesCount > 1 ? $", page {Model.PageNumber}" : string.Empty)</h1>
+
+@if (!Model.Posts.Any())
+{
+    <hr class="pb-3 border-info">
+
+    <div class="alert alert-warning text-center shadow">
+        <p class="lead">Unfortunately, you have no car to sell, so why don't you just add one?</p>
+
+        <p class="mt-4">
+            <a asp-controller="Posts" asp-action="Create" class="btn btn-sm btn-outline-info" role="button">Add a car to sell</a>
+        </p>
+    </div>
+}
+else
+{
+    <partial name="_SortingPartial" model="@Model" />
+
+    <hr class="border-info"/>
+
+    <div class="row justify-content-evenly">
+        @foreach (var post in Model.Posts)
+        {
+            <div class="card rounded-3 m-3 shadow-info-lg" style="width: 18em;">
+
+                <a asp-controller="Posts" class="text-decoration-none" asp-action="Offer" asp-route-id="@post.Car.Id">
+                    <div class="row py-3 text-center text-white">
+                        <div class="col float-end">@post.PublishedOn</div>
+                        <h6 class="col float-start">€@post.Car.Price.ToString("N", CultureInfo.InvariantCulture).Replace(".00", string.Empty)</h6>
+                    </div>
+                                        
+                    <img src="@post.Car.CoverImage" class="img-fluid rounded-3" style="height: 13em; width: 23em;" sizes="(min-width: 768px) 480px, 87.5vw" rel="preload" fetchpriority="high" alt="image" type="image/webp" />
+                                  
+                    <h5 class="text-white-60 py-3 text-center">@post.Car.Year @post.Car.Make @post.Car.Model</h5>  
+                        
+                    <hr class="mt-1 mb-1" />
+
+                    <div class="row justify-content-evenly mx-0 py-3">
+                        <div class="col-4"><a asp-action="Offer" asp-route-id="@post.Car.Id" class="btn btn-outline-info btn-sm">View</a></div>
+                        <div class="col-4"><a asp-action="Edit" asp-route-id="@post.Car.Id" class="btn btn-outline-primary btn-sm">Edit</a></div>
+                        <div class="col-4"><a asp-action="Delete" asp-route-id="@post.Car.Id" class="btn btn-outline-danger btn-sm">Delete</a></div>
+                    </div>                  
+                </a>
+            </div>
+        }
+    </div>
+
+    <hr class="border-info"/>
+
+    <partial name="_PagingPartial" model="@Model" />
+}
+
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#sortingDropDown").change(function () {
+                const sortingValue = $(this).val();
+                const url = new URL(window.location.href);
+
+                url.searchParams.set("sorting", sortingValue);
+                window.location.href = url;
+            });
+        });
+    </script>
+}

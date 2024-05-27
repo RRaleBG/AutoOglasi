@@ -1,0 +1,62 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using AutoOglasi.Data.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+<div class="dropdown">
+
+    <nav class="navbar p-0">
+
+        <ul class="navbar-nav sm text-center">
+
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <li class="nav-item">
+
+                    <a class="btn btn-outline-secondary bg-transparent border-0 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class=" bi bi-person text-info" style="font-size: 1rem; color: cornflowerblue;"></span>
+                        <strong> @User.Identity.Name.ToUpper().Substring(0,1)@User.Identity.Name.Substring(0,User.Identity.Name.IndexOf('@')).ToLower().Substring(1) </strong>
+                    </a>
+
+                    <ul class="dropdown-menu p-2 nav-underline flex-column shadow">
+
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <li class="nav-item text-center" title="Approve new car"> <a class="nav-link text-white-50 fw-semibold" asp-area="Admin" asp-controller="Posts" asp-action="All" asp-route-id="1">Administration</a>  </li>
+                        }
+                        @if(User.IsInRole("Master"))
+                        {
+                            <li class="nav-item text-center" title="Asign user to role">  <a class="nav-link  text-white-50 fw-semibold" asp-area="Admin" asp-controller="Role" asp-action="Index">Role</a>                            </li>
+                        }                            
+                        @if(User.IsInRole("Users"))
+                        {
+                            <li class="nav-item text-center" title="My cars">   <a class="nav-link text-white-50 fw-semibold" asp-area="" asp-controller="Posts" asp-action="Mine" asp-route-id="1">My cars</a>    </li>
+                            <li class="nav-item text-center" title="Add new car">   <a class="nav-link text-white-50 fw-semibold" asp-area="" asp-controller="Posts" asp-action="Create">Sell car </a>                 </li>
+                        }
+
+                        <li class="nav-item text-center">  <a class="nav-link text-white-50 fw-semibold" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">  <strong>Profile </strong> </a>   </li>
+
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li class="nav-item text-center">
+                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <button type="submit" class="dropdown-item btn btn-link text-center text-info ">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-white-50 fw-semibold" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white-50 fw-semibold" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>

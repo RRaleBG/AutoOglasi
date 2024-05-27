@@ -1,0 +1,88 @@
+﻿
+@model AutoOglasi.Web.ViewModels.Posts.LatestPostsViewModel
+
+@{ 
+    ViewData["Title"] = "Latest"; 
+} 
+
+@if (!Model.LatestPosts.Any())
+{
+    <div class="text-center">
+        <p class="lead">Unfortunately, there are no car for selling !!!</p>
+        <p class="lead">
+            <a asp-controller="Posts" asp-action="Create" class="btn btn-outline-info" role="button">Add a car</a>
+        </p>
+    </div>
+}
+
+
+ <!-- Latest post.CoverImage -->
+<div id="carouselExampleFade" class="carousel-fade" data-bs-ride="carousel">
+    <div class="object-fit-none p-2">
+        <div class="carousel-inner">
+            @foreach (var image in Model.LatestPosts.ToList())
+            {
+                <div class="carousel-item active rounded-3">
+                    <img src="@image.Car.CoverImage" class="img-fluid shadow rounded-3" style="height: 500px; width: 100vw;" sizes="(min-width: 768px) 480px, 87.5vw" rel="preload" fetchpriority="high" alt="image" type="image/webp" />
+                </div>
+            }
+        </div>           
+    </div>
+ </div>
+
+
+<div class="row justify-content-evenly">
+
+    @foreach (var post in Model.LatestPosts)
+    {
+        <div class="card rounded-3 m-2 shadow-info-lg" style="width: 19em;">           
+           <a class="text-decoration-none text-white" asp-controller="Posts" asp-action="Offer" asp-route-id="@post.Car.Id">                
+                <div class="row py-2 text-center">
+                    <text class="col float-start py-1">@post.PublishedOn</text>    
+                    
+                    <text class="col float-end py-1"><span class="badge text-bg-warning fw-bold "> € @post.Car.Price.ToString("N", CultureInfo.InvariantCulture).Replace(".00", string.Empty)</span></text>
+                </div>
+                <img src="@post.Car.CoverImage" class="img-fluid rounded shadow" style="height: 13em; width: 25em;" sizes="(min-width: 768px) 480px, 87.5vw" rel="preload" fetchpriority="high" alt="image" type="image/webp" />                        
+                <div class="d-flex flex-column p-2">
+                    <h5 class="card-title text-center">@post.Car.Make @post.Car.Model</h5>
+                </div>
+            </a>
+        </div> 
+    }
+</div>
+
+
+   
+@section Scripts
+{
+    <script>
+
+        $(document).ready(function () {
+            $('.owl-carousel').owlCarousel({
+                lazyLoad: true,
+                loop: true,
+            });
+        });
+
+        $(document).ready(function () {
+            $('#statistics-button').click(function () {
+
+                if ($('#statistics').is(":hidden")) {
+                    $(this.innerHTML = 'Hide site statistics');
+
+                    $.get('/api/statistics', (data) => {
+                        $('#total-users').text(data.totalUsers + " Users");
+                        $('#total-posts').text(data.totalPosts + " Cars");
+                        $('#total-categories').text(data.totalCategories + " Categories");
+                    });
+
+                    $('#statistics').removeClass('d-none');
+                } else {
+                    $('#statistics').addClass('d-none');
+                    $(this.innerHTML = '<span><i class="bi bi-graph-up gy-3"></i> </span> Show site statistics</button>');                    
+                }
+            });
+        });
+
+    </script>
+}

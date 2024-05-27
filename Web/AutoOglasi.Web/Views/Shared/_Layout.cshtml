@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="rs" data-bs-theme="dark">
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Project online selling cars by Rados Rajcic 2023 ITS">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" data-bs-theme="dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="white">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black">
+    <title>@ViewBag.Title</title>
+    @await Html.PartialAsync("_Favicons")
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&displayGo=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>   
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/fontawesome/css/all.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="owlcarousel/owl.theme.default.min.css">
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/dist/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+     <link rel="stylesheet" href="~/css/myCss.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap" />
+    <link href="~/Roboto/Roboto-LightItalic.ttf"/>
+</head>
+<body>
+    <header class="sticky-top ">
+        <nav class="navbar navbar-sm navbar-expand-sm navbar-dark bg-dark shadow-info mb-3 p-0 border-bottom-0">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/android-chrome-512x512.png" height="45rem;" rel="Oglasi"><span><i src="~/Roboto/RobotoMedium.ttf" class="pt-2">Oglasi.rs</i></span>
+                </a>
+                <button class="navbar-toggler p-2 m-1" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between p-0">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-white-50 fw-semibold" asp-area="" asp-controller="Posts" asp-action="All" asp-route-id="1">All cars</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white-50 fw-semibold" asp-area="" asp-controller="Posts" asp-action="Search">Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white-50 fw-semibold" asp-area="" asp-controller="Home" asp-action="About" asp-route-id="1">About</a>
+                        </li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+
+<div class="container">
+
+    <main role="main" class="">
+    
+        @if (this.TempData.ContainsKey(WebConstants.ErrorMessageKey))
+        {
+            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                <strong>Error!</strong> @this.TempData[WebConstants.ErrorMessageKey].
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @if (this.TempData.ContainsKey(WebConstants.SuccessMessageKey))
+        {
+            <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                <strong>Success!</strong> @this.TempData[WebConstants.SuccessMessageKey].
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @RenderBody()
+    </main>
+</div>
+    <script src="~/js/owlcarousel/"></script>
+    <script src="~/js/owlcarousel/jquery.min.js"></script>
+    <script src="~/js/owlcarousel/owl.carousel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
