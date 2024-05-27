@@ -1,0 +1,131 @@
+﻿@model AutoOglasi.Web.ViewModels.Posts.SearchPostInputModel
+
+@{
+    this.ViewData["Title"] = "Search";
+    var extraTypes = new Dictionary<int, string>();
+}
+
+<form method="get" asp-action="All" class=" m-3">
+
+    @* Make, model or/and specification: *@
+    <div class="row mb-3">
+        <div class="col">
+            <label asp-for="@Model.Car.TextSearchTerm" class="form-label col-form-label"></label>
+            <input asp-for="@Model.Car.TextSearchTerm" class="form-control form-control" placeholder="Mercedes S-Class, Golf 5 GTI, etc...">
+        </div>
+    </div>
+
+
+    <div class="row mt-4 mb-2">        
+        @* Year of first registration: *@
+        <div class="col">
+            <label asp-for="@Model.Car.FromYear" class="form-label col-form-label-sm p-0">Registration:</label>       
+            <div class="col mb-3">
+                <input asp-for="@Model.Car.FromYear" class="form-control form-control-sm" placeholder="From year">
+                <span asp-validation-for="@Model.Car.FromYear" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <input asp-for="@Model.Car.ToYear" class="form-control form-control-sm" placeholder="To year">
+                <span asp-validation-for="@Model.Car.ToYear" class="text-danger"></span>
+            </div>
+        </div>
+
+        @* Horsepower (Hp): *@
+        <div class="col">
+           
+           <label asp-for="@Model.Car.MinHorsepower" class="form-label col-form-label-sm p-0">Horsepower (Hp):</label>
+          
+           <div class="col">
+                <input asp-for="@Model.Car.MinHorsepower" class="form-control form-control-sm" placeholder="Min (Hp)">
+                <span asp-validation-for="@Model.Car.MinHorsepower" class="text-danger"></span>
+           </div>
+
+            <div class="col mt-3">
+                <input asp-for="@Model.Car.MaxHorsepower" class="form-control form-control-sm" placeholder="Max (Hp)">
+                <span asp-validation-for="@Model.Car.MaxHorsepower" class="text-danger"></span>
+            </div>
+        </div>
+
+        @* Price *@
+        <div class="col">           
+            <label asp-for="@Model.Car.MinPrice" class="form-label col-form-label-sm p-0">Price:</label>
+            <input asp-for="@Model.Car.MinPrice"  min="0" class="form-control form-control-sm" placeholder="Min (€)">
+            <span asp-validation-for="@Model.Car.MinPrice" class="text-danger"></span>
+                
+            <input asp-for="@Model.Car.MaxPrice" class="form-control form-control-sm mt-3" placeholder="Max (€)">
+            <span asp-validation-for="@Model.Car.MaxPrice" class="text-danger"></span>            
+        </div>
+                       
+
+        <hr class="mt-3 mb-3 border-info"/>
+
+        @* Car category *@
+        <div class="col">
+            <h6 class="text-center">Car category:</h6>
+            <hr class="border-info"/>
+            <div class="row">
+                    @foreach (var category in Model.Car.Categories)
+                    {
+                        <div class="form-check form-check-inline m-1">
+                            <input id="category_@category.Id"
+                                   class="form-check-input"
+                                   type="checkbox"
+                                   name="SelectedCategoriesIds"
+                                   value="@category.Id"
+                            @(Model.SelectedCategoriesIds.Contains(category.Id) ? "checked" : "")>
+                            <label class="form-check-label" for="category_@category.Id">@category.Name</label>
+                        </div>
+                    }
+            </div>
+        </div>
+
+        @* Car fuel type *@
+        <div class="col">
+            <h6 class="text-center">Car fuel type:</h6>
+            <hr class="border-info" />
+            <div class="row">
+                    @foreach (var fuelType in Model.Car.FuelTypes)
+                    {
+                        <div class="form-check form-check-inline m-1">
+                            <input id="fuelType_@fuelType.Id"
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    name="SelectedFuelTypesIds"
+                                    value="@fuelType.Id"
+                            @(Model.SelectedFuelTypesIds.Contains(fuelType.Id) ? "checked" : "")>
+                            <label class="form-check-label" for="fuelType_@fuelType.Id">@fuelType.Name</label>
+                        </div>
+                    }
+            </div>
+        </div>
+
+        @* Car transmission type *@
+        <div class="col">
+            <h6 class="text-center">Car transmission type:</h6>
+            <hr class="border-info" />
+            <div class="row">
+                @foreach (var transmissionType in Model.Car.TransmissionTypes)
+                {
+                    <div class="form-check form-check-inline m-1">
+                        <input id="transmissionType_@transmissionType.Id"
+                                class="form-check-input"
+                                type="checkbox"
+                                name="SelectedTransmissionTypesIds"
+                                value="@transmissionType.Id"
+                        @(Model.SelectedTransmissionTypesIds.Contains(transmissionType.Id) ? "checked" : "")>
+                        <label class="form-check-label" for="transmissionType_@transmissionType.Id">@transmissionType.Name</label>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <hr class="mt-2 mb-4 border-info " />
+    
+        <div align="center" >
+            <input type="submit" class="btn btn-outline-info col-12 shadow-info " value="Search"/>
+        </div>
+
+    </div>
+
+
+</form>

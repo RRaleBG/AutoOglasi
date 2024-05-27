@@ -1,0 +1,39 @@
+ 
+
+
+
+
+ Administrators:
+ --------------------------
+ 1. 
+ username = "admin@admin.com";
+ password = "Admin123";
+ 
+ 2.
+ username = 
+ password = 
+
+ 3.
+ username = 
+ password = 
+---------------------------
+
+
+
+
+ Users
+---------------------------
+ 1.
+ username = 'user@user.com'
+ password = 'User123'
+
+
+  2.
+ username = 
+ password = 
+
+ 3.
+ username = 
+ password = 
+
+ ---------------------------

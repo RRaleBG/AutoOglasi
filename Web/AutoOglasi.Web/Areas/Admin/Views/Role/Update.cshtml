@@ -1,0 +1,81 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model AutoOglasi.Data.Models.RoleEdit
+
+@{
+    ViewData["Title"] = "Update role";
+}
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form method="post" class="row bg-transparent justify-content-around p-3">
+
+    <div class="card col-md-5 shadow-info mb-3">
+
+        <input type="hidden" name="roleName" value="@Model.Role.Name" />
+        <input type="hidden" name="roleId" value="@Model.Role.Id" />
+        <h5 class="card-header bg-transparent text-center text-white-50 border-bottom border-info mb-3 p-3">Confirm to <span class="text-info"> @Model.Role.Name</span></h5>
+
+        <table class="card-body table table-borderless table-hover table-sm">
+
+            @if (Model.NonMembers.Count() == 0)
+            {
+                <tr>
+                    <td colspan="2" class="text-center text-info">All users are confirmed</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (IdentityUser user in Model.NonMembers)
+                {
+                    <tr class="border-0 border-bottom m-2">
+                        <td class="p-2">@user.UserName</td>
+                        <td class="p-2">
+                            <input type="checkbox" name="AddIds" class="select-checkbox" value="@user.Id">
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+
+
+    <div class="card col-md-5 shadow-info">
+
+        <h5 class="card-header bg-transparent text-center text-white-50 mb-3 p-3">Remove from confirmed <span class="text-success"> @Model.Role.Name</span></h5>
+
+        <table class="card-body table table-borderless table-hover table-sm">
+
+            @if (Model.Members.Count() == 0)
+            {
+                <tr>
+                    <td colspan="2" class="text-center text-danger">
+                        Nobody confirmed, please confirm someone!
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (IdentityUser user in Model.Members)
+                {
+                    <tr class="border-bottom m-2">
+                        <td class="p-2">
+                            @user.UserName
+                        </td>
+                        <td class="p-2">
+                            <input type="checkbox" name="DeleteIds" value="@user.Id">
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+
+        <div class="card-footer bg-transparent border-0">
+            <p class="text-center m-0">@Model.Role.Name count: <span class="text-danger border-bottom border-danger text-center"> @Model.Members.Count() </span> </p>
+        </div>
+    </div>
+
+    <div class="row justify-content-around">
+        <button type="submit" class="btn btn-outline-info col-md-2 mt-3 mr-4">Save</button>
+        <a asp-action="Index" class="btn btn-outline-danger col-md-2 mt-3">Back</a>
+    </div>
+</form>

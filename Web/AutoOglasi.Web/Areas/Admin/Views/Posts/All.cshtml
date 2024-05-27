@@ -1,0 +1,73 @@
+﻿@using System.Globalization;
+@model PostsListAdminAreaViewModel
+
+
+@{
+    this.ViewData["Title"] = "Admin approved";
+}
+
+@* <h2 class="heading-margin text-center">@this.ViewData["Title"]@(Model.PagesCount > 1 ? $", page {Model.PageNumber}" : string.Empty)</h2> *@
+
+<h3 class="heading-margin text-center text-secondary m-4"> @this.ViewData["Title"]</h3>
+
+
+<div class="col-sm-10 offset-sm-1">
+
+    <table class="table table-responsive table-hover table-borderless">
+        <thead class="text-center fw-bolder">
+
+        <tr class="border-bottom m-2">
+            <th scope="col">Id</th>
+            <th scope="col">Make</th>
+            <th scope="col">Model</th>
+            <th scope="col">Year</th>
+            <th scope="col">Price</th>
+            <th scope="col">Approved</th>
+            <th scope="col" colspan="8">Do something</th>
+            <th></th>
+           
+           
+        </tr>
+        </thead>
+        <tbody class="text-center">
+        @foreach (var post in Model.Posts)
+        {
+            @if (post != null)
+            {
+                <tr class="table table-striped-columns mb-2">
+                    <td>@post.Car.Id</td>
+                    <td>@post.Car.Make</td>
+                    <td>@post.Car.Model</td>
+                    <td>@post.Car.Year</td>
+                    <td>@post.Car.Price.ToString("N", CultureInfo.InvariantCulture).Replace(".00", string.Empty)</td>
+                    <td>@(post.IsPublic ? "Yes" : "No")</td>
+                    <td>
+                        @* <a asp-area="Admin" asp-controller="Posts" asp-action="ChangeVisibility" asp-route-id="@post.Car.Id" class="btn btn-outline-info btn-sm float-end mx-1">@(post.IsPublic ? "Hide" : "Show")</a> *@
+                        @if(post.IsPublic)
+                            {
+                                <a asp-area="Admin" asp-controller="Posts" asp-action="ChangeVisibility" asp-route-id="@post.Car.Id" class="btn btn-outline-info w-75 btn-sm float-end mx-1">@(post.IsPublic ? "Hide" : "Show")</a>
+                            }
+                         @if(!post.IsPublic)
+                            {
+                                <a asp-area="Admin" asp-controller="Posts" asp-action="ChangeVisibility" asp-route-id="@post.Car.Id" class="btn btn-outline-warning btn-sm w-75 float-end mx-1">@(post.IsPublic ? "Hide" : "Show")</a>
+                            }
+                        </td>
+                    <td>
+                            <a asp-area="" asp-controller="Posts" asp-action="Edit" asp-route-id="@post.Car.Id" class="btn btn-outline-success btn-sm float-end mx-1">Edit</a>
+                    </td>
+                    <td>
+                            <a asp-area="" asp-controller="Posts" asp-action="Offer" asp-route-id="@post.Car.Id" class="btn btn-outline-primary btn-sm float-end mx-1">View</a>
+                    </td>
+                    <td>
+                            <a asp-area="" asp-controller="Posts" asp-action="Delete" asp-route-id="@post.Car.Id" class="btn btn-danger btn-sm float-end mx-1">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>
+
+
+
+<partial name="_PagingPartial" model="@Model" />

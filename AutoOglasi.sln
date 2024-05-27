@@ -1,0 +1,99 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{AF9E7DA8-6651-4A3C-87EC-45E8CD6E670C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{EDA83A5B-6D72-47FE-B4A1-264EB554F4C1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{61A56F80-C077-4F1E-95E7-A8E727314BA2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{88DD47AF-9C60-47DF-9FCE-E8C5440FF385}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoOglasi.Data", "Data\AutoOglasi.Data\AutoOglasi.Data.csproj", "{697A96D2-C8AD-49BA-974A-E5656E15DAE4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoOglasi.Data.Common", "Data\AutoOglasi.Data.Common\AutoOglasi.Data.Common.csproj", "{B6C4D177-076C-4CF2-A50B-8920A27162DC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoOglasi.Data.Models", "Data\AutoOglasi.Data.Models\AutoOglasi.Data.Models.csproj", "{22D48472-0BE9-4EA0-9D4D-1AA1C3846A2B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoOglasi.CustomAttributes", "Infrastructure\AutoOglasi.CustomAttributes\AutoOglasi.CustomAttributes.csproj", "{EB4BDE4B-3520-4B66-B6B2-34621B97B89E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoOglasi.GlobalConstants", "Infrastructure\AutoOglasi.GlobalConstants\AutoOglasi.GlobalConstants.csproj", "{7F3D72F1-9F77-4230-A965-4D3B62F656B2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoOglasi.MapperConfigurations", "Infrastructure\AutoOglasi.MapperConfigurations\AutoOglasi.MapperConfigurations.csproj", "{0524C231-CFF7-4BD8-BD72-6349FAB4F904}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoOglasi.Services", "Services\AutoOglasi.Services\AutoOglasi.Services.csproj", "{9D71DB4C-3326-496C-88B7-F824A60F031A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoOglasi.Web", "Web\AutoOglasi.Web\AutoOglasi.Web.csproj", "{4614B1F8-3042-4412-82A1-D6A1632A5559}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoOglasi.Web.Constants", "Web\AutoOglasi.Web.Constants\AutoOglasi.Web.Constants.csproj", "{7AB30589-5052-4DE3-B47C-015218223391}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoOglasi.Web.ViewModels", "Web\AutoOglasi.Web.ViewModels\AutoOglasi.Web.ViewModels.csproj", "{6E5355F4-3235-401E-A837-36760A7F3BEE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{697A96D2-C8AD-49BA-974A-E5656E15DAE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{697A96D2-C8AD-49BA-974A-E5656E15DAE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{697A96D2-C8AD-49BA-974A-E5656E15DAE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{697A96D2-C8AD-49BA-974A-E5656E15DAE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6C4D177-076C-4CF2-A50B-8920A27162DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6C4D177-076C-4CF2-A50B-8920A27162DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6C4D177-076C-4CF2-A50B-8920A27162DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6C4D177-076C-4CF2-A50B-8920A27162DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22D48472-0BE9-4EA0-9D4D-1AA1C3846A2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22D48472-0BE9-4EA0-9D4D-1AA1C3846A2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22D48472-0BE9-4EA0-9D4D-1AA1C3846A2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22D48472-0BE9-4EA0-9D4D-1AA1C3846A2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB4BDE4B-3520-4B66-B6B2-34621B97B89E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB4BDE4B-3520-4B66-B6B2-34621B97B89E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB4BDE4B-3520-4B66-B6B2-34621B97B89E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB4BDE4B-3520-4B66-B6B2-34621B97B89E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F3D72F1-9F77-4230-A965-4D3B62F656B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F3D72F1-9F77-4230-A965-4D3B62F656B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F3D72F1-9F77-4230-A965-4D3B62F656B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F3D72F1-9F77-4230-A965-4D3B62F656B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0524C231-CFF7-4BD8-BD72-6349FAB4F904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0524C231-CFF7-4BD8-BD72-6349FAB4F904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0524C231-CFF7-4BD8-BD72-6349FAB4F904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0524C231-CFF7-4BD8-BD72-6349FAB4F904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D71DB4C-3326-496C-88B7-F824A60F031A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D71DB4C-3326-496C-88B7-F824A60F031A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D71DB4C-3326-496C-88B7-F824A60F031A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D71DB4C-3326-496C-88B7-F824A60F031A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4614B1F8-3042-4412-82A1-D6A1632A5559}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4614B1F8-3042-4412-82A1-D6A1632A5559}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4614B1F8-3042-4412-82A1-D6A1632A5559}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4614B1F8-3042-4412-82A1-D6A1632A5559}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AB30589-5052-4DE3-B47C-015218223391}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AB30589-5052-4DE3-B47C-015218223391}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AB30589-5052-4DE3-B47C-015218223391}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AB30589-5052-4DE3-B47C-015218223391}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E5355F4-3235-401E-A837-36760A7F3BEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E5355F4-3235-401E-A837-36760A7F3BEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E5355F4-3235-401E-A837-36760A7F3BEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E5355F4-3235-401E-A837-36760A7F3BEE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{697A96D2-C8AD-49BA-974A-E5656E15DAE4} = {AF9E7DA8-6651-4A3C-87EC-45E8CD6E670C}
+		{B6C4D177-076C-4CF2-A50B-8920A27162DC} = {AF9E7DA8-6651-4A3C-87EC-45E8CD6E670C}
+		{22D48472-0BE9-4EA0-9D4D-1AA1C3846A2B} = {AF9E7DA8-6651-4A3C-87EC-45E8CD6E670C}
+		{EB4BDE4B-3520-4B66-B6B2-34621B97B89E} = {88DD47AF-9C60-47DF-9FCE-E8C5440FF385}
+		{7F3D72F1-9F77-4230-A965-4D3B62F656B2} = {88DD47AF-9C60-47DF-9FCE-E8C5440FF385}
+		{0524C231-CFF7-4BD8-BD72-6349FAB4F904} = {88DD47AF-9C60-47DF-9FCE-E8C5440FF385}
+		{9D71DB4C-3326-496C-88B7-F824A60F031A} = {61A56F80-C077-4F1E-95E7-A8E727314BA2}
+		{4614B1F8-3042-4412-82A1-D6A1632A5559} = {EDA83A5B-6D72-47FE-B4A1-264EB554F4C1}
+		{7AB30589-5052-4DE3-B47C-015218223391} = {EDA83A5B-6D72-47FE-B4A1-264EB554F4C1}
+		{6E5355F4-3235-401E-A837-36760A7F3BEE} = {EDA83A5B-6D72-47FE-B4A1-264EB554F4C1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F58AD33E-2526-4C0D-A440-DEAAE473763D}
+	EndGlobalSection
+EndGlobal
