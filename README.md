@@ -91,7 +91,7 @@ dotnet test
     │   └── AutoOglasi.Data.Models
     ├── Infrastructure
     │   ├── AutoOglasi.CustomAttributes
-    │   ├── AutoOglasi.GlobalConstants
+    │   └── AutoOglasi.GlobalConstants
     | 
     ├── Services
     │   └── AutoOglasi.Services
@@ -139,8 +139,8 @@ dotnet test
         │   │   ├── _ViewImports.cshtml
         │   │   └── _ViewStart.cshtml
         │   └── wwwroot        
-        │       ├── images
-        │       │   ├── cars
+        │       └── images
+        │           ├── cars
         │           └── homePage
         ├── AutoOglasi.Web.Constants
         └── AutoOglasi.Web.ViewModels
