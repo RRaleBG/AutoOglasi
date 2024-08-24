@@ -74,7 +74,7 @@ namespace AutoOglasi.Web
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<AutoOglasiDbContext>();
-                //dbContext.Database.Migrate();   // equivalent Update-Database -TargetMigration  automatically update the database after a model changes
+                dbContext.Database.Migrate();   // equivalent Update-Database -TargetMigration  automatically update the database after a model changes
 
                 new AutoOglasiDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             }
