@@ -12,7 +12,7 @@
 
 
     [Area(AdminAreaName)]
-    [Authorize(Roles="Master")]
+    [Authorize(Roles= "Administrator")]
     public class RoleController : Controller
     {
         private RoleManager<IdentityRole> roleManager;
