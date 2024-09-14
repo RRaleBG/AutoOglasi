@@ -1,0 +1,103 @@
+{
+  "settings": {
+    "components": {
+      "code": true,
+      "binaries": false
+    },
+    "targetId": "",
+    "targetDisplayName": ".NET 8.0"
+  },
+  "analysisStartTime": "2024-09-10T13:27:28.0571673Z",
+  "analysisEndTime": "2024-09-10T13:27:29.4418195Z",
+  "privacyModeHelpUrl": "https://go.microsoft.com/fwlink/?linkid=2270980",
+  "stats": {
+    "summary": {
+      "projects": 10,
+      "issues": 0,
+      "incidents": 0,
+      "effort": 0
+    },
+    "charts": {
+      "severity": {
+        "Mandatory": 0,
+        "Optional": 0,
+        "Potential": 0,
+        "Information": 0
+      },
+      "category": {}
+    }
+  },
+  "projects": [
+    {
+      "path": "Infrastructure\\AutoOglasi.CustomAttributes\\AutoOglasi.CustomAttributes.csproj",
+      "startingProject": true,
+      "issues": 0,
+      "storyPoints": 0,
+      "ruleInstances": []
+    },
+    {
+      "path": "Data\\AutoOglasi.Data.Common\\AutoOglasi.Data.Common.csproj",
+      "startingProject": true,
+      "issues": 0,
+      "storyPoints": 0,
+      "ruleInstances": []
+    },
+    {
+      "path": "Data\\AutoOglasi.Data\\AutoOglasi.Data.csproj",
+      "startingProject": true,
+      "issues": 0,
+      "storyPoints": 0,
+      "ruleInstances": []
+    },
+    {
+      "path": "Data\\AutoOglasi.Data.Models\\AutoOglasi.Data.Models.csproj",
+      "startingProject": true,
+      "issues": 0,
+      "storyPoints": 0,
+      "ruleInstances": []
+    },
+    {
+      "path": "Infrastructure\\AutoOglasi.GlobalConstants\\AutoOglasi.GlobalConstants.csproj",
+      "startingProject": true,
+      "issues": 0,
+      "storyPoints": 0,
+      "ruleInstances": []
+    },
+    {
+      "path": "Infrastructure\\AutoOglasi.MapperConfigurations\\AutoOglasi.MapperConfigurations.csproj",
+      "startingProject": true,
+      "issues": 0,
+      "storyPoints": 0,
+      "ruleInstances": []
+    },
+    {
+      "path": "Services\\AutoOglasi.Services\\AutoOglasi.Services.csproj",
+      "startingProject": true,
+      "issues": 0,
+      "storyPoints": 0,
+      "ruleInstances": []
+    },
+    {
+      "path": "Web\\AutoOglasi.Web.Constants\\AutoOglasi.Web.Constants.csproj",
+      "startingProject": true,
+      "issues": 0,
+      "storyPoints": 0,
+      "ruleInstances": []
+    },
+    {
+      "path": "Web\\AutoOglasi.Web\\AutoOglasi.Web.csproj",
+      "startingProject": true,
+      "issues": 0,
+      "storyPoints": 0,
+      "ruleInstances": []
+    },
+    {
+      "path": "Web\\AutoOglasi.Web.ViewModels\\AutoOglasi.Web.ViewModels.csproj",
+      "startingProject": true,
+      "issues": 0,
+      "storyPoints": 0,
+      "ruleInstances": []
+    }
+  ],
+  "rules": {}
+}

@@ -1,15 +1,9 @@
 ﻿namespace AutoOglasi.Web.Controllers
 {
     using System;
-    using System.Linq;
-    using System.Security.Claims;
-    using System.Threading.Tasks;
-    using System.Collections.Generic;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Authorization;
     using Constants;
     using AutoMapper;
+    using System.Linq;
     using Services.Cars;
     using Services.Posts;
     using ViewModels.Cars;
@@ -17,8 +11,13 @@
     using ViewModels.Images;
     using Services.Cars.Models;
     using Services.Posts.Models;
+    using System.Threading.Tasks;
     using Services.Images.Models;
-
+    using System.Security.Claims;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Authorization;
     using static GlobalConstants.GlobalConstants;
 
     public class PostsController : Controller

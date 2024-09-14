@@ -1,40 +1,28 @@
 ﻿@model IEnumerable<IdentityRole>
 @using Microsoft.AspNetCore.Identity
 
-
 @{
     ViewData["Title"] = "Roles";
 }
-
 <div class="row justify-content-center">
-
     <div class="card shadow">
-
         <div class="card-header bg-transparent">
-
             <a asp-action="Create" class="btn btn-outline-info mt-2 mb-2">Create new role</a>
         </div>
-
         <div class="card-body">
-
             <table class="table table-sm table-borderless table-responsive table-hover text-center">
-
                 <tr class="border-bottom border-info">
-
                     <th>Role name</th>
                     <th>Update</th>
                     <th>Delete</th>
                 </tr>
-
                 @foreach (var role in Model)
                 {
                     <tr>
                         <td class="fw-bold">@role.Name</td>
-
                         <td>
                             <a class="btn btn-sm btn-outline-info" asp-action="Update" asp-route-id="@role.Id">Update</a>
                         </td>
-
                         <td>
                             <form asp-action="Delete" asp-route-id="@role.Id" method="post">
                                 <button type="submit" class="btn btn-sm btn-outline-danger"> Delete  </button>
@@ -46,4 +34,3 @@
         </div>
     </div>
 </div>
-

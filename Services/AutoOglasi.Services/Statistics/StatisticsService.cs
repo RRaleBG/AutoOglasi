@@ -6,18 +6,19 @@
 
     public class StatisticsService : IStatisticsService
     {
-        private readonly AutoOglasiDbContext data;
+        private readonly AutoOglasiDbContext _dataContext;
 
-        public StatisticsService(AutoOglasiDbContext data)
+        public StatisticsService(AutoOglasiDbContext dataContext)
         {
-            this.data = data;
+            _dataContext = dataContext;
         }
 
         public StatisticsServiceModel Total()
         {
-            var totalUsers = this.data.Users.Count();
-            var totalPosts = this.data.Posts.Count(p => !p.IsDeleted && p.IsPublic);
-            var totalCategories = this.data.Categories.Count();
+            var totalUsers = _dataContext.Users.Count();
+            var totalPosts = _dataContext.Posts.Count(p => !p.IsDeleted && p.IsPublic);
+            var totalCategories = _dataContext.Categories.Count();
+
 
             return new StatisticsServiceModel
             {
