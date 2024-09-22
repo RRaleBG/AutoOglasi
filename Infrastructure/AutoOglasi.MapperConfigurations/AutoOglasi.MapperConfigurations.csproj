@@ -1,7 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Data\AutoOglasi.Data.Models\AutoOglasi.Data.Models.csproj" />
     <ProjectReference Include="..\..\Services\AutoOglasi.Services\AutoOglasi.Services.csproj" />

@@ -30,7 +30,10 @@ namespace AutoOglasi.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AutoOglasiDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AutoOglasiDbContext>(options => 
+                            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddAutoMapper(typeof(CarsProfile).GetTypeInfo().Assembly);
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -55,11 +58,8 @@ namespace AutoOglasi.Web
             {
                 options.Cookie.IsEssential = true; //without this configuration the TempData doesn't works
             });
-
-            services.AddAutoMapper(typeof(CarsProfile).GetTypeInfo().Assembly);
-
-            services.AddControllersWithViews(options =>
-            {
+                      
+            services.AddControllersWithViews(options => {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             })
                 .AddRazorRuntimeCompilation();
@@ -91,7 +91,7 @@ namespace AutoOglasi.Web
                 app.UseExceptionHandler(WebConstants.ExceptionHandlerPath);
                 app.UseHsts();
             }
-
+                       
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

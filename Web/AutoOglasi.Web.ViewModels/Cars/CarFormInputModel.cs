@@ -1,12 +1,11 @@
-﻿namespace AutoOglasi.Web.ViewModels.Cars
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using AutoOglasi.CustomAttributes.ValidationAttributes;
+using Microsoft.AspNetCore.Http;
+using static AutoOglasi.Data.Common.DataConstants;
+
+namespace AutoOglasi.Web.ViewModels.Cars
 {
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using Microsoft.AspNetCore.Http;
-    using CustomAttributes.ValidationAttributes;
-
-    using static Data.Common.DataConstants;
-
     public class CarFormInputModel : BaseCarInputModel
     {
         [Required(ErrorMessage = "The car make field is required.")]
