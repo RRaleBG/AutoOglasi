@@ -18,12 +18,12 @@
 
  <!-- Latest post.CoverImage -->
 <div id="carouselExampleFade" class="carousel-fade" data-bs-ride="carousel">
-    <div class="object-fit-none p-2">
+    <div class="object-fit-contain p-2">
         <div class="carousel-inner">
             @foreach (var image in Model.LatestPosts.ToList())
             {
-                <div class="carousel-item active rounded-3">
-                    <img src="@image.Car.CoverImage" class="img-fluid shadow rounded-3" style="height: 500px; width: 100vw;" sizes="(min-width: 768px) 480px, 87.5vw" rel="preload" fetchpriority="high" alt="image" type="image/webp" />
+                <div class="carousel-item active rounded-3 shadow-sm">
+                    <img src="@image.Car.CoverImage" class="img-fluid img-thumbnail" style="width: 120rem; height: 40rem;" type="image/webp" />
                 </div>
             }
         </div>           
@@ -39,10 +39,9 @@
            <a class="text-decoration-none text-white" asp-controller="Posts" asp-action="Offer" asp-route-id="@post.Car.Id">                
                 <div class="row py-2 text-center">
                     <text class="col float-start py-1">@post.PublishedOn</text>    
-                    
                     <text class="col float-end py-1"><span class="badge text-bg-warning fw-bold "> € @post.Car.Price.ToString("N", CultureInfo.InvariantCulture).Replace(".00", string.Empty)</span></text>
                 </div>
-                <img src="@post.Car.CoverImage" class="img-fluid rounded shadow" style="height: 13em; width: 25em;" sizes="(min-width: 768px) 480px, 87.5vw" rel="preload" fetchpriority="high" alt="image" type="image/webp" />                        
+                <img src="@post.Car.CoverImage" class="img-fluid rounded shadow" style="height: 11rem; width: 25rem;" sizes="(min-width: 768px) 480px, 87.5vw" rel="preload" fetchpriority="high" alt="image" type="image/webp" />                        
                 <div class="d-flex flex-column p-2">
                     <h5 class="card-title text-center">@post.Car.Make @post.Car.Model</h5>
                 </div>
