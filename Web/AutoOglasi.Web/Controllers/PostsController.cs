@@ -1,25 +1,25 @@
-﻿namespace AutoOglasi.Web.Controllers
-{
-    using System;
-    using Constants;
-    using AutoMapper;
-    using System.Linq;
-    using Services.Cars;
-    using Services.Posts;
-    using ViewModels.Cars;
-    using ViewModels.Posts;
-    using ViewModels.Images;
-    using Services.Cars.Models;
-    using Services.Posts.Models;
-    using System.Threading.Tasks;
-    using Services.Images.Models;
-    using System.Security.Claims;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Collections.Generic;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Authorization;
-    using static GlobalConstants.GlobalConstants;
+﻿using System;
+using AutoOglasi.Web.Constants;
+using AutoMapper;
+using System.Linq;
+using AutoOglasi.Services.Cars;
+using AutoOglasi.Services.Posts;
+using AutoOglasi.Web.ViewModels.Cars;
+using AutoOglasi.Web.ViewModels.Posts;
+using AutoOglasi.Web.ViewModels.Images;
+using AutoOglasi.Services.Cars.Models;
+using AutoOglasi.Services.Posts.Models;
+using System.Threading.Tasks;
+using AutoOglasi.Services.Images.Models;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
+using static AutoOglasi.GlobalConstants.GlobalConstants;
 
+namespace AutoOglasi.Web.Controllers
+{
     public class PostsController : Controller
     {
         private const int PostsPerPage = 8;
