@@ -1,8 +1,7 @@
-﻿namespace AutoOglasi.Web.ViewModels.Posts
-{
-    using System.Collections.Generic;
-    using System.Globalization;
+﻿using System.Collections.Generic;
 
+namespace AutoOglasi.Web.ViewModels.Posts
+{
     public class PostsListAdminAreaViewModel : PagingViewModel
     {
         public IEnumerable<PostInAdminAreaViewModel> Posts { get; init; }

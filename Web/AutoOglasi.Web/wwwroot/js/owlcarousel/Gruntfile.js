@@ -6,7 +6,7 @@
  * Copyright (c) 2014
  * Licensed under the MIT license.
  */
-module.exports = function(grunt) {
+function(grunt) {
 
 	require('load-grunt-tasks')(grunt);
 
