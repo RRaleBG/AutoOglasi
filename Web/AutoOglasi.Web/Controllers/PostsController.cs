@@ -1,21 +1,21 @@
-﻿using System;
-using AutoOglasi.Web.Constants;
-using AutoMapper;
-using System.Linq;
+﻿using AutoMapper;
 using AutoOglasi.Services.Cars;
-using AutoOglasi.Services.Posts;
-using AutoOglasi.Web.ViewModels.Cars;
-using AutoOglasi.Web.ViewModels.Posts;
-using AutoOglasi.Web.ViewModels.Images;
 using AutoOglasi.Services.Cars.Models;
-using AutoOglasi.Services.Posts.Models;
-using System.Threading.Tasks;
 using AutoOglasi.Services.Images.Models;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Hosting;
+using AutoOglasi.Services.Posts;
+using AutoOglasi.Services.Posts.Models;
+using AutoOglasi.Web.Constants;
+using AutoOglasi.Web.ViewModels.Cars;
+using AutoOglasi.Web.ViewModels.Images;
+using AutoOglasi.Web.ViewModels.Posts;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using static AutoOglasi.GlobalConstants.GlobalConstants;
 
 namespace AutoOglasi.Web.Controllers
@@ -116,8 +116,6 @@ namespace AutoOglasi.Web.Controllers
             return this.View(searchPostInputModel);
         }
 
-
-
         public IActionResult All(SearchPostInputModel searchPostInputModel, int id = 1, int sorting = 0)
         {
             try
@@ -162,8 +160,6 @@ namespace AutoOglasi.Web.Controllers
                 return View("Search", searchPostInputModel);
             }
         }
-
-
 
         public IActionResult Offer(int id)
         {
