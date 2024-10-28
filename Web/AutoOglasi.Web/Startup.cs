@@ -1,24 +1,24 @@
-    using System.Reflection;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Hosting;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using AutoOglasi.Data;
-    using AutoOglasi.Data.Models;
-    using AutoOglasi.Data.Seeding;
-    using AutoOglasi.Web.Constants;
-    using AutoOglasi.Services.Cars;
-    using AutoOglasi.Services.Images;
-    using AutoOglasi.Services.Posts;
-    using AutoOglasi.Services.Statistics;
-    using AutoOglasi.MapperConfigurations.Profiles;
-    using System;
-    
+using AutoOglasi.Data;
+using AutoOglasi.Data.Models;
+using AutoOglasi.Data.Seeding;
+using AutoOglasi.MapperConfigurations.Profiles;
+using AutoOglasi.Services.Cars;
+using AutoOglasi.Services.Images;
+using AutoOglasi.Services.Posts;
+using AutoOglasi.Services.Statistics;
+using AutoOglasi.Web.Constants;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
+using System.Reflection;
+
 namespace AutoOglasi.Web
 {
 
@@ -30,7 +30,7 @@ namespace AutoOglasi.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AutoOglasiDbContext>(options => 
+            services.AddDbContext<AutoOglasiDbContext>(options =>
                             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddAutoMapper(typeof(CarsProfile).GetTypeInfo().Assembly);
@@ -39,7 +39,7 @@ namespace AutoOglasi.Web
 
             services.AddDefaultIdentity<ApplicationUser>(options =>
             {
-                options.Password.RequireNonAlphanumeric = false; 
+                options.Password.RequireNonAlphanumeric = false;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
             })
                 .AddRoles<IdentityRole>()
@@ -58,8 +58,9 @@ namespace AutoOglasi.Web
             {
                 options.Cookie.IsEssential = true; //without this configuration the TempData doesn't works
             });
-                      
-            services.AddControllersWithViews(options => {
+
+            services.AddControllersWithViews(options =>
+            {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             })
                 .AddRazorRuntimeCompilation();
@@ -91,7 +92,7 @@ namespace AutoOglasi.Web
                 app.UseExceptionHandler(WebConstants.ExceptionHandlerPath);
                 app.UseHsts();
             }
-                       
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
