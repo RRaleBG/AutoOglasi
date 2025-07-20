@@ -39,6 +39,9 @@
     </div>
 
 
+
+
+
     <div class="card col-md-5 shadow-info">
 
         <h5 class="card-header bg-transparent text-center text-white-50 mb-3 p-3">Remove from confirmed <span class="text-success"> @Model.Role.Name</span></h5>
@@ -57,7 +60,7 @@
             {
                 @foreach (IdentityUser user in Model.Members)
                 {
-                    <tr class="border-bottom m-2">
+                    <tr class="border-bottom">
                         <td class="p-2">
                             @user.UserName
                         </td>

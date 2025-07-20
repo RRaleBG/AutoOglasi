@@ -1,17 +1,19 @@
 ﻿<!DOCTYPE html>
-<html lang="rs" data-bs-theme="dark">
+<html lang="en" data-bs-theme="dark" id="changeTheme">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Project online selling cars by Rados Rajcic 2023 ITS">
+    <meta name="description" content="Project online busines">
     <meta name="theme-color" data-bs-theme="dark" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="white">
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black">
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
     <title>@ViewBag.Title</title>
     @await Html.PartialAsync("_Favicons")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
+    
     <link href="https://fonts.googleapis.com/css2?family=Roboto&displayGo=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"/>
 
@@ -26,6 +28,7 @@
 
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <link rel="stylesheet" href="~/bootstrap-icons/" />
 
      <link rel="stylesheet" href="~/css/myCss.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap" />
@@ -33,8 +36,15 @@
 </head>
 <body>
     <header class="sticky-top ">
-        <nav class="navbar navbar-sm navbar-expand-sm navbar-dark bg-dark shadow-info mb-3 p-0 border-bottom-0">
+
+        <nav class="navbar navbar-sm navbar-expand-sm bg-body shadow-info mb-3 p-0 border-bottom-0">
             <div class="container">
+
+                <!-- Clickable theme icon -->
+                <div class="mx-3 d-flex align-items-bottom">
+                    <i id="themeIcon" class="bi bi-moon fs-5" style="cursor: pointer;"></i>
+                </div>
+
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/android-chrome-512x512.png" height="45rem;" rel="Oglasi"><span><i src="~/Roboto/RobotoMedium.ttf" class="pt-2">Oglasi.rs</i></span>
                 </a>
@@ -46,13 +56,13 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between p-0">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-white-50 fw-semibold" asp-area="" asp-controller="Posts" asp-action="All" asp-route-id="1">All cars</a>
+                            <a class="nav-link fw-semibold" asp-area="" asp-controller="Posts" asp-action="All" asp-route-id="1">All cars</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white-50 fw-semibold" asp-area="" asp-controller="Posts" asp-action="Search">Search</a>
+                            <a class="nav-link fw-semibold" asp-area="" asp-controller="Posts" asp-action="Search">Search</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white-50 fw-semibold" asp-area="" asp-controller="Home" asp-action="About" asp-route-id="1">About</a>
+                            <a class="nav-link fw-semibold" asp-area="" asp-controller="Home" asp-action="About" asp-route-id="1">About</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -90,3 +100,33 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const page = document.getElementById("changeTheme");
+        const icon = document.getElementById("themeIcon");
+
+        // Ensure the theme element exists
+        if (!page) {
+            console.error("Error: 'changeTheme' element/ not found.");
+            return;
+        }
+
+        // Apply stored theme on page load
+        const savedTheme = localStorage.getItem("theme") || "dark"; // Default to dark
+        page.setAttribute("data-bs-theme", savedTheme);
+        updateIcon(savedTheme);
+
+        // Toggle theme on icon click
+        icon.addEventListener("click", () => {
+            const newTheme = page.getAttribute("data-bs-theme") === "dark" ? "light" : "dark";
+            page.setAttribute("data-bs-theme", newTheme);
+            localStorage.setItem("theme", newTheme);
+            updateIcon(newTheme);
+        });
+
+        function updateIcon(theme) {
+            icon.className = theme === "dark" ? "bi bi-moon fs-5" : "bi bi-sun fs-5";
+        }
+    });
+</script>
+<!-- Clickable theme icon -->     

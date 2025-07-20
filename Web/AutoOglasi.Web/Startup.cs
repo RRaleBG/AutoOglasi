@@ -51,7 +51,8 @@ namespace AutoOglasi.Web
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.MinimumSameSitePolicy = SameSiteMode.Lax;
+               
             });
 
             services.Configure<CookieTempDataProviderOptions>(options =>
@@ -70,6 +71,9 @@ namespace AutoOglasi.Web
             services.AddTransient<IImagesService, ImagesService>();
             services.AddTransient<IStatisticsService, StatisticsService>();
         }
+
+
+
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

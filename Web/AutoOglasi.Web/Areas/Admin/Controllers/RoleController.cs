@@ -75,12 +75,13 @@
         }
 
 
+
+
         public async Task<IActionResult> Update(string id)
         {
             IdentityRole role = roleManager.FindByIdAsync(id).Result;
 
             List<ApplicationUser> members = new List<ApplicationUser>();
-
             List<ApplicationUser> nonMembers = new List<ApplicationUser>();
 
             foreach (ApplicationUser user in userManager.Users)
@@ -91,13 +92,16 @@
             }
 
 
-            return View(new RoleEdit
+            return View(new RoleEdit 
             {
                 Role = role,
                 Members = members,
                 NonMembers = nonMembers
             });
         }
+
+
+       
 
 
         [HttpPost]
