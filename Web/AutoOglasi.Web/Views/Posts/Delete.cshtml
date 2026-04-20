@@ -34,8 +34,8 @@
 </div>
 
 <div class="row text-center my-2">
-    <form class="my-3" asp-action="Delete">
-        <input type="hidden" asp-for="@Model.Car.Id" />
+    <form class="my-3" asp-action="Delete" asp-route-id="@Model.Id">
+        <input type="hidden" asp-for="Id" />
         <input type="submit" value="Delete" class="btn btn-danger" />
         @if (this.User.IsInRole("Administrator"))
         {

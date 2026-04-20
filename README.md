@@ -18,10 +18,12 @@
 		<em>Developed with the software and tools below.</em>
 </p>
 <p align="center">
-	<img src="https://img.shields.io/badge/C%23-256860?style=flat&logo=c-sharp&logoColor=white"/>
-	<img src="https://img.shields.io/badge/Microsoft_SQL_Server-CC2927?style=flat&logo=microsoft-sql-server&logoColor=white"/>
-	<img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat&logo=JavaScript&logoColor=black" alt="JavaScript">
-	<img src="https://img.shields.io/badge/JSON-245567.svg?style=flat&logo=JSON&logoColor=white" alt="JSON">
+   <img src="https://img.shields.io/badge/C%23-256860?style=flat&logo=c-sharp&logoColor=white"/>
+    <img src="https://img.shields.io/badge/ASP.NET_Core-512BD4?style=flat&logo=dotnet&logoColor=white" alt="ASP.NET Core">
+    <img src="https://img.shields.io/badge/Entity_Framework_Core-512BD4?style=flat&logo=dotnet&logoColor=white" alt="EF Core">
+    <img src="https://img.shields.io/badge/Microsoft_SQL_Server-CC2927?style=flat&logo=microsoft-sql-server&logoColor=white"/>
+    <img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat&logo=JavaScript&logoColor=black" alt="JavaScript">
+    <img src="https://img.shields.io/badge/xUnit-5E5E5E?style=flat&logo=dotnet&logoColor=white" alt="xUnit">
 </p>
 <hr>
 
@@ -43,7 +45,18 @@
 
 Ensure you have the following dependencies installed on your system:
 
-* **TargetFramework**: `version net8.0`
+* **.NET SDK**: `10.0`
+* **Database**: SQL Server-compatible connection for the web application
+
+### 🏗️ Architecture at a Glance
+
+AutoOglasi follows a layered architecture:
+
+- `Data/` contains EF Core data access, entities, migrations, and seed logic.
+- `Infrastructure/` contains shared constants, validation attributes, and AutoMapper profiles.
+- `Services/` contains application business logic for cars, posts, images, and statistics.
+- `Web/` contains ASP.NET Core MVC controllers, Identity Razor Pages, views, and UI models.
+- `Tests/` contains xUnit tests with lightweight helpers and EF Core InMemory-based coverage.
 
 ### ⚙️ Installation
 
@@ -59,18 +72,33 @@ git clone https://github.com/RRaleBG/AutoOglasi
 cd AutoOglasi
 ```
 
-3. Install the dependencies:
+3. Restore and build the solution:
 
 ```sh
 dotnet build
 ```
+
+4. Configure the application settings for the web project.
+
+- Keep the checked-in `Web/AutoOglasi.Web/appsettings.json` file sample-safe.
+- Store local secrets in `appsettings.Development.json`, environment variables, or user secrets.
+- Set a valid `ConnectionStrings:DefaultConnection` for your SQL Server instance.
+- Optional external login providers are configuration-driven:
+  - `Google:ClientId`
+  - `Google:ClientSecret`
+  - `GitHub:ClientId`
+  - `GitHub:ClientSecret`
+
+Use placeholder values in repository files and only supply real credentials in local, non-committed configuration.
+
+The application applies EF Core migrations and seed data during startup.
 
 ### 🤖 Running AutoOglasi
 
 Use the following command to run AutoOglasi:
 
 ```sh
-dotnet run
+dotnet run --project Web/AutoOglasi.Web
 ```
 
 ### 🧪 Tests:
@@ -78,6 +106,14 @@ dotnet run
 ```sh
 dotnet test
 ```
+
+## 🧭 Development Notes
+
+- The repository targets `.NET 10` and uses Central Package Management via `Directory.Packages.props`.
+- Package updates should stay compatible with `.NET 10` unless a wider upgrade is explicitly planned.
+- Controllers and Razor Pages are intentionally thin; business rules and EF Core queries belong in the `Services/` layer.
+- AutoMapper profiles live under `Infrastructure/AutoOglasi.MapperConfigurations/Profiles`.
+- Cars and posts use soft-delete behavior, so new queries should preserve filters such as `!IsDeleted` and `IsPublic` where appropriate.
 ---
 
 

@@ -1,24 +1,24 @@
 ﻿namespace AutoOglasi.Services.Statistics
 {
-    using System.Linq;
     using Data;
+    using Microsoft.EntityFrameworkCore;
     using Models;
+    using System.Threading.Tasks;
 
     public class StatisticsService : IStatisticsService
     {
-        private readonly AutoOglasiDbContext _dataContext;
+        private readonly AutoOglasiDbContext dataContext;
 
         public StatisticsService(AutoOglasiDbContext dataContext)
         {
-            _dataContext = dataContext;
+            this.dataContext = dataContext;
         }
 
-        public StatisticsServiceModel Total()
+        public async Task<StatisticsServiceModel> TotalAsync()
         {
-            var totalUsers = _dataContext.Users.Count();
-            var totalPosts = _dataContext.Posts.Count(p => !p.IsDeleted && p.IsPublic);
-            var totalCategories = _dataContext.Categories.Count();
-
+            var totalUsers = await this.dataContext.Users.CountAsync();
+            var totalPosts = await this.dataContext.Posts.CountAsync(p => !p.IsDeleted && p.IsPublic);
+            var totalCategories = await this.dataContext.Categories.CountAsync();
 
             return new StatisticsServiceModel
             {

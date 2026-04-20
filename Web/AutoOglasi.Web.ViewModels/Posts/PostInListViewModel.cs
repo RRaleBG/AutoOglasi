@@ -4,6 +4,8 @@
 
     public class PostInListViewModel
     {
+        public int Id { get; init; }
+
         public CarInListViewModel Car { get; init; }
 
         public string PublishedOn { get; init; }

@@ -1,51 +1,43 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <UserSecretsId>aspnet-AutoOglasi-28FC1372-11FE-44D9-9A28-987D2F90AC42</UserSecretsId>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
     <ApplicationIcon>wwwroot\favicon.ico</ApplicationIcon>
 	  <TreatWarningAsErrors>true</TreatWarningAsErrors>
 	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="14.0.0" />
-    <PackageReference Include="bootstrap" Version="5.3.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="9.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="9.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="9.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
-    <PackageReference Include="OwlCarousel" Version="1.3.3" />
-    <PackageReference Include="Shouldly" Version="4.3.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.4">
+    <PackageReference Include="AspNet.Security.OAuth.GitHub" />
+    <PackageReference Include="AutoMapper" />
+    <PackageReference Include="bootstrap" />
+    <PackageReference Include="jQuery" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.4" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="10.9.0.115408">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" />
+    <PackageReference Include="SonarAnalyzer.CSharp">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
+    <PackageReference Include="StyleCop.Analyzers">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\Data\AutoOglasi.Data.Models\AutoOglasi.Data.Models.csproj" />
-    <ProjectReference Include="..\..\Data\AutoOglasi.Data.Models\AutoOglasi.Data.Models.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\AutoOglasi.GlobalConstants\AutoOglasi.GlobalConstants.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\AutoOglasi.MapperConfigurations\AutoOglasi.MapperConfigurations.csproj" />
     <ProjectReference Include="..\..\Infrastructure\AutoOglasi.GlobalConstants\AutoOglasi.GlobalConstants.csproj" />
     <ProjectReference Include="..\..\Infrastructure\AutoOglasi.MapperConfigurations\AutoOglasi.MapperConfigurations.csproj" />
     <ProjectReference Include="..\..\Services\AutoOglasi.Services\AutoOglasi.Services.csproj" />
-    <ProjectReference Include="..\..\Services\AutoOglasi.Services\AutoOglasi.Services.csproj" />
-    <ProjectReference Include="..\AutoOglasi.Web.Constants\AutoOglasi.Web.Constants.csproj" />
-    <ProjectReference Include="..\AutoOglasi.Web.ViewModels\AutoOglasi.Web.ViewModels.csproj" />
     <ProjectReference Include="..\AutoOglasi.Web.Constants\AutoOglasi.Web.Constants.csproj" />
     <ProjectReference Include="..\AutoOglasi.Web.ViewModels\AutoOglasi.Web.ViewModels.csproj" />
   </ItemGroup>

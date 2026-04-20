@@ -45,21 +45,21 @@
                         @* <a asp-area="Admin" asp-controller="Posts" asp-action="ChangeVisibility" asp-route-id="@post.Car.Id" class="btn btn-outline-info btn-sm float-end mx-1">@(post.IsPublic ? "Hide" : "Show")</a> *@
                         @if(post.IsPublic)
                             {
-                                <a asp-area="Admin" asp-controller="Posts" asp-action="ChangeVisibility" asp-route-id="@post.Car.Id" class="btn btn-outline-info w-75 btn-sm float-end mx-1">@(post.IsPublic ? "Hide" : "Show")</a>
+                                <a asp-area="Admin" asp-controller="Posts" asp-action="ChangeVisibility" asp-route-id="@post.Id" class="btn btn-outline-info w-75 btn-sm float-end mx-1">@(post.IsPublic ? "Hide" : "Show")</a>
                             }
                          @if(!post.IsPublic)
                             {
-                                <a asp-area="Admin" asp-controller="Posts" asp-action="ChangeVisibility" asp-route-id="@post.Car.Id" class="btn btn-outline-warning btn-sm w-75 float-end mx-1">@(post.IsPublic ? "Hide" : "Show")</a>
+                                <a asp-area="Admin" asp-controller="Posts" asp-action="ChangeVisibility" asp-route-id="@post.Id" class="btn btn-outline-warning btn-sm w-75 float-end mx-1">@(post.IsPublic ? "Hide" : "Show")</a>
                             }
                         </td>
                     <td>
-                            <a asp-area="" asp-controller="Posts" asp-action="Edit" asp-route-id="@post.Car.Id" class="btn btn-outline-success btn-sm float-end mx-1">Edit</a>
+                            <a asp-area="" asp-controller="Posts" asp-action="Edit" asp-route-id="@post.Id" class="btn btn-outline-success btn-sm float-end mx-1">Edit</a>
                     </td>
                     <td>
-                            <a asp-area="" asp-controller="Posts" asp-action="Offer" asp-route-id="@post.Car.Id" class="btn btn-outline-primary btn-sm float-end mx-1">View</a>
+                            <a asp-area="" asp-controller="Posts" asp-action="Offer" asp-route-id="@post.Id" class="btn btn-outline-primary btn-sm float-end mx-1">View</a>
                     </td>
                     <td>
-                            <a asp-area="" asp-controller="Posts" asp-action="Delete" asp-route-id="@post.Car.Id" class="btn btn-danger btn-sm float-end mx-1">Delete</a>
+                            <a asp-area="" asp-controller="Posts" asp-action="Delete" asp-route-id="@post.Id" class="btn btn-danger btn-sm float-end mx-1">Delete</a>
                     </td>
                 </tr>
             }

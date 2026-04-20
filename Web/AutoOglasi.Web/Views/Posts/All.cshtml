@@ -23,7 +23,7 @@
                 <p class="col float-end mt-sm-2"><span class="badge text-bg-warning fw-bold "> € @post.Car.Price.ToString("N", CultureInfo.InvariantCulture).Replace(".00", string.Empty)</span></p>
             </div>
 
-            <a asp-action="Offer" asp-route-id="@post.Car.Id" class="text-decoration-none">
+            <a asp-action="Offer" asp-route-id="@post.Id" class="text-decoration-none">
 
                 <img src="@post.Car.CoverImage" class="img-fluid rounded" style="height: 13em; width: auto;" sizes="(min-width: 768px) 480px, 87.5vw" rel="preload" fetchpriority="high" alt="image" type="image/webp" />
 

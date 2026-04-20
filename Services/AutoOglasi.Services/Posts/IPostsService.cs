@@ -10,31 +10,31 @@
     {
         Task<int> CreateAsync(PostFormInputModelDTO inputPost, Car car, string userId, bool isPublic);
 
-        IEnumerable<PostInListDTO> GetMatchingPosts(SearchPostDTO searchInputModel, int sortingNumber);
+        Task<IEnumerable<PostInListDTO>> GetMatchingPostsAsync(SearchPostDTO searchInputModel, int sortingNumber);
 
-        IEnumerable<BasePostInListDTO> GetAllPostsBaseInfo(int page, int postsPerPage);
+        Task<IEnumerable<BasePostInListDTO>> GetAllPostsBaseInfoAsync(int page, int postsPerPage);
 
-        int GetAllPostsCount();
+        Task<int> GetAllPostsCountAsync();
 
         IEnumerable<T> GetPostsByPage<T>(IEnumerable<T> posts, int page, int postsPerPage);
 
-        IEnumerable<PostByUserDTO> GetPostsByUser(string userId, int sortingNumber);
+        Task<IEnumerable<PostByUserDTO>> GetPostsByUserAsync(string userId, int sortingNumber);
 
-        SinglePostDTO GetSinglePostViewModelById(int postId, bool publicOnly = true);
+        Task<SinglePostDTO> GetSinglePostViewModelByIdAsync(int postId, bool publicOnly = true);
 
-        EditPostDTO GetPostFormInputModelById(int postId);
+        Task<EditPostDTO> GetPostFormInputModelByIdAsync(int postId);
 
-        IEnumerable<PostInLatestListDTO> GetLatest(int count);
+        Task<IEnumerable<PostInLatestListDTO>> GetLatestAsync(int count);
 
         Task UpdateAsync(int postId, EditPostDTO input, bool isPublic);
 
         Task ChangeVisibilityAsync(int postId);
 
-        IEnumerable<ImageInfoDTO> GetCurrentDbImagesForAPost(int postId);
+        Task<IEnumerable<ImageInfoDTO>> GetCurrentDbImagesForAPostAsync(int postId);
 
-        PostByUserDTO GetBasicPostInformationById(int postId);
+        Task<PostByUserDTO> GetBasicPostInformationByIdAsync(int postId);
 
-        string GetPostCreatorId(int postId);
+        Task<string> GetPostCreatorIdAsync(int postId);
 
         Task DeletePostByIdAsync(int postId);
     }

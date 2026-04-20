@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.EntityFrameworkCore;
     using Data;
     using Data.Models;
 
@@ -52,7 +53,7 @@
         
         public async Task SetCoverImagePropertyAsync(string imageId)
         {
-            var image = this.data.Images.FirstOrDefault(img => img.Id == imageId);
+            var image = await this.data.Images.FirstOrDefaultAsync(img => img.Id == imageId);
 
             if (image != null)
             {
@@ -64,7 +65,7 @@
 
         public async Task RemoveCoverImagePropertyAsync(string imageId)
         {
-            var image = this.data.Images.FirstOrDefault(img => img.Id == imageId);
+            var image = await this.data.Images.FirstOrDefaultAsync(img => img.Id == imageId);
 
             if (image != null)
             {

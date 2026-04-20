@@ -1,9 +1,10 @@
 ﻿namespace AutoOglasi.Services.Statistics
 {
+    using System.Threading.Tasks;
     using Models;
 
     public interface IStatisticsService
     {
-        StatisticsServiceModel Total();
+        Task<StatisticsServiceModel> TotalAsync();
     }
 }

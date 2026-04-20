@@ -1,0 +1,53 @@
+@page
+@model AutoOglasi.Web.Areas.Identity.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4 shadow-info" style="max-width:420px; width:100%;">
+        <h2 class="text-center mb-3">Log in</h2>
+
+        <form method="post" asp-page="./Login">
+            <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+
+            <div class="mb-3">
+                <label asp-for="Input.Email" class="form-label"></label>
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Input.Password" class="form-label"></label>
+                <input asp-for="Input.Password" class="form-control" autocomplete="current-password" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-check mb-3">
+                <input asp-for="Input.RememberMe" class="form-check-input text-white-50" />
+                <label asp-for="Input.RememberMe" class="text-white-50"></label>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Log in</button>
+        </form>
+
+        @if (Model.ExternalLogins?.Count > 0)
+        {
+            <hr />
+            <div class="mt-3">
+                <p class="text-center">Or sign in with</p>
+                @foreach (var provider in Model.ExternalLogins)
+                {
+                    <form method="post" asp-page="./ExternalLogin" asp-route-provider="@provider.Name" asp-route-returnUrl="@Model.ReturnUrl">
+                        <button type="submit" class="btn btn-outline-secondary w-100 mb-2">Log in with @provider.DisplayName</button>
+                    </form>
+                }
+            </div>
+        }
+
+        <p class="text-center mt-3">
+            <a asp-page="./Register">Register as a new user</a>
+        </p>
+    </div>
+</div>
+
+<partial name="_ValidationScriptsPartial" />

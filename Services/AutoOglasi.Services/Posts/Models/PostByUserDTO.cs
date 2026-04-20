@@ -4,6 +4,8 @@
 
     public class PostByUserDTO
     {
+        public int Id { get; init; }
+
         public CarByUserDTO Car { get; init; }
 
         public string PublishedOn { get; init; }

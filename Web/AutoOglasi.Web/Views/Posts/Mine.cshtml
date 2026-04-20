@@ -29,7 +29,7 @@ else
         {
             <div class="card rounded-3 m-3 shadow-info-lg" style="width: 18em;">
 
-                <a asp-controller="Posts" class="text-decoration-none" asp-action="Offer" asp-route-id="@post.Car.Id">
+                <a asp-controller="Posts" class="text-decoration-none" asp-action="Offer" asp-route-id="@post.Id">
                     <div class="row py-3 text-center text-white">
                         <div class="col float-end">@post.PublishedOn</div>
                         <h6 class="col float-start">€@post.Car.Price.ToString("N", CultureInfo.InvariantCulture).Replace(".00", string.Empty)</h6>
@@ -42,9 +42,9 @@ else
                     <hr class="mt-1 mb-1" />
 
                     <div class="row justify-content-evenly mx-0 py-3">
-                        <div class="col-4"><a asp-action="Offer" asp-route-id="@post.Car.Id" class="btn btn-outline-info btn-sm">View</a></div>
-                        <div class="col-4"><a asp-action="Edit" asp-route-id="@post.Car.Id" class="btn btn-outline-primary btn-sm">Edit</a></div>
-                        <div class="col-4"><a asp-action="Delete" asp-route-id="@post.Car.Id" class="btn btn-outline-danger btn-sm">Delete</a></div>
+                        <div class="col-4"><a asp-action="Offer" asp-route-id="@post.Id" class="btn btn-outline-info btn-sm">View</a></div>
+                        <div class="col-4"><a asp-action="Edit" asp-route-id="@post.Id" class="btn btn-outline-primary btn-sm">Edit</a></div>
+                        <div class="col-4"><a asp-action="Delete" asp-route-id="@post.Id" class="btn btn-outline-danger btn-sm">Delete</a></div>
                     </div>                  
                 </a>
             </div>

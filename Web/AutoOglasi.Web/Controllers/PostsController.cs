@@ -37,19 +37,18 @@ namespace AutoOglasi.Web.Controllers
             this.mapper = mapper;
         }
 
-
         [Authorize]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             var createPostServiceModel = new PostFormInputModelDTO();
             var createCarServiceModel = new CarFormInputModelDTO();
 
-            this.carsService.FillInputCarBaseProperties(createCarServiceModel);
+            await this.carsService.FillInputCarBasePropertiesAsync(createCarServiceModel);
 
             createPostServiceModel.Car = createCarServiceModel;
 
-            var createPostViewModel = mapper.Map<PostFormInputModel>(createPostServiceModel);
-            var createCarViewModel = mapper.Map<CarFormInputModel>(createCarServiceModel);
+            var createPostViewModel = this.mapper.Map<PostFormInputModel>(createPostServiceModel);
+            var createCarViewModel = this.mapper.Map<CarFormInputModel>(createCarServiceModel);
 
             createPostViewModel.Car = createCarViewModel;
 
@@ -62,35 +61,35 @@ namespace AutoOglasi.Web.Controllers
         {
             var isAdmin = User.IsInRole("Administrator");
 
-            var inputCarDTO = mapper.Map<CarFormInputModelDTO>(input.Car);
+            var inputCarDTO = this.mapper.Map<CarFormInputModelDTO>(input.Car);
 
             if (!ModelState.IsValid)
             {
-                carsService.FillInputCarBaseProperties(inputCarDTO);
-                input.Car = mapper.Map<CarFormInputModel>(inputCarDTO);
-                return View(input);
+                await this.carsService.FillInputCarBasePropertiesAsync(inputCarDTO);
+                input.Car = this.mapper.Map<CarFormInputModel>(inputCarDTO);
+                return this.View(input);
             }
 
-            var userId = GetCurrentUserId();
-            var inputPostDTO = mapper.Map<PostFormInputModelDTO>(input);
+            var userId = this.GetCurrentUserId();
+            var inputPostDTO = this.mapper.Map<PostFormInputModelDTO>(input);
             var selectedExtrasIds = input.SelectedExtrasIds.ToList();
-            var imagePath = $"{environment.WebRootPath}/images";
+            var imagePath = $"{this.environment.WebRootPath}/images";
             int postId;
 
             try
             {
-                var car = await carsService.GetCarFromInputModelAsync(inputCarDTO, selectedExtrasIds, userId, imagePath);
-                postId = await postsService.CreateAsync(inputPostDTO, car, userId, isAdmin);
+                var car = await this.carsService.GetCarFromInputModelAsync(inputCarDTO, selectedExtrasIds, userId, imagePath);
+                postId = await this.postsService.CreateAsync(inputPostDTO, car, userId, isAdmin);
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("CustomError", ex.Message);
 
-                carsService.FillInputCarBaseProperties(inputCarDTO);
+                await this.carsService.FillInputCarBasePropertiesAsync(inputCarDTO);
 
-                input.Car = mapper.Map<CarFormInputModel>(inputCarDTO);
+                input.Car = this.mapper.Map<CarFormInputModel>(inputCarDTO);
 
-                return View(input);
+                return this.View(input);
             }
 
             TempData[WebConstants.SuccessMessageKey] = $"The car post was added successfully{(isAdmin ? string.Empty : " and is awaiting for approval")}!";
@@ -98,13 +97,12 @@ namespace AutoOglasi.Web.Controllers
             return RedirectToAction("Offer", new { Id = postId });
         }
 
-
-        public IActionResult Search()
+        public async Task<IActionResult> Search()
         {
             var searchCarDTO = new SearchCarInputModelDTO();
             var searchPostDTO = new SearchPostDTO();
 
-            this.carsService.FillInputCarBaseProperties(searchCarDTO);
+            await this.carsService.FillInputCarBasePropertiesAsync(searchCarDTO);
 
             searchPostDTO.Car = searchCarDTO;
 
@@ -116,7 +114,7 @@ namespace AutoOglasi.Web.Controllers
             return this.View(searchPostInputModel);
         }
 
-        public IActionResult All(SearchPostInputModel searchPostInputModel, int id = 1, int sorting = 0)
+        public async Task<IActionResult> All(SearchPostInputModel searchPostInputModel, int id = 1, int sorting = 0)
         {
             try
             {
@@ -125,10 +123,10 @@ namespace AutoOglasi.Web.Controllers
                     return NotFound();
                 }
 
-                var searchPostDTO = mapper.Map<SearchPostDTO>(searchPostInputModel);
-                var matchingPosts = postsService.GetMatchingPosts(searchPostDTO, sorting).ToList();
-                var postsByPageDTOs = postsService.GetPostsByPage(matchingPosts, id, PostsPerPage);
-                var postsByPageAsViewModels = mapper.Map<IEnumerable<PostInListDTO>, IEnumerable<PostInListViewModel>>(postsByPageDTOs);
+                var searchPostDTO = this.mapper.Map<SearchPostDTO>(searchPostInputModel);
+                var matchingPosts = (await this.postsService.GetMatchingPostsAsync(searchPostDTO, sorting)).ToList();
+                var postsByPageDTOs = this.postsService.GetPostsByPage(matchingPosts, id, PostsPerPage);
+                var postsByPageAsViewModels = this.mapper.Map<IEnumerable<PostInListDTO>, IEnumerable<PostInListViewModel>>(postsByPageDTOs);
 
                 var postsListViewModel = new PostsListViewModel()
                 {
@@ -150,55 +148,54 @@ namespace AutoOglasi.Web.Controllers
                 TempData[WebConstants.ErrorMessageKey] = ex.Message;
 
                 var searchCarInputModel = searchPostInputModel.Car;
-                var searchCarInputModelDTO = mapper.Map<SearchCarInputModelDTO>(searchCarInputModel);
+                var searchCarInputModelDTO = this.mapper.Map<SearchCarInputModelDTO>(searchCarInputModel);
 
-                carsService.FillInputCarBaseProperties(searchCarInputModelDTO);
+                await this.carsService.FillInputCarBasePropertiesAsync(searchCarInputModelDTO);
 
-                searchCarInputModel = mapper.Map<SearchCarInputModel>(searchCarInputModelDTO);
+                searchCarInputModel = this.mapper.Map<SearchCarInputModel>(searchCarInputModelDTO);
                 searchPostInputModel.Car = searchCarInputModel;
 
                 return View("Search", searchPostInputModel);
             }
         }
 
-        public IActionResult Offer(int id)
+        public async Task<IActionResult> Offer(int id)
         {
             var isAdmin = User.IsInRole("Administrator");
             var publicOnly = !isAdmin;
 
             if (User.Identity.IsAuthenticated && !isAdmin)
             {
-                var userId = GetCurrentUserId();
-                var postCreatorId = postsService.GetPostCreatorId(id);
+                var userId = this.GetCurrentUserId();
+                var postCreatorId = await this.postsService.GetPostCreatorIdAsync(id);
 
                 publicOnly = userId != postCreatorId;
             }
 
-            var singlePostDataDTO = postsService.GetSinglePostViewModelById(id, publicOnly);
+            var singlePostDataDTO = await this.postsService.GetSinglePostViewModelByIdAsync(id, publicOnly);
 
             if (singlePostDataDTO == null)
             {
                 return NotFound();
             }
 
-            var singlePostViewModel = mapper.Map<SinglePostViewModel>(singlePostDataDTO);
+            var singlePostViewModel = this.mapper.Map<SinglePostViewModel>(singlePostDataDTO);
 
             return View(singlePostViewModel);
         }
 
-
         [Authorize]
-        public IActionResult Mine(int id = 1, int sorting = 0)
+        public async Task<IActionResult> Mine(int id = 1, int sorting = 0)
         {
             if (id <= 0)
             {
                 return NotFound();
             }
 
-            var userId = GetCurrentUserId();
-            var postsByUserDTOs = postsService.GetPostsByUser(userId, sorting).ToList();
-            var postsByUserDTOsForThisPage = postsService.GetPostsByPage(postsByUserDTOs, id, PostsPerPage);
-            var postsByUserViewModels = mapper.Map<IEnumerable<PostByUserDTO>, IEnumerable<PostByUserViewModel>>(postsByUserDTOsForThisPage);
+            var userId = this.GetCurrentUserId();
+            var postsByUserDTOs = (await this.postsService.GetPostsByUserAsync(userId, sorting)).ToList();
+            var postsByUserDTOsForThisPage = this.postsService.GetPostsByPage(postsByUserDTOs, id, PostsPerPage);
+            var postsByUserViewModels = this.mapper.Map<IEnumerable<PostByUserDTO>, IEnumerable<PostByUserViewModel>>(postsByUserDTOsForThisPage);
 
             var postsByUserViewModel = new PostsByUserViewModel()
             {
@@ -216,12 +213,11 @@ namespace AutoOglasi.Web.Controllers
             return View(postsByUserViewModel);
         }
 
-
         [Authorize]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var userId = GetCurrentUserId();
-            var editPostDTO = postsService.GetPostFormInputModelById(id);
+            var userId = this.GetCurrentUserId();
+            var editPostDTO = await this.postsService.GetPostFormInputModelByIdAsync(id);
 
             if (editPostDTO == null)
             {
@@ -233,19 +229,18 @@ namespace AutoOglasi.Web.Controllers
                 return Unauthorized();
             }
 
-            carsService.FillInputCarBaseProperties(editPostDTO.Car);
+            await this.carsService.FillInputCarBasePropertiesAsync(editPostDTO.Car);
 
-            var editPostViewModel = mapper.Map<EditPostViewModel>(editPostDTO);
+            var editPostViewModel = this.mapper.Map<EditPostViewModel>(editPostDTO);
 
             return View(editPostViewModel);
         }
-
 
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Edit(int id, EditPostViewModel editedPost)
         {
-            var userId = GetCurrentUserId();
+            var userId = this.GetCurrentUserId();
             var isAdmin = User.IsInRole(AdministratorRoleName);
 
             if ((editedPost.CreatorId != userId) && !User.IsInRole(AdministratorRoleName))
@@ -253,15 +248,15 @@ namespace AutoOglasi.Web.Controllers
                 return Unauthorized();
             }
 
-            var editedPostDTO = mapper.Map<EditPostDTO>(editedPost);
-            var currentImagesDTO = postsService.GetCurrentDbImagesForAPost(id);
-            var currentImagesViewModel = mapper.Map<IEnumerable<ImageInfoDTO>, IEnumerable<ImageInfoViewModel>>(currentImagesDTO);
+            var editedPostDTO = this.mapper.Map<EditPostDTO>(editedPost);
+            var currentImagesDTO = await this.postsService.GetCurrentDbImagesForAPostAsync(id);
+            var currentImagesViewModel = this.mapper.Map<IEnumerable<ImageInfoDTO>, IEnumerable<ImageInfoViewModel>>(currentImagesDTO);
 
             if (!ModelState.IsValid)
             {
-                carsService.FillInputCarBaseProperties(editedPostDTO.Car);
+                await this.carsService.FillInputCarBasePropertiesAsync(editedPostDTO.Car);
 
-                var editedPostViewModel = mapper.Map<EditPostViewModel>(editedPostDTO);
+                var editedPostViewModel = this.mapper.Map<EditPostViewModel>(editedPostDTO);
                 editedPostViewModel.CurrentImages = currentImagesViewModel;
 
                 return this.View(editedPostViewModel);
@@ -269,19 +264,19 @@ namespace AutoOglasi.Web.Controllers
 
             var selectedExtrasIds = editedPost.SelectedExtrasIds.ToList();
             var deletedImagesIds = editedPost.DeletedImagesIds.ToList();
-            var imagePath = $"{environment.WebRootPath}/images";
+            var imagePath = $"{this.environment.WebRootPath}/images";
 
             try
             {
-                await carsService.UpdateCarDataFromInputModelAsync(editedPostDTO.CarId, editedPostDTO.Car, selectedExtrasIds, deletedImagesIds, userId, imagePath, editedPost.SelectedCoverImageId);
-                await postsService.UpdateAsync(id, editedPostDTO, isAdmin);
+                await this.carsService.UpdateCarDataFromInputModelAsync(editedPostDTO.CarId, editedPostDTO.Car, selectedExtrasIds, deletedImagesIds, userId, imagePath, editedPost.SelectedCoverImageId);
+                await this.postsService.UpdateAsync(id, editedPostDTO, isAdmin);
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("CustomError", ex.Message);
-                carsService.FillInputCarBaseProperties(editedPostDTO.Car);
+                await this.carsService.FillInputCarBasePropertiesAsync(editedPostDTO.Car);
 
-                editedPost = mapper.Map<EditPostViewModel>(editedPostDTO);
+                editedPost = this.mapper.Map<EditPostViewModel>(editedPostDTO);
                 editedPost.CurrentImages = currentImagesViewModel;
 
                 return View(editedPost);
@@ -292,41 +287,36 @@ namespace AutoOglasi.Web.Controllers
             return RedirectToAction("Offer", new { Id = id });
         }
 
-
         [Authorize]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var userId = GetCurrentUserId();
-
-            var postDTO = postsService.GetBasicPostInformationById(id);
+            var userId = this.GetCurrentUserId();
+            var postDTO = await this.postsService.GetBasicPostInformationByIdAsync(id);
 
             if (postDTO == null)
             {
                 return NotFound();
             }
 
-            var postCreatorId = postsService.GetPostCreatorId(id);
+            var postCreatorId = await this.postsService.GetPostCreatorIdAsync(id);
 
             if ((userId != postCreatorId) && !User.IsInRole(AdministratorRoleName))
             {
                 return Unauthorized();
             }
 
-            var postByUserViewModel = mapper.Map<PostByUserViewModel>(postDTO);
+            var postByUserViewModel = this.mapper.Map<PostByUserViewModel>(postDTO);
 
             return View(postByUserViewModel);
         }
-
 
         [HttpPost]
         [Authorize]
         [ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var userId = GetCurrentUserId();
-
-            var postCreatorId = postsService.GetPostCreatorId(id);
-
+            var userId = this.GetCurrentUserId();
+            var postCreatorId = await this.postsService.GetPostCreatorIdAsync(id);
             var isAdmin = User.IsInRole(AdministratorRoleName);
 
             if ((userId != postCreatorId) && !isAdmin)
@@ -336,7 +326,7 @@ namespace AutoOglasi.Web.Controllers
 
             try
             {
-                await postsService.DeletePostByIdAsync(id);
+                await this.postsService.DeletePostByIdAsync(id);
                 TempData[WebConstants.SuccessMessageKey] = "The car post was deleted successfully!";
             }
             catch (Exception ex)

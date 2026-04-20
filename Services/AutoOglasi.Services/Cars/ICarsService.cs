@@ -9,15 +9,15 @@
     {
         Task<Car> GetCarFromInputModelAsync(CarFormInputModelDTO inputCar, List<int> selectedExtrasIds, string userId, string imagePath);
 
-        IEnumerable<BaseCarSpecificationServiceModel> GetAllCategories();
+        Task<IEnumerable<BaseCarSpecificationServiceModel>> GetAllCategoriesAsync();
 
-        IEnumerable<BaseCarSpecificationServiceModel> GetAllFuelTypes();
+        Task<IEnumerable<BaseCarSpecificationServiceModel>> GetAllFuelTypesAsync();
 
-        IEnumerable<BaseCarSpecificationServiceModel> GetAllTransmissionTypes();
+        Task<IEnumerable<BaseCarSpecificationServiceModel>> GetAllTransmissionTypesAsync();
 
-        IEnumerable<CarExtrasServiceModel> GetAllCarExtras();
+        Task<IEnumerable<CarExtrasServiceModel>> GetAllCarExtrasAsync();
 
-        void FillInputCarBaseProperties(BaseCarInputModelDTO inputCar);
+        Task FillInputCarBasePropertiesAsync(BaseCarInputModelDTO inputCar);
 
         Task UpdateCarDataFromInputModelAsync(int carId, CarFormInputModelDTO inputCar, List<int> selectedExtrasIds, List<string> deletedImagesIds, string userId, string imagePath, string coverImageId);
 

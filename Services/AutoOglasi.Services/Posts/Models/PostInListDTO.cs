@@ -4,6 +4,8 @@
 
     public class PostInListDTO
     {
+        public int Id { get; init; }
+
         public CarInListDTO Car { get; init; }
 
         public string PublishedOn { get; init; }

@@ -25,10 +25,7 @@
                         {
                             <li class="nav-item text-center" title="Approve new car"> 
                                 <a class="nav-link fw-semibold" asp-area="Admin" asp-controller="Posts" asp-action="All" asp-route-id="1">Administration</a>  
-                            </li>
-                        }
-                        @if (User.IsInRole("Administrator"))
-                        {
+                            </li>           
                             <li class="nav-item text-center" title="Asign user to role">  
                                 <a class="nav-link fw-semibold" asp-area="Admin" asp-controller="Role" asp-action="Index">Role</a>  
                             </li>

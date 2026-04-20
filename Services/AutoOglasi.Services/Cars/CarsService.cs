@@ -5,7 +5,7 @@
     using Data;
     using Data.Models;
     using Images;
-    using Microsoft.Extensions.Configuration;
+    using Microsoft.EntityFrameworkCore;
     using Models;
     using System;
     using System.Collections.Generic;
@@ -48,7 +48,7 @@
             {
                 foreach (var extraId in selectedExtrasIds)
                 {
-                    var extra = this.data.Extras.FirstOrDefault(e => e.Id == extraId);
+                    var extra = await this.data.Extras.FirstOrDefaultAsync(e => e.Id == extraId);
 
                     if (extra != null)
                     {
@@ -104,11 +104,11 @@
 
             if (selectedExtrasIds.Any())
             {
-                var currentExtrasIds = this.data.CarExtras.Where(ce => ce.CarId == carId).Select(ce => ce.ExtraId).ToList();
+                var currentExtrasIds = await this.data.CarExtras.Where(ce => ce.CarId == carId).Select(ce => ce.ExtraId).ToListAsync();
 
                 foreach (var extraId in selectedExtrasIds)
                 {
-                    var extra = this.data.Extras.FirstOrDefault(e => e.Id == extraId);
+                    var extra = await this.data.Extras.FirstOrDefaultAsync(e => e.Id == extraId);
 
                     if (extra != null && !currentExtrasIds.Contains(extraId))
                     {
@@ -133,7 +133,7 @@
                 }
             }
 
-            var currentImages = this.data.Images.Where(img => img.CarId == carId).ToList();
+            var currentImages = await this.data.Images.Where(img => img.CarId == carId).ToListAsync();
 
             if (deletedImagesIds.Count >= currentImages.Count && !inputCar.Images.Any())
             {
@@ -146,7 +146,7 @@
                 {
                     if (currentImages.Any(img => img.Id == deletedImageId))
                     {
-                        var imageToRemove = this.data.Images.First(img => img.Id == deletedImageId);
+                        var imageToRemove = await this.data.Images.FirstAsync(img => img.Id == deletedImageId);
                         this.data.Images.Remove(imageToRemove);
                     }
                 }
@@ -191,45 +191,53 @@
             await this.data.SaveChangesAsync();
         }
 
-        public IEnumerable<BaseCarSpecificationServiceModel> GetAllCategories()
+        public async Task<IEnumerable<BaseCarSpecificationServiceModel>> GetAllCategoriesAsync()
         {
-            return this.data
+            var categories = await this.data
                 .Categories
-                .ProjectTo<BaseCarSpecificationServiceModel>((AutoMapper.IConfigurationProvider)mapperConfiguration)
-                .ToList();
+                .ProjectTo<BaseCarSpecificationServiceModel>(this.mapperConfiguration)
+                .ToListAsync();
+
+            return categories;
         }
 
-        public IEnumerable<BaseCarSpecificationServiceModel> GetAllFuelTypes()
+        public async Task<IEnumerable<BaseCarSpecificationServiceModel>> GetAllFuelTypesAsync()
         {
-            return this.data
+            var fuelTypes = await this.data
                 .FuelTypes
-                .ProjectTo<BaseCarSpecificationServiceModel>((AutoMapper.IConfigurationProvider)mapperConfiguration)
-                .ToList();
+                .ProjectTo<BaseCarSpecificationServiceModel>(this.mapperConfiguration)
+                .ToListAsync();
+
+            return fuelTypes;
         }
 
-        public IEnumerable<BaseCarSpecificationServiceModel> GetAllTransmissionTypes()
+        public async Task<IEnumerable<BaseCarSpecificationServiceModel>> GetAllTransmissionTypesAsync()
         {
-            return this.data
+            var transmissionTypes = await this.data
                 .TransmissionTypes
-                .ProjectTo<BaseCarSpecificationServiceModel>((AutoMapper.IConfigurationProvider)mapperConfiguration)
-                .ToList();
+                .ProjectTo<BaseCarSpecificationServiceModel>(this.mapperConfiguration)
+                .ToListAsync();
+
+            return transmissionTypes;
         }
 
-        public IEnumerable<CarExtrasServiceModel> GetAllCarExtras()
+        public async Task<IEnumerable<CarExtrasServiceModel>> GetAllCarExtrasAsync()
         {
-            return this.data
+            var carExtras = await this.data
                 .Extras
                 .OrderBy(e => e.TypeId)
-                .ProjectTo<CarExtrasServiceModel>((AutoMapper.IConfigurationProvider)mapperConfiguration)
-                .ToList();
+                .ProjectTo<CarExtrasServiceModel>(this.mapperConfiguration)
+                .ToListAsync();
+
+            return carExtras;
         }
 
-        public void FillInputCarBaseProperties(BaseCarInputModelDTO inputCar)
+        public async Task FillInputCarBasePropertiesAsync(BaseCarInputModelDTO inputCar)
         {
-            inputCar.Categories = this.GetAllCategories();
-            inputCar.FuelTypes = this.GetAllFuelTypes();
-            inputCar.TransmissionTypes = this.GetAllTransmissionTypes();
-            inputCar.CarExtras = this.GetAllCarExtras();
+            inputCar.Categories = await this.GetAllCategoriesAsync();
+            inputCar.FuelTypes = await this.GetAllFuelTypesAsync();
+            inputCar.TransmissionTypes = await this.GetAllTransmissionTypesAsync();
+            inputCar.CarExtras = await this.GetAllCarExtrasAsync();
         }
 
         private Car GetDbCarById(int carId)

@@ -36,7 +36,7 @@
     @foreach (var post in Model.LatestPosts)
     {
         <div class="card rounded-3 m-2 shadow-info-lg" style="width: 19em;">           
-           <a class="text-decoration-none text-white" asp-controller="Posts" asp-action="Offer" asp-route-id="@post.Car.Id">                
+           <a class="text-decoration-none text-white" asp-controller="Posts" asp-action="Offer" asp-route-id="@post.Id">                
                 <div class="row py-2 text-center">
                     <text class="col float-start py-1">@post.PublishedOn</text>    
                     <text class="col float-end py-1"><span class="badge text-bg-warning fw-bold "> € @post.Car.Price.ToString("N", CultureInfo.InvariantCulture).Replace(".00", string.Empty)</span></text>

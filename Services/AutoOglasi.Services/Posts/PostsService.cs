@@ -11,6 +11,7 @@
     using Data.Models;
     using Images;
     using Images.Models;
+    using Microsoft.EntityFrameworkCore;
     using Models;
 
     public class PostsService : IPostsService
@@ -49,33 +50,34 @@
             return posts.Skip((page - 1) * postsPerPage).Take(postsPerPage).ToList();
         }
 
-        public IEnumerable<PostByUserDTO> GetPostsByUser(string userId, int sortingNumber)
+        public async Task<IEnumerable<PostByUserDTO>> GetPostsByUserAsync(string userId, int sortingNumber)
         {
             var postsQuery = this.data.Posts.Where(p => p.CreatorId == userId && !p.IsDeleted).AsQueryable();
-            
+
             postsQuery = GetSortedPosts(postsQuery, sortingNumber);
 
-            var posts = postsQuery.Select(p => new PostByUserDTO()
-            {
-                Car = new CarByUserDTO()
+            return await postsQuery
+                .Select(p => new PostByUserDTO()
                 {
-                    Id = p.Car.Id,
-                    Make = p.Car.Make,
-                    Model = p.Car.Model,
-                    Price = p.Car.Price,
-                    Year = p.Car.Year,
-                    CoverImage = this.imagesService.GetCoverImagePath(p.Car.Images.ToList()),
-                },
-                PublishedOn = GetFormattedDate(p.PublishedOn),
-            }).ToList();
-
-            return posts;
+                    Id = p.Id,
+                    Car = new CarByUserDTO()
+                    {
+                        Id = p.Car.Id,
+                        Make = p.Car.Make,
+                        Model = p.Car.Model,
+                        Price = p.Car.Price,
+                        Year = p.Car.Year,
+                        CoverImage = this.imagesService.GetCoverImagePath(p.Car.Images.ToList()),
+                    },
+                    PublishedOn = GetFormattedDate(p.PublishedOn),
+                })
+                .ToListAsync();
         }
 
-        public IEnumerable<PostInListDTO> GetMatchingPosts(SearchPostDTO searchInputModel, int sortingNumber)
+        public async Task<IEnumerable<PostInListDTO>> GetMatchingPostsAsync(SearchPostDTO searchInputModel, int sortingNumber)
         {
             var postsQuery = this.data.Posts.Where(p => !p.IsDeleted && p.IsPublic).AsQueryable();
-            
+
             if (searchInputModel.Car != null)
             {
                 var searchedCarDetails = searchInputModel.Car;
@@ -89,38 +91,32 @@
 
                 if (searchedCarDetails.FromYear is > 0)
                 {
-                    postsQuery = postsQuery.Where(p =>
-                        p.Car.Year >= searchedCarDetails.FromYear);
+                    postsQuery = postsQuery.Where(p => p.Car.Year >= searchedCarDetails.FromYear);
                 }
 
                 if (searchedCarDetails.ToYear is > 0)
                 {
-                    postsQuery = postsQuery.Where(p =>
-                        p.Car.Year <= searchedCarDetails.ToYear);
+                    postsQuery = postsQuery.Where(p => p.Car.Year <= searchedCarDetails.ToYear);
                 }
 
                 if (searchedCarDetails.MinHorsepower is > 0)
                 {
-                    postsQuery = postsQuery.Where(p =>
-                        p.Car.Horsepower >= searchedCarDetails.MinHorsepower);
+                    postsQuery = postsQuery.Where(p => p.Car.Horsepower >= searchedCarDetails.MinHorsepower);
                 }
 
                 if (searchedCarDetails.MaxHorsepower is > 0)
                 {
-                    postsQuery = postsQuery.Where(p =>
-                        p.Car.Horsepower <= searchedCarDetails.MaxHorsepower);
+                    postsQuery = postsQuery.Where(p => p.Car.Horsepower <= searchedCarDetails.MaxHorsepower);
                 }
 
                 if (searchedCarDetails.MinPrice is > 0)
                 {
-                    postsQuery = postsQuery.Where(p =>
-                        p.Car.Price >= searchedCarDetails.MinPrice);
+                    postsQuery = postsQuery.Where(p => p.Car.Price >= searchedCarDetails.MinPrice);
                 }
 
                 if (searchedCarDetails.MaxPrice is > 0)
                 {
-                    postsQuery = postsQuery.Where(p =>
-                        p.Car.Price <= searchedCarDetails.MaxPrice);
+                    postsQuery = postsQuery.Where(p => p.Car.Price <= searchedCarDetails.MaxPrice);
                 }
             }
 
@@ -142,18 +138,16 @@
             if (searchInputModel.SelectedExtrasIds.Any())
             {
                 var searchedExtrasIds = searchInputModel.SelectedExtrasIds;
-                var currentQueuedCars = postsQuery.Select(p => p.Car).ToList();
+                var currentQueuedCars = await postsQuery.Select(p => p.Car).ToListAsync();
                 var allMatchedCarIds = new List<int>();
 
-                
                 foreach (var car in currentQueuedCars)
                 {
-                    var currentCarExtrasIds = data.CarExtras
-                                                            .Where(ce => ce.Car.Id == car.Id)
-                                                            .Select(ce => ce.ExtraId)
-                                                            .ToList();
+                    var currentCarExtrasIds = await this.data.CarExtras
+                        .Where(ce => ce.Car.Id == car.Id)
+                        .Select(ce => ce.ExtraId)
+                        .ToListAsync();
 
-                    //The below code checks if all the searched extras are contained in the current car extras
                     if (searchedExtrasIds.Intersect(currentCarExtrasIds).Count() == searchedExtrasIds.Count())
                     {
                         allMatchedCarIds.Add(car.Id);
@@ -163,16 +157,17 @@
                 postsQuery = postsQuery.Where(p => allMatchedCarIds.Contains(p.Car.Id));
             }
 
-            if (!postsQuery.Any())
+            if (!await postsQuery.AnyAsync())
             {
                 throw new Exception("Unfortunately, there are no cars in our system that match this search criteria.");
             }
 
             postsQuery = GetSortedPosts(postsQuery, sortingNumber);
 
-            var posts = postsQuery
+            return await postsQuery
                 .Select(p => new PostInListDTO()
                 {
+                    Id = p.Id,
                     Car = new CarInListDTO()
                     {
                         Id = p.Car.Id,
@@ -193,25 +188,26 @@
                         CoverImage = this.imagesService.GetCoverImagePath(p.Car.Images.ToList()),
                     },
                     PublishedOn = GetFormattedDate(p.PublishedOn),
-                }).ToList();
-
-            return posts;
+                })
+                .ToListAsync();
         }
 
-        public int GetAllPostsCount()
+        public Task<int> GetAllPostsCountAsync()
         {
-            return this.data.Posts.Count();
+            return this.data.Posts.CountAsync();
         }
 
-        public IEnumerable<BasePostInListDTO> GetAllPostsBaseInfo(int page, int postsPerPage)
+        public async Task<IEnumerable<BasePostInListDTO>> GetAllPostsBaseInfoAsync(int page, int postsPerPage)
         {
-            var posts = this.data.Posts
+            return await this.data.Posts
                 .Where(p => !p.IsDeleted)
                 .OrderBy(p => p.IsPublic)
                 .ThenByDescending(p => p.PublishedOn)
-                .Skip((page - 1) * postsPerPage).Take(postsPerPage)
+                .Skip((page - 1) * postsPerPage)
+                .Take(postsPerPage)
                 .Select(p => new BasePostInListDTO()
                 {
+                    Id = p.Id,
                     Car = new BaseCarDTO()
                     {
                         Id = p.Car.Id,
@@ -221,15 +217,14 @@
                         Price = p.Car.Price,
                     },
                     PublishedOn = GetFormattedDate(p.PublishedOn),
-                    IsPublic = p.IsPublic
-                }).ToList();
-
-            return posts;
+                    IsPublic = p.IsPublic,
+                })
+                .ToListAsync();
         }
 
-        public SinglePostDTO GetSinglePostViewModelById(int postId, bool publicOnly = true)
+        public async Task<SinglePostDTO> GetSinglePostViewModelByIdAsync(int postId, bool publicOnly = true)
         {
-            var post = this.data.Posts
+            return await this.data.Posts
                 .Where(p => p.Id == postId && !p.IsDeleted && (!publicOnly || p.IsPublic))
                 .Select(p => new SinglePostDTO()
                 {
@@ -257,16 +252,14 @@
                     },
                     PublishedOn = GetFormattedDate(p.PublishedOn),
                     SellerName = p.SellerName,
-                    SellerPhoneNumber = p.SellerPhoneNumber
+                    SellerPhoneNumber = p.SellerPhoneNumber,
                 })
-                .FirstOrDefault();
-
-            return post;
+                .FirstOrDefaultAsync();
         }
 
-        public EditPostDTO GetPostFormInputModelById(int postId)
+        public async Task<EditPostDTO> GetPostFormInputModelByIdAsync(int postId)
         {
-            var post = this.data.Posts
+            return await this.data.Posts
                 .Where(p => p.Id == postId && !p.IsDeleted)
                 .Select(p => new EditPostDTO()
                 {
@@ -290,42 +283,56 @@
                     SellerPhoneNumber = p.SellerPhoneNumber,
                     CreatorId = p.CreatorId,
                     CurrentImages = p.Car.Images.OrderByDescending(img => img.IsCoverImage)
-                                                .Select(img => new ImageInfoDTO()
-                                                        {
-                                                            Id = img.Id,
-                                                            Path = this.imagesService.GetDefaultCarImagesPath(img.Id, img.Extension),
-                                                        }).ToList(),
-                    SelectedCoverImageId = p.Car.Images.FirstOrDefault(img => img.IsCoverImage).Id,
+                        .Select(img => new ImageInfoDTO()
+                        {
+                            Id = img.Id,
+                            Path = this.imagesService.GetDefaultCarImagesPath(img.Id, img.Extension),
+                        }).ToList(),
+                    SelectedCoverImageId = p.Car.Images
+                        .Where(img => img.IsCoverImage)
+                        .Select(img => img.Id)
+                        .FirstOrDefault(),
                     CarId = p.CarId,
-                }).FirstOrDefault();
-
-            return post;
+                })
+                .FirstOrDefaultAsync();
         }
 
-        public IEnumerable<ImageInfoDTO> GetCurrentDbImagesForAPost(int postId)
+        public async Task<IEnumerable<ImageInfoDTO>> GetCurrentDbImagesForAPostAsync(int postId)
         {
-             var post = this.data.Posts.FirstOrDefault(p => p.Id == postId && !p.IsDeleted);
-             var car = this.data.Cars.FirstOrDefault(c => c.Id == post.CarId && !c.IsDeleted);
-             var postImages = this.data.Images
-                                        .Where(img => img.CarId == car.Id)
-                                        .OrderByDescending(img => img.IsCoverImage)
-                                        .Select(img => new ImageInfoDTO()
-                                        {
-                                            Id = img.Id, 
-                                            Path = this.imagesService.GetDefaultCarImagesPath(img.Id, img.Extension),
-                                        }).ToList();
+            var post = await this.data.Posts.FirstOrDefaultAsync(p => p.Id == postId && !p.IsDeleted);
 
-             return postImages;
+            if (post == null)
+            {
+                return Enumerable.Empty<ImageInfoDTO>();
+            }
+
+            var car = await this.data.Cars.FirstOrDefaultAsync(c => c.Id == post.CarId && !c.IsDeleted);
+
+            if (car == null)
+            {
+                return Enumerable.Empty<ImageInfoDTO>();
+            }
+
+            return await this.data.Images
+                .Where(img => img.CarId == car.Id)
+                .OrderByDescending(img => img.IsCoverImage)
+                .Select(img => new ImageInfoDTO()
+                {
+                    Id = img.Id,
+                    Path = this.imagesService.GetDefaultCarImagesPath(img.Id, img.Extension),
+                })
+                .ToListAsync();
         }
 
-        public IEnumerable<PostInLatestListDTO> GetLatest(int count)
+        public async Task<IEnumerable<PostInLatestListDTO>> GetLatestAsync(int count)
         {
-            var posts = this.data.Posts
+            return await this.data.Posts
                 .Where(p => !p.IsDeleted && p.IsPublic)
                 .OrderByDescending(p => p.PublishedOn)
                 .Take(count)
                 .Select(p => new PostInLatestListDTO()
                 {
+                    Id = p.Id,
                     Car = new LatestPostsCarDTO()
                     {
                         Id = p.Car.Id,
@@ -336,46 +343,51 @@
                         Horsepower = p.Car.Horsepower,
                         FuelType = p.Car.FuelType.Name,
                         TransmissionType = p.Car.TransmissionType.Name,
-                        CoverImage = this.imagesService.GetCoverImagePath(p.Car.Images.ToList())
+                        CoverImage = this.imagesService.GetCoverImagePath(p.Car.Images.ToList()),
                     },
                     PublishedOn = GetFormattedDate(p.PublishedOn),
-                }).ToList();
-
-            return posts;
+                })
+                .ToListAsync();
         }
 
         public async Task UpdateAsync(int postId, EditPostDTO editedPost, bool isPublic)
         {
-            var post = this.GetDbPostById(postId);
+            var post = await this.GetDbPostByIdAsync(postId);
 
             if (post == null)
             {
-                throw new Exception($"Unfortunately, we cannot find such post in our system!");
+                throw new Exception("Unfortunately, we cannot find such post in our system!");
             }
-            
+
             post.ModifiedOn = DateTime.UtcNow;
             post.SellerName = editedPost.SellerName;
             post.SellerPhoneNumber = editedPost.SellerPhoneNumber;
             post.IsPublic = isPublic;
-            
+
             await this.data.SaveChangesAsync();
         }
 
         public async Task ChangeVisibilityAsync(int postId)
         {
-            var post = this.GetDbPostById(postId);
+            var post = await this.GetDbPostByIdAsync(postId);
+
+            if (post == null)
+            {
+                throw new Exception("Unfortunately, we cannot find such post in our system!");
+            }
 
             post.IsPublic = !post.IsPublic;
 
             await this.data.SaveChangesAsync();
         }
 
-        public PostByUserDTO GetBasicPostInformationById(int postId)
+        public async Task<PostByUserDTO> GetBasicPostInformationByIdAsync(int postId)
         {
-            var post = this.data.Posts
+            return await this.data.Posts
                 .Where(p => p.Id == postId && !p.IsDeleted)
                 .Select(p => new PostByUserDTO()
                 {
+                    Id = p.Id,
                     Car = new CarByUserDTO()
                     {
                         Id = p.Car.Id,
@@ -386,39 +398,38 @@
                         CoverImage = this.imagesService.GetCoverImagePath(p.Car.Images.ToList()),
                     },
                     PublishedOn = GetFormattedDate(p.PublishedOn),
-                }).FirstOrDefault();
-
-            return post;
+                })
+                .FirstOrDefaultAsync();
         }
 
-        public string GetPostCreatorId(int postId)
+        public async Task<string> GetPostCreatorIdAsync(int postId)
         {
-            var post = this.GetDbPostById(postId);
+            var post = await this.GetDbPostByIdAsync(postId);
 
             return post?.CreatorId;
         }
 
         public async Task DeletePostByIdAsync(int postId)
         {
-            var post = this.GetDbPostById(postId);
+            var post = await this.GetDbPostByIdAsync(postId);
 
             if (post == null)
             {
-                throw new Exception($"Unfortunately, we cannot find such post in our system!");
+                throw new Exception("Unfortunately, we cannot find such post in our system!");
             }
 
-            await this.carsService.DeleteCarByIdAsync(post.Id);
+            await this.carsService.DeleteCarByIdAsync(post.CarId);
 
             post.IsDeleted = true;
             post.DeletedOn = DateTime.UtcNow;
             post.IsPublic = false;
-            
+
             await this.data.SaveChangesAsync();
         }
 
-        private Post GetDbPostById(int postId)
+        private Task<Post> GetDbPostByIdAsync(int postId)
         {
-            return this.data.Posts.FirstOrDefault(p => p.Id == postId && !p.IsDeleted);
+            return this.data.Posts.FirstOrDefaultAsync(p => p.Id == postId && !p.IsDeleted);
         }
 
         private static string GetFormattedDate(DateTime inputDateTime)
@@ -430,7 +441,7 @@
 
             return inputDateTime.ToString("dddd dd.MMM", CultureInfo.CreateSpecificCulture("sr-Latn-RS"));
         }
-        
+
         private static IQueryable<Post> GetSortedPosts(IQueryable<Post> postsQuery, int sortingNumber)
         {
             postsQuery = sortingNumber switch

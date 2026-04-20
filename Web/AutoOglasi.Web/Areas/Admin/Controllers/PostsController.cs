@@ -30,16 +30,16 @@
 
 
 
-        public IActionResult All(int id = 1)
+        public async Task<IActionResult> All(int id = 1)
         {
             if (id <= 0)
             {
                 return NotFound();
             }
 
-            var postsDTO = postsService.GetAllPostsBaseInfo(id, 10);
+            var postsDTO = await postsService.GetAllPostsBaseInfoAsync(id, PostsPerPage);
             var postsViewModel = mapper.Map<IEnumerable<BasePostInListDTO>, IEnumerable<PostInAdminAreaViewModel>>(postsDTO);
-            var allPosts = postsService.GetAllPostsCount();
+            var allPosts = await postsService.GetAllPostsCountAsync();
 
             var postsListViewModel = new PostsListAdminAreaViewModel()
             {

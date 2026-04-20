@@ -2,8 +2,8 @@
 {
     using System.Diagnostics;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Logging;
     using AutoMapper;
     using ViewModels;
     using ViewModels.Posts;
@@ -14,43 +14,21 @@
     {
         private readonly IPostsService postsService;
         private readonly IMapper mapper;
-        ILogger<HomeController> logger;
 
-        public HomeController(ILogger<HomeController> _logger, IPostsService _postsService, IMapper _mapper)
+        public HomeController(IPostsService postsService, IMapper mapper)
         {
-            postsService = _postsService;
-            mapper = _mapper;
-            logger = _logger;
+            this.postsService = postsService;
+            this.mapper = mapper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var latestPostsDTO = postsService.GetLatest(8);
-            var latestPostsViewModel = mapper.Map<IEnumerable<PostInLatestListDTO>, IEnumerable<PostInLatestListViewModel>>(latestPostsDTO);
-
-            var latestPosts = new LatestPostsViewModel()
-            {
-                LatestPosts = latestPostsViewModel,
-            };
-
-            return View(latestPosts);
+            return View(await this.BuildLatestPostsViewModelAsync());
         }
 
-
-
-
-        public IActionResult About()
+        public async Task<IActionResult> About()
         {
-            var latestPostsDTO = postsService.GetLatest(8);
-            var latestPostsViewModel = mapper.Map<IEnumerable<PostInLatestListDTO>, IEnumerable<PostInLatestListViewModel>>(latestPostsDTO);
-
-            var latestPosts = new LatestPostsViewModel()
-            {
-                LatestPosts = latestPostsViewModel,
-            };
-
-            return View(latestPosts);
-
+            return View(await this.BuildLatestPostsViewModelAsync());
         }
 
         public IActionResult Error(string code)
@@ -61,6 +39,17 @@
         public IActionResult StatusCode(string code)
         {
             return RedirectToAction("Error", new { code });
+        }
+
+        private async Task<LatestPostsViewModel> BuildLatestPostsViewModelAsync()
+        {
+            var latestPostsDto = await this.postsService.GetLatestAsync(8);
+            var latestPostsViewModel = this.mapper.Map<IEnumerable<PostInLatestListDTO>, IEnumerable<PostInLatestListViewModel>>(latestPostsDto);
+
+            return new LatestPostsViewModel
+            {
+                LatestPosts = latestPostsViewModel,
+            };
         }
     }
 }

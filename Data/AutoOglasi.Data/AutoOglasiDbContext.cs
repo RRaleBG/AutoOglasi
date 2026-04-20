@@ -1,14 +1,13 @@
 ﻿namespace AutoOglasi.Data
 {
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
     using Models;
 
     public class AutoOglasiDbContext : IdentityDbContext<ApplicationUser>
     {
-        public AutoOglasiDbContext(DbContextOptions<AutoOglasiDbContext> options) : base(options)
+        public AutoOglasiDbContext(DbContextOptions options) : base(options)
         {
-
         }
 
         public DbSet<Car> Cars { get; set; }
@@ -31,6 +30,10 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder
+                .Entity<Car>()
+                .ToTable("Car");
+
             builder
                 .Entity<Car>()
                 .HasOne(c => c.Category)
@@ -58,7 +61,7 @@
                 .WithOne(p => p.Car)
                 .HasForeignKey<Post>(p => p.CarId)
                 .OnDelete(DeleteBehavior.Restrict);
-            
+
             builder
                 .Entity<Car>()
                 .Property(c => c.Price)
@@ -70,7 +73,7 @@
                 .WithMany(u => u.Posts)
                 .HasForeignKey(p => p.CreatorId)
                 .OnDelete(DeleteBehavior.Restrict);
-            
+
             builder
                 .Entity<ApplicationUser>()
                 .HasMany(u => u.Posts)
