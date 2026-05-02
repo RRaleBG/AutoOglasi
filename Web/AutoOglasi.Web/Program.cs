@@ -48,7 +48,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
     options.CheckConsentNeeded = context => true;
-    options.MinimumSameSitePolicy = SameSiteMode.Lax;
+    options.MinimumSameSitePolicy = SameSiteMode.None; // TEMP: Allow cross-origin cookies for troubleshooting
 });
 
 builder.Services.Configure<CookieTempDataProviderOptions>(options =>
@@ -118,15 +118,21 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseCookiePolicy();
+
 app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Mapiranje za Areas (MVC controllere)
 app.MapControllerRoute(
     name: "Areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
+// Default controller route
 app.MapDefaultControllerRoute();
+
+// 🔑 ključno za Identity Razor Pages
 app.MapRazorPages();
 
 await app.RunAsync();

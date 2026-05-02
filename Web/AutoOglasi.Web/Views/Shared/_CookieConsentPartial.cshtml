@@ -1,0 +1,42 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+
+@{
+    var tokens = Antiforgery.GetAndStoreTokens(HttpContextAccessor.HttpContext);
+
+}
+@if (HttpContextAccessor.HttpContext?.Request?.Cookies["Consent"] != "true")
+{
+    <div id="cookie-banner" class="alert alert-dark fixed-bottom mb-0 shadow-lg">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap">
+            <span class="text-light">
+                This site uses cookies to improve your experience.
+                By continuing, you accept our
+                <a asp-page="/Privacy" class="text-decoration-underline text-info">Privacy Policy</a>.
+            </span>
+            <button id="accept-cookies" class="btn btn-success btn-sm fw-bold ms-3">
+                @Html.AntiForgeryToken()
+                Accept
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("accept-cookies").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/Home/AcceptCookies", {
+                    method: "POST",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "RequestVerificationToken": "@tokens.RequestToken"
+                    }
+                });
+                if (response.ok) {
+                    document.getElementById("cookie-banner").remove();
+                }
+            } catch (err) {
+                console.error("Cookie consent error:", err);
+            }
+        });
+    </script>
+}

@@ -108,10 +108,11 @@ internal static class TestIdentityManagers
         }
     }
 
-    private sealed class InMemoryUserStore : IQueryableUserStore<ApplicationUser>, IUserRoleStore<ApplicationUser>
+    private sealed class InMemoryUserStore : IQueryableUserStore<ApplicationUser>, IUserRoleStore<ApplicationUser>, IUserPasswordStore<ApplicationUser>, IUserEmailStore<ApplicationUser>
     {
         private readonly List<ApplicationUser> users;
         private readonly Dictionary<string, HashSet<string>> rolesByUserId;
+        private readonly Dictionary<string, string?> passwordHashes = new();
 
         public InMemoryUserStore(
             IEnumerable<ApplicationUser> users,
@@ -214,6 +215,23 @@ internal static class TestIdentityManagers
             return Task.CompletedTask;
         }
 
+        public Task<string?> GetPasswordHashAsync(ApplicationUser user, CancellationToken cancellationToken)
+        {
+            passwordHashes.TryGetValue(user.Id, out var hash);
+            return Task.FromResult(hash);
+        }
+
+        public Task<bool> HasPasswordAsync(ApplicationUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(passwordHashes.ContainsKey(user.Id) && passwordHashes[user.Id] != null);
+        }
+
+        public Task SetPasswordHashAsync(ApplicationUser user, string? passwordHash, CancellationToken cancellationToken)
+        {
+            passwordHashes[user.Id] = passwordHash;
+            return Task.CompletedTask;
+        }
+
         public Task SetNormalizedUserNameAsync(ApplicationUser user, string? normalizedName, CancellationToken cancellationToken)
         {
             user.NormalizedUserName = normalizedName;
@@ -223,6 +241,44 @@ internal static class TestIdentityManagers
         public Task SetUserNameAsync(ApplicationUser user, string? userName, CancellationToken cancellationToken)
         {
             user.UserName = userName;
+            return Task.CompletedTask;
+        }
+
+        public Task<string?> GetEmailAsync(ApplicationUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.Email);
+        }
+
+        public Task<bool> GetEmailConfirmedAsync(ApplicationUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.EmailConfirmed);
+        }
+
+        public Task<ApplicationUser?> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(this.users.FirstOrDefault(u => u.NormalizedEmail == normalizedEmail));
+        }
+
+        public Task SetEmailAsync(ApplicationUser user, string? email, CancellationToken cancellationToken)
+        {
+            user.Email = email;
+            return Task.CompletedTask;
+        }
+
+        public Task SetEmailConfirmedAsync(ApplicationUser user, bool confirmed, CancellationToken cancellationToken)
+        {
+            user.EmailConfirmed = confirmed;
+            return Task.CompletedTask;
+        }
+
+        public Task<string?> GetNormalizedEmailAsync(ApplicationUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.NormalizedEmail);
+        }
+
+        public Task SetNormalizedEmailAsync(ApplicationUser user, string? normalizedEmail, CancellationToken cancellationToken)
+        {
+            user.NormalizedEmail = normalizedEmail;
             return Task.CompletedTask;
         }
 

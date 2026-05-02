@@ -16,7 +16,7 @@
  Administrators:
  --------------------------
  1. 
- username = "admin@admin.com";
+ username = "admin@admin.rs";
  password = "Admin123";
  
  2.
@@ -29,7 +29,7 @@
  Users
 ---------------------------
  1.
- username = 'user@user.sr'
+ ccdousername = 'user@user.sr'
  password = 'User123'
 
  2.
