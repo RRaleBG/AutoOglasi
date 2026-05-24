@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace AutoOglasi.Data.Migrations
+namespace AutoOglasi.Migrations
 {
     [DbContext(typeof(AutoOglasiDbContext))]
     [Migration("20260112093313_PendingModelChanges")]

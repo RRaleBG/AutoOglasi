@@ -11,6 +11,15 @@
       "resourceId": null,
       "type": "mssql.local",
       "connectionId": "ConnectionStrings:DefaultConnection"
+    },
+    "postgresql1": {
+      "containerPorts": "5432:5432",
+      "secretStore": "LocalSecretsFile",
+      "containerName": "autooglasi-server.postgres.database.azure.com",
+      "containerImage": "autooglasi-database",
+      "resourceId": null,
+      "type": "postgresql.container",
+      "connectionId": "AZURE_POSTGRESQL_CONNECTIONSTRING"
     }
   }
 }
