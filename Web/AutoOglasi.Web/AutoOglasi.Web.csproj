@@ -25,6 +25,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
     <PackageReference Include="NuGet.Packaging" />
     <PackageReference Include="NuGet.Protocol" />
     <PackageReference Include="SonarAnalyzer.CSharp">
@@ -44,5 +45,9 @@
     <ProjectReference Include="..\..\Services\AutoOglasi.Services\AutoOglasi.Services.csproj" />
     <ProjectReference Include="..\AutoOglasi.Web.Constants\AutoOglasi.Web.Constants.csproj" />
     <ProjectReference Include="..\AutoOglasi.Web.ViewModels\AutoOglasi.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include=".github\workflows\deploy.yml" />
   </ItemGroup>
 </Project>

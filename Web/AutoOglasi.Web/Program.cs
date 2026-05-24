@@ -12,13 +12,20 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Infrastructure; // Dodato za IMigrationsAssembly
+using Microsoft.EntityFrameworkCore.Migrations; // Dodato za IMigrationsAssembly
+using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Linq;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var dbProvider = builder.Configuration["DbProvider"];
 var defaultConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 
 if (string.IsNullOrWhiteSpace(defaultConnection) || defaultConnection.Contains("YOUR_SQL_SERVER", StringComparison.Ordinal))
@@ -27,18 +34,57 @@ if (string.IsNullOrWhiteSpace(defaultConnection) || defaultConnection.Contains("
         "ConnectionStrings:DefaultConnection is not configured. Set a real SQL Server connection string in user secrets, environment variables, or appsettings.Development.json before starting the application.");
 }
 
+
 builder.Services.AddDbContext<AutoOglasiDbContext>(options =>
-    options.UseSqlServer(defaultConnection));
+{
+    var mainAssembly = typeof(AutoOglasiDbContext).Assembly.FullName;
+
+    // 1. Ako je na lokalu (Development okruženje -> SQL Server)
+    if (builder.Environment.IsDevelopment())
+    {
+        options.UseSqlServer(defaultConnection, b =>
+            b.MigrationsAssembly(mainAssembly));
+    }
+    // 2. Ako je na Azure produkciji (Production okruženje -> PostgreSQL)
+    else if (builder.Environment.IsProduction())
+    {
+        options.UseNpgsql(defaultConnection, b =>
+            b.MigrationsAssembly(mainAssembly));
+    }
+
+    options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
+});
+
+//builder.Services.AddDbContext<AutoOglasiDbContext>(options =>
+//{
+//    var mainAssembly = typeof(AutoOglasiDbContext).Assembly.FullName;
+
+//    // 1. Ako je na Azure produkciji (PostgreSQL)
+//    if (dbProvider?.Equals("AZURE_POSTGRESQL_CONNECTIONSTRING", StringComparison.OrdinalIgnoreCase) == true)
+//    {
+//        options.UseNpgsql(defaultConnection, b => b.MigrationsAssembly(mainAssembly));
+//    }
+//    // 2. Ako je na lokalu (Development okruženje - SqlServer)
+//    else
+//    {
+//        options.UseSqlServer(defaultConnection, b => b.MigrationsAssembly(mainAssembly));
+//    }
+
+//    // Isključujemo striktnu proveru modela za različite provajdere u runtime-u
+//    options.ConfigureWarnings(warnings =>
+//    {
+//        warnings.Ignore(RelationalEventId.PendingModelChangesWarning);
+//    });
+//});
 
 builder.Services.AddAutoMapper(_ => { }, typeof(CarsProfile).Assembly);
-
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
-    {
-        options.Password.RequireNonAlphanumeric = false;
-        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
-    })
+{
+    options.Password.RequireNonAlphanumeric = false;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+})
     .AddRoles<IdentityRole>()
     .AddDefaultTokenProviders()
     .AddDefaultUI()
@@ -48,7 +94,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
     options.CheckConsentNeeded = context => true;
-    options.MinimumSameSitePolicy = SameSiteMode.None; // TEMP: Allow cross-origin cookies for troubleshooting
+    options.MinimumSameSitePolicy = SameSiteMode.None;
 });
 
 builder.Services.Configure<CookieTempDataProviderOptions>(options =>
@@ -67,14 +113,12 @@ if (builder.Environment.IsDevelopment())
 }
 
 builder.Services.AddRazorPages();
-
 builder.Services.AddTransient<ICarsService, CarsService>();
 builder.Services.AddTransient<IPostsService, PostsService>();
 builder.Services.AddTransient<IImagesService, ImagesService>();
 builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 
 var authenticationBuilder = builder.Services.AddAuthentication();
-
 var googleClientId = builder.Configuration["Google:ClientId"];
 var googleClientSecret = builder.Configuration["Google:ClientSecret"];
 
@@ -101,6 +145,7 @@ if (!string.IsNullOrWhiteSpace(githubClientId) && !string.IsNullOrWhiteSpace(git
 
 var app = builder.Build();
 
+// Pokretanje automatskih migracija i seedovanja podataka
 await app.InitializeDatabaseAsync();
 
 if (app.Environment.IsDevelopment())
@@ -118,23 +163,37 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseCookiePolicy();
-
 app.UseRouting();
-
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Mapiranje za Areas (MVC controllere)
 app.MapControllerRoute(
     name: "Areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
-// Default controller route
 app.MapDefaultControllerRoute();
-
-// 🔑 ključno za Identity Razor Pages
 app.MapRazorPages();
 
 await app.RunAsync();
+
+// Pomoćna klasa kompatibilna sa .NET 10 koja bezbedno filtrira migracije po Namespacu
+public class CustomMigrationsAssembly : MigrationsAssembly
+{
+    public static string TargetNamespace { get; set; } = string.Empty;
+
+    public CustomMigrationsAssembly(
+        ICurrentDbContext currentContext,
+        IDbContextOptions options,
+        IMigrationsIdGenerator idGenerator,
+        IDiagnosticsLogger<DbLoggerCategory.Migrations> logger)
+        : base(currentContext, options, idGenerator, logger)
+    {
+    }
+
+    public override System.Collections.Generic.IReadOnlyDictionary<string, TypeInfo> Migrations =>
+        base.Migrations
+            .Where(m => !string.IsNullOrEmpty(m.Value.Namespace) && m.Value.Namespace.Equals(TargetNamespace, StringComparison.Ordinal))
+            .ToDictionary(m => m.Key, m => m.Value);
+}
 
 public partial class Program;

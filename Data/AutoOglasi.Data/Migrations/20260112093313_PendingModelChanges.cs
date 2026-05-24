@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace AutoOglasi.Data.Migrations
+namespace AutoOglasi.Migrations
 {
     /// <inheritdoc />
     public partial class PendingModelChanges : Migration
