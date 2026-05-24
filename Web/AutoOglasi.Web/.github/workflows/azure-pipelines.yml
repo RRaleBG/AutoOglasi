@@ -1,0 +1,22 @@
+﻿trigger:
+- master
+
+pool:
+  name: 'Default'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'Dotnet Build'
+
+- script: dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish
+  displayName: 'Dotnet Publish'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Upload Artefakta'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/publish'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
