@@ -46,8 +46,4 @@
     <ProjectReference Include="..\AutoOglasi.Web.Constants\AutoOglasi.Web.Constants.csproj" />
     <ProjectReference Include="..\AutoOglasi.Web.ViewModels\AutoOglasi.Web.ViewModels.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Include=".github\workflows\deploy.yml" />
-  </ItemGroup>
 </Project>
