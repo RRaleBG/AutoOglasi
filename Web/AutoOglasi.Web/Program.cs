@@ -1,4 +1,4 @@
-using AutoOglasi.Data;
+8using AutoOglasi.Data;
 using AutoOglasi.Data.Models;
 using AutoOglasi.MapperConfigurations.Profiles;
 using AutoOglasi.Services.Cars;
@@ -48,7 +48,7 @@ builder.Services.AddDbContext<AutoOglasiDbContext>(options =>
     // 2. Ako je na Azure produkciji (Production okruženje -> PostgreSQL)
     else if (builder.Environment.IsProduction())
     {
-        options.UseNpgsql(defaultConnection, b =>
+        options.UseSqlServer(defaultConnection, b =>
             b.MigrationsAssembly(mainAssembly));
     }
 
