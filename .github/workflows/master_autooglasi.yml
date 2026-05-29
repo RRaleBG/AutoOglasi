@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy ASP.Net Core app to Azure Web App - AutoOglasi
+name: Build and deploy ASP.NET Core app to Azure Web App - AutoOglasi
 
 on:
   push:
@@ -9,46 +6,52 @@ on:
       - master
   workflow_dispatch:
 
+env:
+  DOTNET_VERSION: '10.0.x'
+  PROJECT_PATH: 'AutoOglasi.Web/AutoOglasi.Web.csproj'
+  PUBLISH_DIR: 'publish'
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read #This is required for actions/checkout
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - name: Set up .NET Core
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.x'
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
+      - name: Restore solution
+        run: dotnet restore AutoOglasi.sln
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+      - name: Build solution (Release)
+        run: dotnet build AutoOglasi.sln -c Release --no-restore
 
-      - name: Upload artifact for deployment job
+      - name: Publish Web App
+        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -o ${{ env.PUBLISH_DIR }} --no-build
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          name: webapp
+          path: ${{ env.PUBLISH_DIR }}
+
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
 
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: .net-app
-      
-      - name: Login to Azure
+          name: webapp
+          path: publish
+
+      - name: Azure Login
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_54FEC83E422345928EE03446F88AE022 }}
@@ -56,10 +59,8 @@ jobs:
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F21B9EDF0A234CB4A26043D1BF461B5B }}
 
       - name: Deploy to Azure Web App
-        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'AutoOglasi'
-          slot-name: 'Production'
-          package: .
-          
+          app-name: AutoOglasi
+          slot-name: Production
+          package: publish
