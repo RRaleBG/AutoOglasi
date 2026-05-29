@@ -1,4 +1,4 @@
-8using AutoOglasi.Data;
+using AutoOglasi.Data;
 using AutoOglasi.Data.Models;
 using AutoOglasi.MapperConfigurations.Profiles;
 using AutoOglasi.Services.Cars;
