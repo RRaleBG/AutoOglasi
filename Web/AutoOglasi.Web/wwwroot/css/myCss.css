@@ -57,3 +57,59 @@
     -o-transition: 2s ease-in-out left;
     transition: 2s ease-in-out left;
 }
+
+
+
+/* Bioskopski Carousel */
+.luxury-hero-container {
+    position: relative;
+    background: #000;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    overflow: hidden;
+}
+
+/* Na mobilnom je visina 55% ekrana, na desktopu (min-width: 992px) prelazi na 75% ekrana */
+.luxury-carousel-img {
+    height: 55vh;
+    width: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+    transition: opacity 0.5s ease;
+}
+
+@media (min-width: 992px) {
+    .luxury-carousel-img {
+        height: 75vh;
+    }
+}
+
+/* Senka na dnu hero sekcije */
+.luxury-hero-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    background: linear-gradient(to top, #0b0c10, transparent);
+    pointer-events: none;
+}
+
+/* Sličice galerije */
+.luxury-thumb {
+    height: 80px;
+    object-fit: cover;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: all 0.3s ease;
+    border-bottom: 2px solid transparent;
+}
+
+.luxury-thumb:hover {
+    opacity: 1;
+    border-bottom: 2px solid #d4af37;
+}
