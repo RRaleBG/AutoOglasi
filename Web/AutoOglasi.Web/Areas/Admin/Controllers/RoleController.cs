@@ -10,9 +10,8 @@
 
     using static AdminConstants;
 
-
-    [Area(AdminAreaName)]
-    [Authorize(Roles= "Administrator")]
+    [Area("Admin")]
+    [Authorize(Roles = "Administrator")]
     public class RoleController : Controller
     {
         private RoleManager<IdentityRole> roleManager;
@@ -75,11 +74,9 @@
         }
 
 
-
-
         public async Task<IActionResult> Update(string id)
         {
-            IdentityRole role = roleManager.FindByIdAsync(id).Result;
+            IdentityRole role = await roleManager.FindByIdAsync(id);
 
             List<ApplicationUser> members = new List<ApplicationUser>();
             List<ApplicationUser> nonMembers = new List<ApplicationUser>();
@@ -87,10 +84,8 @@
             foreach (ApplicationUser user in userManager.Users)
             {
                 var list = await userManager.IsInRoleAsync(user, role.Name) ? members : nonMembers;
-
                 list.Add(user);
             }
-
 
             return View(new RoleEdit 
             {
@@ -99,9 +94,6 @@
                 NonMembers = nonMembers
             });
         }
-
-
-       
 
 
         [HttpPost]
