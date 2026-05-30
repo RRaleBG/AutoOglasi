@@ -1,103 +1,145 @@
-﻿
+@using System.Globalization
 @model AutoOglasi.Web.ViewModels.Posts.LatestPostsViewModel
 
-@{ 
-    ViewData["Title"] = "Latest"; 
-} 
-
-@if (!Model.LatestPosts.Any())
-{
-    <div class="text-center">
-        <p class="lead">Unfortunately, there are no car for selling !!!</p>
-        <p class="lead">
-            <a asp-controller="Posts" asp-action="Create" class="btn btn-outline-info" role="button">Add a car</a>
-        </p>
-    </div>
+@{
+    ViewData["Title"] = "Exclusive Fleet";
 }
 
+<div class="container-xl py-2" style="background-color: #0b0c10; color: #c5c6c7;">
 
- <!-- Latest post.CoverImage -->
-<div id="carouselExampleFade" class="carousel-fade" data-bs-ride="carousel">
-    <div class="object-fit-contain p-2">
-        <div class="carousel-inner">
-            @foreach (var image in Model.LatestPosts.ToList())
+    @if (!Model.LatestPosts.Any())
+    {
+        <div class="text-center py-5 my-5">
+            <span class="text-warning text-uppercase small d-block mb-2" style="letter-spacing: 3px;">Showroom Empty</span>
+            <h2 class="text-white fw-light mb-4">Currently, there are no hypercars available.</h2>
+            <a asp-controller="Posts" asp-action="Create" class="btn border text-uppercase px-4 py-2" 
+               style="color: #d4af37; border-color: #d4af37 !important; letter-spacing: 2px; font-size: 0.85rem;">
+                Deliver a Vehicle
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="home-hero-container mb-5">
+            <div id="homeHeroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @{
+                        var postsList = Model.LatestPosts.ToList();
+                        for (int i = 0; i < postsList.Count; i++)
+                        {
+                            <div class="carousel-item @(i == 0 ? "active" : "")">
+                                <img src="@postsList[i].Car.CoverImage" class="d-block home-carousel-img" alt="Featured Hypercar" />
+                                <div class="carousel-caption d-none d-md-block text-start start-50 translate-middle-x w-75" style="bottom: 40px;">
+                                    <span class="text-warning text-uppercase small" style="letter-spacing: 3px;">Just Arrived</span>
+                                    <h1 class="display-4 text-white fw-bold text-uppercase m-0" style="letter-spacing: 2px;">
+                                        @postsList[i].Car.Make @postsList[i].Car.Model
+                                    </h1>
+                                    <a asp-controller="Posts" asp-action="Offer" asp-route-id="@postsList[i].Id" 
+                                       class="text-decoration-none small text-warning" style="letter-spacing: 1px;">
+                                        VIEW ASSET <i class="fas fa-arrow-right ms-1" style="font-size: 0.75rem;"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#homeHeroCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#homeHeroCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="text-center mb-5">
+            <span class="text-warning text-uppercase small" style="letter-spacing: 4px;">Available Portfolio</span>
+            <h2 class="text-white fw-light text-uppercase mt-1" style="letter-spacing: 2px;">The Latest Acquisitions</h2>
+            <div class="mx-auto mt-3" style="width: 50px; height: 1px; background-color: #d4af37;"></div>
+        </div>
+
+        <div class="row g-4 justify-content-center mb-5">
+            @foreach (var post in Model.LatestPosts)
             {
-                <div class="carousel-item active rounded-3 shadow-sm">
-                    <img src="@image.Car.CoverImage"
-                         class="d-block w-100"
-                         style="height: 400px; object-fit: cover;"
-                         alt="@($"{image.Car.Make} {image.Car.Model}")" />
+                <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="card h-100 luxury-card overflow-hidden">
+                        <a asp-controller="Posts" asp-action="Offer" asp-route-id="@post.Id" class="text-decoration-none text-light d-flex flex-column h-100">
+                            
+                            <div class="d-flex justify-content-between align-items-center p-3 bg-black bg-opacity-20">
+                                <small class="text-muted" style="font-size: 0.75rem;"><i class="far fa-calendar-alt me-1"></i>@post.PublishedOn</small>
+                                <span class="fw-bold" style="color: #d4af37; font-size: 0.95rem;">
+                                    €@post.Car.Price.ToString("N0", CultureInfo.InvariantCulture)
+                                </span>
+                            </div>
+
+                            <div class="overflow-hidden" style="height: 200px;">
+                                <img src="@post.Car.CoverImage"
+                                     class="w-100 h-100 luxury-card-img"
+                                     style="object-fit: cover;"
+                                     alt="@($"{post.Car.Make} {post.Car.Model}")" />
+                            </div>
+
+                            <div class="card-body bg-black bg-opacity-10 text-center py-3 mt-auto">
+                                <h5 class="m-0 text-white fw-normal text-uppercase tracking-wide" style="font-size: 1.05rem; letter-spacing: 1px;">
+                                    @post.Car.Make <span class="fw-bold text-muted" style="font-size: 0.9rem;">@post.Car.Model</span>
+                                </h5>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             }
-        </div>           
-    </div>
- </div>
+        </div>
 
+        <div class="text-center my-5 pt-4">
+            <button id="statistics-button" class="btn border text-uppercase px-4 py-3" 
+                    style="color: #c5c6c7; border-color: rgba(255,255,255,0.15) !important; letter-spacing: 2px; font-size: 0.8rem; background: #1f2833;">
+                <span><i class="bi bi-graph-up me-2"></i></span> Show Market Insights
+            </button>
 
-<!-- Cards -->
-<div class="row justify-content-center g-3">
-
-    @foreach (var post in Model.LatestPosts)
-    {
-
-        <div class="col-md-4 col-lg-3">
-
-            <div class="card h-100 shadow-info-lg border-0 rounded-3">
-
-                <a asp-controller="Posts" asp-action="Offer" asp-route-id="@post.Id" class="text-decoration-none text-dark">
-                    <div class="d-flex justify-content-between align-items-center p-2">
-                        <small class="text-muted">@post.PublishedOn</small>
-
-                        <span class="badge bg-warning text-dark fw-bold">
-                            € @post.Car.Price.ToString("N0", CultureInfo.InvariantCulture)
-                        </span>
+            <div id="statistics" class="d-none mt-4 row justify-content-center g-3">
+                <div class="col-12 col-md-8 col-lg-6">
+                    <div class="p-4 border border-secondary border-opacity-10 bg-black">
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <small class="text-muted d-block text-uppercase small" style="letter-spacing: 1px; font-size: 0.65rem;">Active Investors</small>
+                                <span id="total-users" class="fs-4 fw-light text-white">-</span>
+                            </div>
+                            <div class="col-4 border-start border-secondary border-opacity-25">
+                                <small class="text-muted d-block text-uppercase small" style="letter-spacing: 1px; font-size: 0.65rem;">Vehicles Curated</small>
+                                <span id="total-posts" class="fs-4 fw-light text-white">-</span>
+                            </div>
+                            <div class="col-4 border-start border-secondary border-opacity-25">
+                                <small class="text-muted d-block text-uppercase small" style="letter-spacing: 1px; font-size: 0.65rem;">Segments</small>
+                                <span id="total-categories" class="fs-4 fw-light text-white">-</span>
+                            </div>
+                        </div>
                     </div>
-
-                    <img src="@post.Car.CoverImage"
-                         class="card-img-top rounded-0"
-                         style="height: 180px; object-fit: cover;"
-                         alt="@($"{post.Car.Make} {post.Car.Model}")" />
-
-                    <div class="card-footer text-center">
-                        <h5 class="card-title fw-bold text-muted">@post.Car.Make @post.Car.Model</h5>
-                    </div>
-                </a>
+                </div>
             </div>
         </div>
     }
 </div>
 
-
 @section Scripts
 {
     <script>
-
-        $(document).ready(function () {
-            $('.owl-carousel').owlCarousel({
-                lazyLoad: true,
-                loop: true,
-            });
-        });
-
         $(document).ready(function () {
             $('#statistics-button').click(function () {
-
-                if ($('#statistics').is(":hidden")) {
-                    $(this.innerHTML = 'Hide site statistics');
+                if ($('#statistics').hasClass('d-none')) {
+                    $(this).html('<span><i class="bi bi-eye-slash me-2"></i></span> Hide Market Insights');
 
                     $.get('/api/statistics', (data) => {
-                        $('#total-users').text(data.totalUsers + " Users");
-                        $('#total-posts').text(data.totalPosts + " Cars");
-                        $('#total-categories').text(data.totalCategories + " Categories");
+                        $('#total-users').text(data.totalUsers);
+                        $('#total-posts').text(data.totalPosts);
+                        $('#total-categories').text(data.totalCategories);
                     });
 
                     $('#statistics').removeClass('d-none');
                 } else {
                     $('#statistics').addClass('d-none');
-                    $(this.innerHTML = '<span><i class="bi bi-graph-up gy-3"></i> </span> Show site statistics</button>');                    
+                    $(this).html('<span><i class="bi bi-graph-up me-2"></i></span> Show Market Insights');                    
                 }
             });
         });
-
     </script>
 }
