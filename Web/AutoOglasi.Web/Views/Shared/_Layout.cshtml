@@ -3,17 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Project online busines">
+    <meta name="description" content="Exclusive Online Hypercar Showroom">
     <meta name="theme-color" data-bs-theme="dark" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="white">
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black">
     <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
-    <title>@ViewBag.Title</title>
+    <title>@ViewData["Title"] - Oglasi.rs</title>
     @await Html.PartialAsync("_SocialMetaTags")
     @await Html.PartialAsync("_Favicons")
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" />
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/fontawesome/css/all.min.css" asp-append-version="true" />
@@ -22,18 +23,105 @@
     <link rel="stylesheet" href="~/css/myCss.css" asp-append-version="true" />
 </head>
 <body>
-    <header class="sticky-top ">
-        <nav class="navbar navbar-sm navbar-expand-sm bg-body shadow-info mb-3 p-0 border-bottom-0">
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-md luxury-navbar shadow-lg navbar-dark m-0 p-0">
             <div class="container">
-                <div class="mx-3 d-flex align-items-bottom">
-                    <i id="themeIcon" class="bi bi-moon fs-5" style="cursor: pointer;"></i>
+                
+                <div class="me-3 d-flex align-items-center">
+                    <i id="themeIcon" class="bi bi-moon fs-5 text-warning" style="cursor: pointer; transition: transform 0.3s ease;"></i>
                 </div>
 
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/android-chrome-512x512.png" height="45rem;" rel="Oglasi"><span><i class="pt-2">Oglasi.rs</i></span>
+                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/android-chrome-512x512.png" style="height: 38px; width: auto;" alt="Logo" class="me-2" />
+                    <span class="luxury-brand-font text-white fw-bold fs-4">OGLASI<span style="color: #d4af37;">.RS</span></span>
                 </a>
-                <button class="navbar-toggler p-2 m-1" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                
+                <button class="navbar-toggler border-0 p-2" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse d-md-inline-flex justify-content-between">
+                    <ul class="navbar-nav mx-auto"> <li class="nav-item px-2">
+                            <a class="nav-link luxury-nav-link fw-semibold" asp-area="" asp-controller="Posts" asp-action="All" asp-route-id="1">All Vehicles</a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a class="nav-link luxury-nav-link fw-semibold" asp-area="" asp-controller="Posts" asp-action="Search">Search Inventory</a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a class="nav-link luxury-nav-link fw-semibold" asp-area="" asp-controller="Home" asp-action="About" asp-route-id="1">The Salon</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <partial name="_LoginPartial" />
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container my-4">
+        <main role="main" class="pb-5">
+            @if (this.TempData.ContainsKey(WebConstants.ErrorMessageKey))
+            {
+                <div class="alert alert-danger border-0 rounded-0 text-center shadow-lg" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i> @this.TempData[WebConstants.ErrorMessageKey].
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            @if (this.TempData.ContainsKey(WebConstants.SuccessMessageKey))
+            {
+                <div class="alert alert-success border-0 rounded-0 text-center shadow-lg" role="alert">
+                    <i class="fas fa-check-circle me-2"></i> @this.TempData[WebConstants.SuccessMessageKey].
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <script src="~/js/owlcarousel/owl.carousel.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const page = document.getElementById("changeTheme");
+            const icon = document.getElementById("themeIcon");
+
+            if (!page || !icon) {
+                return;
+            }
+
+            const savedTheme = localStorage.getItem("theme") || "dark";
+            page.setAttribute("data-bs-theme", savedTheme);
+            updateIcon(savedTheme);
+
+            icon.addEventListener("click", () => {
+                const newTheme = page.getAttribute("data-bs-theme") === "dark" ? "light" : "dark";
+                page.setAttribute("data-bs-theme", newTheme);
+                localStorage.setItem("theme", newTheme);
+                updateIcon(newTheme);
+            });
+
+            function updateIcon(theme) {
+                if(theme === "dark") {
+                    icon.className = "bi bi-moon fs-5 text-warning";
+                    icon.style.transform = "rotate(0deg)";
+                } else {
+                    icon.className = "bi bi-sun fs-5 text-dark";
+                    icon.style.transform = "rotate(180deg)";
+                }
+            }
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <partial name="_CookieConsentPartial" />
+</body>
+</html>
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
