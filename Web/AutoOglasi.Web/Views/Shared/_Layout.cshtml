@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-bs-theme="dark" id="changeTheme">
 <head>
     <meta charset="utf-8" />
@@ -9,6 +9,7 @@
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black">
     <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
     <title>@ViewBag.Title</title>
+    @await Html.PartialAsync("_SocialMetaTags")
     @await Html.PartialAsync("_Favicons")
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
