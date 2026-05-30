@@ -7,128 +7,29 @@
     ViewData["Image"] = $"{Context.Request.Scheme}://{Context.Request.Host}{Model.Car.Images.FirstOrDefault()}";
 }
 
-<style>
-    body {
-        background-color: #0b0c10 !important;
-        color: #c5c6c7;
-    }
-    /* Bioskopski Carousel na vrhu */
-    .luxury-hero-container {
-        position: relative;
-        background: #000;
-        width: 100vw;
-        left: 50%;
-        right: 50%;
-        margin-left: -50vw;
-        margin-right: -50vw;
-        overflow: hidden;
-    }
-    .luxury-carousel-img {
-        height: 55vh;
-        width: 100%;
-        object-fit: cover;
-        opacity: 0.85;
-        transition: opacity 0.5s ease;
-    }
-    @media (min-width: 992px) {
-        .luxury-carousel-img {
-            height: 75vh;
-        }
-    }
-    /* Elegantno zatamnjenje na dnu slike */
-    .luxury-hero-container::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 150px;
-        background: linear-gradient(to top, #0b0c10, transparent);
-        pointer-events: none;
-    }
-    /* Zlatni / Bronzani Luxury Akcenti */
-    .text-luxury-gold {
-        color: #d4af37; /* Metalik zlatna */
-        letter-spacing: 1px;
-    }
-    .btn-luxury {
-        background: transparent;
-        border: 1px solid #d4af37;
-        color: #d4af37;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        font-size: 0.85rem;
-        transition: all 0.4s ease;
-        padding: 12px 30px;
-    }
-    .btn-luxury:hover {
-        background: #d4af37;
-        color: #000;
-        box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-    }
-    /* Sličice galerije */
-    .luxury-thumb {
-        height: 80px;
-        object-fit: cover;
-        cursor: pointer;
-        opacity: 0.4;
-        transition: all 0.3s ease;
-        border-bottom: 2px solid transparent;
-    }
-    .luxury-thumb:hover, .luxury-thumb.active-thumb {
-        opacity: 1;
-        border-bottom: 2px solid #d4af37;
-    }
-    /* Specifikacije - Minimalist Grid */
-    .luxury-spec-box {
-        background: #1f2833;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 0px; /* Oštre, moderne ivice za luksuzne sajtove */
-        padding: 25px;
-        transition: transform 0.3s;
-    }
-    .luxury-spec-label {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: #858688;
-    }
-    .luxury-spec-value {
-        font-size: 1.25rem;
-        font-weight: 300;
-        color: #ffffff;
-    }
-    .brand-title {
-        font-family: 'Playfair Display', 'Times New Roman', serif;
-        font-weight: 700;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-    }
-</style>
-
-<div class="luxury-hero-container mb-5">
-    <div id="postCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            @for (int i = 0; i < Model.Car.Images.Count; i++)
-            {
-                var img = Model.Car.Images[i];
-                <div class="carousel-item @(i == 0 ? "active" : "")">
-                    <img src="@img" class="d-block luxury-carousel-img" alt="Hypercar view" />
-                </div>
-            }
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#postCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#postCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        </button>
-    </div>
-</div>
-
-<div class="container py-2">
+<div class="container-xl py-4" style="background-color: #0b0c10; color: #c5c6c7;">
     
-    <div class="row g-2 justify-content-center mb-5">
+    <div class="luxury-hero-container mb-5">
+        <div id="postCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @for (int i = 0; i < Model.Car.Images.Count; i++)
+                {
+                    var img = Model.Car.Images[i];
+                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                        <img src="@img" class="d-block luxury-carousel-img" alt="Hypercar view" />
+                    </div>
+                }
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#postCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#postCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mb-5">
         <div class="col-12 col-lg-10">
             <div class="row row-cols-5 g-2">
                 @for (int i = 0; i < Model.Car.Images.Count; i++)
@@ -137,7 +38,8 @@
                         <img src="@Model.Car.Images[i]" 
                              class="w-100 luxury-thumb" 
                              data-bs-target="#postCarousel" 
-                             data-bs-slide-to="@i" />
+                             data-bs-slide-to="@i" 
+                             alt="Thumbnail" />
                     </div>
                 }
             </div>
@@ -147,13 +49,15 @@
     <div class="row justify-content-center mb-5 text-center text-lg-start">
         <div class="col-12 col-lg-10 d-flex flex-column flex-lg-row justify-content-between align-items-center">
             <div>
-                <span class="text-luxury-gold text-uppercase small tracking-widest" style="letter-spacing: 4px;">Exclusive Collection</span>
-                <h1 class="display-4 text-white brand-title mt-1 mb-2">@Model.Car.Make @Model.Car.Model</h1>
-                <p class="text-muted small"><i class="light-text fas fa-clock me-2"></i>Curated on @Model.PublishedOn</p>
+                <span class="text-uppercase small text-warning text-opacity-75" style="letter-spacing: 4px;">Exclusive Collection</span>
+                <h1 class="display-5 text-white fw-bold text-uppercase mt-1 mb-2" style="letter-spacing: 2px;">
+                    @Model.Car.Make @Model.Car.Model
+                </h1>
+                <p class="text-muted small"><i class="fas fa-clock me-2"></i>Curated on @Model.PublishedOn</p>
             </div>
             <div class="mt-4 mt-lg-0 text-center text-lg-end">
                 <span class="text-muted small text-uppercase d-block" style="letter-spacing: 2px;">Investment Value</span>
-                <span class="display-5 fw-bold text-luxury-gold">
+                <span class="display-5 fw-bold" style="color: #d4af37;">
                     €@Model.Car.Price.ToString("N0", CultureInfo.CurrentCulture)
                 </span>
             </div>
@@ -164,39 +68,39 @@
         <div class="col-12 col-lg-10">
             <div class="row row-cols-2 row-cols-md-3 g-3">
                 <div class="col">
-                    <div class="luxury-spec-box">
-                        <div class="luxury-spec-label">Year of Production</div>
-                        <div class="luxury-spec-value">@Model.Car.Year</div>
+                    <div class="p-4 h-100 border border-secondary border-opacity-10" style="background: #1f2833;">
+                        <div class="text-uppercase text-muted small pb-1" style="letter-spacing: 2px; font-size: 0.75rem;">Year of Production</div>
+                        <div class="fs-4 text-white fw-light">@Model.Car.Year</div>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="luxury-spec-box">
-                        <div class="luxury-spec-label">Transmission</div>
-                        <div class="luxury-spec-value">@Model.Car.TransmissionType</div>
+                    <div class="p-4 h-100 border border-secondary border-opacity-10" style="background: #1f2833;">
+                        <div class="text-uppercase text-muted small pb-1" style="letter-spacing: 2px; font-size: 0.75rem;">Transmission</div>
+                        <div class="fs-4 text-white fw-light">@Model.Car.TransmissionType</div>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="luxury-spec-box">
-                        <div class="luxury-spec-label">Engine Performance</div>
-                        <div class="luxury-spec-value">@Model.Car.Horsepower <span class="fs-6 text-muted">BHP</span></div>
+                    <div class="p-4 h-100 border border-secondary border-opacity-10" style="background: #1f2833;">
+                        <div class="text-uppercase text-muted small pb-1" style="letter-spacing: 2px; font-size: 0.75rem;">Engine Performance</div>
+                        <div class="fs-4 text-white fw-light">@Model.Car.Horsepower <span class="fs-6 text-muted">BHP</span></div>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="luxury-spec-box">
-                        <div class="luxury-spec-label">Fuel & Drivetrain</div>
-                        <div class="luxury-spec-value">@Model.Car.FuelType</div>
+                    <div class="p-4 h-100 border border-secondary border-opacity-10" style="background: #1f2833;">
+                        <div class="text-uppercase text-muted small pb-1" style="letter-spacing: 2px; font-size: 0.75rem;">Fuel & Drivetrain</div>
+                        <div class="fs-4 text-white fw-light">@Model.Car.FuelType</div>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="luxury-spec-box">
-                        <div class="luxury-spec-label">Location</div>
-                        <div class="luxury-spec-value text-truncate">@Model.Car.LocationCity</div>
+                    <div class="p-4 h-100 border border-secondary border-opacity-10" style="background: #1f2833;">
+                        <div class="text-uppercase text-muted small pb-1" style="letter-spacing: 2px; font-size: 0.75rem;">Location</div>
+                        <div class="fs-4 text-white fw-light text-truncate">@Model.Car.LocationCity</div>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="luxury-spec-box">
-                        <div class="luxury-spec-label">Status</div>
-                        <div class="luxury-spec-value text-luxury-gold">Available</div>
+                    <div class="p-4 h-100 border border-secondary border-opacity-10" style="background: #1f2833;">
+                        <div class="text-uppercase text-muted small pb-1" style="letter-spacing: 2px; font-size: 0.75rem;">Status</div>
+                        <div class="fs-4 fw-light" style="color: #d4af37;">Available</div>
                     </div>
                 </div>
             </div>
@@ -205,8 +109,8 @@
 
     <div class="row justify-content-center g-5 mb-5">
         <div class="col-12 col-lg-6">
-            <h3 class="text-white fw-light mb-4 pb-2 border-bottom border-secondary" style="letter-spacing: 2px;">The Story</h3>
-            <p class="lh-lg text-justify font-monospace small text-muted" style="white-space: pre-line; font-size: 0.95rem;">
+            <h3 class="text-white fw-light mb-4 pb-2 border-bottom border-secondary border-opacity-25" style="letter-spacing: 2px;">The Story</h3>
+            <p class="lh-lg text-muted small" style="white-space: pre-line; font-size: 0.95rem; font-family: monospace;">
                 @Model.Car.Description
             </p>
         </div>
@@ -219,16 +123,16 @@
                 <hr class="border-secondary opacity-25 mb-4" />
 
                 <div class="mb-3">
-                    <span class="text-uppercase text-muted d-block small" style="letter-spacing: 1px;">Managing Concierge</span>
+                    <span class="text-uppercase text-muted d-block small pb-1" style="letter-spacing: 1px;">Managing Concierge</span>
                     <span class="fs-5 text-white fw-light">@Model.SellerName</span>
                 </div>
 
                 <div class="mb-4">
-                    <span class="text-uppercase text-muted d-block small" style="letter-spacing: 1px;">Origin</span>
+                    <span class="text-uppercase text-muted d-block small pb-1" style="letter-spacing: 1px;">Origin</span>
                     <span class="fs-6 text-muted">@Model.Car.LocationCity, @Model.Car.LocationCountry</span>
                 </div>
 
-                <a href="tel:@Model.SellerPhoneNumber" class="btn btn-luxury w-100 py-3">
+                <a href="tel:@Model.SellerPhoneNumber" class="btn border text-uppercase py-3 w-100 fw-bold" style="color: #d4af37; border-color: #d4af37 !important; letter-spacing: 2px; font-size: 0.85rem;">
                     <i class="fas fa-phone-alt me-2"></i> Contact Agent
                 </a>
             </div>
@@ -236,3 +140,17 @@
     </div>
 
 </div>
+
+@section Scripts
+{
+    <script src="~/js/owlcarousel/owl.carousel.min.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            $('.owl-carousel').owlCarousel({
+                lazyLoad: true,
+                loop: true,
+                responsive: true
+            });
+        });
+    </script>
+}
