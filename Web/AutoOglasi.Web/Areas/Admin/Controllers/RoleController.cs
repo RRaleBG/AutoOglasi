@@ -74,27 +74,46 @@
         }
 
 
-        public async Task<IActionResult> Update(string id)
+        
+
+public async Task<IActionResult> Update(string id)
+{
+    if (string.IsNullOrEmpty(id))
+    {
+        return NotFound();
+    }
+
+    IdentityRole role = await roleManager.FindByIdAsync(id);
+
+    if (role == null)
+    {
+        return NotFound();
+    }
+
+    List<ApplicationUser> members = new();
+    List<ApplicationUser> nonMembers = new();
+
+    var users = await userManager.Users.ToListAsync();
+
+    foreach (var user in users)
+    {
+        if (await userManager.IsInRoleAsync(user, role.Name))
         {
-            IdentityRole role = await roleManager.FindByIdAsync(id);
-
-            List<ApplicationUser> members = new List<ApplicationUser>();
-            List<ApplicationUser> nonMembers = new List<ApplicationUser>();
-
-            foreach (ApplicationUser user in userManager.Users)
-            {
-                var list = await userManager.IsInRoleAsync(user, role.Name) ? members : nonMembers;
-                list.Add(user);
-            }
-
-            return View(new RoleEdit 
-            {
-                Role = role,
-                Members = members,
-                NonMembers = nonMembers
-            });
+            members.Add(user);
         }
+        else
+        {
+            nonMembers.Add(user);
+        }
+    }
 
+    return View(new RoleEdit
+    {
+        Role = role,
+        Members = members,
+        NonMembers = nonMembers
+    });
+}
 
         [HttpPost]
         public async Task<IActionResult> Update(RoleModification model)
