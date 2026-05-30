@@ -7,9 +7,8 @@ on:
   workflow_dispatch:
 
 env:
-  DOTNET_VERSION: '10.0.x'
-  PROJECT_PATH: 'AutoOglasi.Web/AutoOglasi.Web.csproj'
-  PUBLISH_DIR: 'publish'
+  PROJECT_PATH: Web/AutoOglasi.Web/AutoOglasi.Web.csproj
+  PUBLISH_DIR: publish
 
 jobs:
   build:
@@ -22,13 +21,13 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+          dotnet-version: '10.x'
 
       - name: Restore solution
-        run: dotnet restore AutoOglasi.sln
+        run: dotnet restore
 
-      - name: Build solution (Release)
-        run: dotnet build AutoOglasi.sln -c Release --no-restore
+      - name: Build solution
+        run: dotnet build -c Release --no-restore
 
       - name: Publish Web App
         run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -o ${{ env.PUBLISH_DIR }} --no-build
@@ -38,7 +37,6 @@ jobs:
         with:
           name: webapp
           path: ${{ env.PUBLISH_DIR }}
-
 
   deploy:
     runs-on: ubuntu-latest
