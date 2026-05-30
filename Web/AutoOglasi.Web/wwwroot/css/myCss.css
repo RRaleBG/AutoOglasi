@@ -1,69 +1,6 @@
-﻿.bg-glass {
-    /* From https://css.glass */
-    background: rgba(255, 255, 255, 0.12);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5.5px);
-    -webkit-backdrop-filter: blur(5.5px);
-    border: 1px solid rgba(255, 255, 255, 0.21);
-}
-
-.shadow-info {
-    box-shadow: 2px 4px 8px 2px rgba(27, 202, 237,0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    backdrop-filter: blur(5.5px);
-    -webkit-backdrop-filter: blur(5.5px);
-}
-
-.shadow-info-lg {
-    /*box-shadow: 2px 4px 8px 1px rgba(27, 202, 237,0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
-    box-shadow: 1px 1px 13px -1px rgba(27,202,237,0.68);
-    -webkit-box-shadow: 1px 1px 13px -1px rgba(27,202,237,0.68);
-    -moz-box-shadow: 1px 1px 13px -1px rgba(27,202,237,0.68);
-    /*    box-shadow: 3px 10px 5px 0px rgba(27,202,237,0.75);
-    -webkit-box-shadow: 3px 7px 5px 0px rgba(27,202,237,0.35);
-    -moz-box-shadow: 3px 10px 5px 0px rgba(27,202,237,0.75);*/
-}
-
-.imgInCarousel {
-    max-width: 100%;
-    height: auto;
-}
-
-.logo-font {
-    font-family: 'Roboto', monospace, 'Sans Serif';
-    font-weight: 300;
-    font-style: italic;
-}
-
-.gallery-item {
-    max-width: 120px;
-    cursor: pointer;
-}
-
-.imgInCarousel {
-    max-width: 100%;
-    height: auto;
-}
-
-.item {
+/* Home Page Hero Slider */
+.home-hero-container {
     position: relative;
-    transition: 2s ease-in-out left;
-}
-
-.carousel-inner > .item {
-    position: relative;
-    -webkit-transition: 2s ease-in-out left;
-    -moz-transition: 2s ease-in-out left;
-    -o-transition: 2s ease-in-out left;
-    transition: 2s ease-in-out left;
-}
-
-
-
-/* Bioskopski Carousel */
-.luxury-hero-container {
-    position: relative;
-    background: #000;
     width: 100vw;
     left: 50%;
     right: 50%;
@@ -72,20 +9,52 @@
     overflow: hidden;
 }
 
-/* Na mobilnom je visina 55% ekrana, na desktopu (min-width: 992px) prelazi na 75% ekrana */
-.luxury-carousel-img {
-    height: 55vh;
+.home-carousel-img {
+    height: 45vh;
     width: 100%;
     object-fit: cover;
-    opacity: 0.85;
-    transition: opacity 0.5s ease;
+    opacity: 0.75;
 }
 
 @media (min-width: 992px) {
-    .luxury-carousel-img {
-        height: 75vh;
+    .home-carousel-img {
+        height: 65vh;
     }
 }
+
+.home-hero-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    background: linear-gradient(to top, #0b0c10, transparent);
+    pointer-events: none;
+}
+
+/* Luksuzne kartice na gridu */
+.luxury-card {
+    background: #1f2833 !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 0px !important; /* Oštre ivice */
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.luxury-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5) !important;
+    border-color: rgba(212, 175, 55, 0.3) !important;
+}
+
+.luxury-card-img {
+    transition: transform 0.5s ease;
+}
+
+.luxury-card:hover .luxury-card-img {
+    transform: scale(1.03);
+}
+
 
 /* Senka na dnu hero sekcije */
 .luxury-hero-container::after {
