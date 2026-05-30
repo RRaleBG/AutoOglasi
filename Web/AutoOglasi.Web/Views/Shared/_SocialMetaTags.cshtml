@@ -1,1 +1,13 @@
 
+<meta property="og:type" content="website" />
+
+<meta property="og:title" content="@ViewData["Title"]" />
+<meta property="og:description" content="@ViewData["Description"]" />
+<meta property="og:image" content="@ViewData["Image"]" />
+<meta property="og:url" content="@Context.Request.Scheme://@Context.Request.Host@Context.Request.Path@Context.Request.QueryString" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="@ViewData["Title"]" />
+<meta name="twitter:description" content="@ViewData["Description"]" />
+<meta name="twitter:image" content="@ViewData["Image"]" />
+<link rel="canonical" href="@Context.Request.Scheme://@Context.Request.Host@Context.Request.Path@Context.Request.QueryString" />
