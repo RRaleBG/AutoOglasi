@@ -34,24 +34,13 @@ if (string.IsNullOrWhiteSpace(defaultConnection) || defaultConnection.Contains("
         "ConnectionStrings:DefaultConnection is not configured. Set a real SQL Server connection string in user secrets, environment variables, or appsettings.Development.json before starting the application.");
 }
 
-
 builder.Services.AddDbContext<AutoOglasiDbContext>(options =>
 {
     var mainAssembly = typeof(AutoOglasiDbContext).Assembly.FullName;
-
-    // 1. Ako je na lokalu (Development okruženje -> SQL Server)
-    if (builder.Environment.IsDevelopment())
-    {
-        options.UseSqlServer(defaultConnection, b =>
+       
+    options.UseSqlServer(defaultConnection, b =>
             b.MigrationsAssembly(mainAssembly));
-    }
-    // 2. Ako je na Azure produkciji (Production okruženje -> PostgreSQL)
-    else if (builder.Environment.IsProduction())
-    {
-        options.UseSqlServer(defaultConnection, b =>
-            b.MigrationsAssembly(mainAssembly));
-    }
-
+    
     options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
 });
 
@@ -143,6 +132,8 @@ if (!string.IsNullOrWhiteSpace(githubClientId) && !string.IsNullOrWhiteSpace(git
     });
 }
 
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 // Pokretanje automatskih migracija i seedovanja podataka
@@ -164,6 +155,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseCookiePolicy();
 app.UseRouting();
+
+app.MapHealthChecks("/health");
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -175,25 +169,5 @@ app.MapDefaultControllerRoute();
 app.MapRazorPages();
 
 await app.RunAsync();
-
-// Pomoćna klasa kompatibilna sa .NET 10 koja bezbedno filtrira migracije po Namespacu
-public class CustomMigrationsAssembly : MigrationsAssembly
-{
-    public static string TargetNamespace { get; set; } = string.Empty;
-
-    public CustomMigrationsAssembly(
-        ICurrentDbContext currentContext,
-        IDbContextOptions options,
-        IMigrationsIdGenerator idGenerator,
-        IDiagnosticsLogger<DbLoggerCategory.Migrations> logger)
-        : base(currentContext, options, idGenerator, logger)
-    {
-    }
-
-    public override System.Collections.Generic.IReadOnlyDictionary<string, TypeInfo> Migrations =>
-        base.Migrations
-            .Where(m => !string.IsNullOrEmpty(m.Value.Namespace) && m.Value.Namespace.Equals(TargetNamespace, StringComparison.Ordinal))
-            .ToDictionary(m => m.Key, m => m.Value);
-}
 
 public partial class Program;
