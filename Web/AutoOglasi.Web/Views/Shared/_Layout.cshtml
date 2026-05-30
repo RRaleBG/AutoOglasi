@@ -12,6 +12,7 @@
     @await Html.PartialAsync("_SocialMetaTags")
     @await Html.PartialAsync("_Favicons")
     
+    <!-- Google Fonts za Premium izgled -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
@@ -20,17 +21,21 @@
     <link rel="stylesheet" href="~/lib/fontawesome/css/all.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/owl.carousel.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/owl.theme.default.min.css" asp-append-version="true" />
+    <!-- Tvoj glavni CSS fajl -->
     <link rel="stylesheet" href="~/css/myCss.css" asp-append-version="true" />
 </head>
 <body>
     <header class="sticky-top">
+        <!-- Luksuzna crna navigacija -->
         <nav class="navbar navbar-expand-md luxury-navbar shadow-lg navbar-dark m-0 p-0">
             <div class="container">
                 
+                <!-- Selektor Teme -->
                 <div class="me-3 d-flex align-items-center">
                     <i id="themeIcon" class="bi bi-moon fs-5 text-warning" style="cursor: pointer; transition: transform 0.3s ease;"></i>
                 </div>
 
+                <!-- Brend / Logo -->
                 <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/android-chrome-512x512.png" style="height: 38px; width: auto;" alt="Logo" class="me-2" />
                     <span class="luxury-brand-font text-white fw-bold fs-4">OGLASI<span style="color: #d4af37;">.RS</span></span>
@@ -42,7 +47,8 @@
                 </button>
 
                 <div class="navbar-collapse collapse d-md-inline-flex justify-content-between">
-                    <ul class="navbar-nav mx-auto"> <li class="nav-item px-2">
+                    <ul class="navbar-nav mx-auto"> 
+                        <li class="nav-item px-2">
                             <a class="nav-link luxury-nav-link fw-semibold" asp-area="" asp-controller="Posts" asp-action="All" asp-route-id="1">All Vehicles</a>
                         </li>
                         <li class="nav-item px-2">
@@ -65,7 +71,7 @@
             @if (this.TempData.ContainsKey(WebConstants.ErrorMessageKey))
             {
                 <div class="alert alert-danger border-0 rounded-0 text-center shadow-lg" role="alert">
-                    <i class="fas fa-exclamation-circle me-2"></i> @this.TempData[WebConstants.ErrorMessageKey].
+                    <i class="fas fa-exclamation-circle me-2"></i> @this.TempData[WebConstants.ErrorMessageKey]
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             }
@@ -73,7 +79,7 @@
             @if (this.TempData.ContainsKey(WebConstants.SuccessMessageKey))
             {
                 <div class="alert alert-success border-0 rounded-0 text-center shadow-lg" role="alert">
-                    <i class="fas fa-check-circle me-2"></i> @this.TempData[WebConstants.SuccessMessageKey].
+                    <i class="fas fa-check-circle me-2"></i> @this.TempData[WebConstants.SuccessMessageKey]
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             }
@@ -82,11 +88,13 @@
         </main>
     </div>
 
+    <!-- Skripte ubačene pre zatvaranja body taga -->
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
     <script src="~/js/owlcarousel/owl.carousel.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+    
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const page = document.getElementById("changeTheme");
@@ -110,92 +118,14 @@
             function updateIcon(theme) {
                 if(theme === "dark") {
                     icon.className = "bi bi-moon fs-5 text-warning";
-                    icon.style.transform = "rotate(0deg)";
                 } else {
                     icon.className = "bi bi-sun fs-5 text-dark";
-                    icon.style.transform = "rotate(180deg)";
                 }
             }
         });
     </script>
-    @await RenderSectionAsync("Scripts", required: false)
+
     <partial name="_CookieConsentPartial" />
-</body>
-</html>
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between p-0">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link fw-semibold" asp-area="" asp-controller="Posts" asp-action="All" asp-route-id="1">All cars</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-semibold" asp-area="" asp-controller="Posts" asp-action="Search">Search</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-semibold" asp-area="" asp-controller="Home" asp-action="About" asp-route-id="1">About</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <div class="container">
-        <main role="main" class="">
-            @if (this.TempData.ContainsKey(WebConstants.ErrorMessageKey))
-            {
-                <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-                    <strong>Error!</strong> @this.TempData[WebConstants.ErrorMessageKey].
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            }
-
-            @if (this.TempData.ContainsKey(WebConstants.SuccessMessageKey))
-            {
-                <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-                    <strong>Success!</strong> @this.TempData[WebConstants.SuccessMessageKey].
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            }
-
-            @RenderBody()
-        </main>
-    </div>
-
-    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
-    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
-    <script src="~/js/owlcarousel/owl.carousel.min.js" asp-append-version="true"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const page = document.getElementById("changeTheme");
-            const icon = document.getElementById("themeIcon");
-
-            if (!page || !icon) {
-                return;
-            }
-
-            const savedTheme = localStorage.getItem("theme") || "dark";
-            page.setAttribute("data-bs-theme", savedTheme);
-            updateIcon(savedTheme);
-
-            icon.addEventListener("click", () => {
-                const newTheme = page.getAttribute("data-bs-theme") === "dark" ? "light" : "dark";
-                page.setAttribute("data-bs-theme", newTheme);
-                localStorage.setItem("theme", newTheme);
-                updateIcon(newTheme);
-            });
-
-            function updateIcon(theme) {
-                icon.className = theme === "dark" ? "bi bi-moon fs-5" : "bi bi-sun fs-5";
-            }
-        });
-    </script>
     @await RenderSectionAsync("Scripts", required: false)
-    <partial name="_CookieConsentPartial" />
 </body>
 </html>
