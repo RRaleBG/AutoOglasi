@@ -7,6 +7,7 @@
     using AutoOglasi.Data.Models;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
 
     using static AdminConstants;
 
