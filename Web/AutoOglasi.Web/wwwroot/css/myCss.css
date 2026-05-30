@@ -1,84 +1,134 @@
-/* Home Page Hero Slider */
-.home-hero-container {
-    position: relative;
-    width: 100vw;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
+/* --- LUXURY ELITE GLOBAL STYLES --- */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;600&display=swap');
+
+/* Globalna tipografija i tamna podloga za ceo sajt */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #0b0c10 !important;
+    color: #c5c6c7 !important;
+}
+
+/* Ekskluzivni font za brendiranje (koristi se u _Layout za logo) */
+.luxury-brand-font {
+    font-family: 'Cinzel', serif;
+    letter-spacing: 2px;
+}
+
+/* --- PREMIUM HEADER / NAVBAR --- */
+.luxury-navbar {
+    background-color: #050508 !important; /* Duboka crna za premium kontrast */
+    border-bottom: 1px solid rgba(214, 175, 55, 0.15) !important; /* Elegantna zlatna nit */
+    padding: 12px 0 !important;
+}
+
+.luxury-nav-link {
+    color: #c5c6c7 !important;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    transition: color 0.3s ease;
+}
+
+.luxury-nav-link:hover {
+    color: #d4af37 !important; /* Zlatni hover efekat za linkove */
+}
+
+/* --- STRANICA SA DETALJIMA (OFFER PAGE) --- */
+.luxury-carousel-container {
+    background: #000;
+    border: 1px solid rgba(255, 255, 255, 0.05);
     overflow: hidden;
 }
 
-.home-carousel-img {
-    height: 45vh;
+.luxury-carousel-img {
+    height: 350px;
     width: 100%;
     object-fit: cover;
-    opacity: 0.75;
 }
 
-@media (min-width: 992px) {
-    .home-carousel-img {
-        height: 65vh;
+@media (min-width: 768px) {
+    .luxury-carousel-img {
+        height: 500px; /* Moćna visina za desktop ekrane */
     }
 }
 
-.home-hero-container::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 150px;
-    background: linear-gradient(to top, #0b0c10, transparent);
-    pointer-events: none;
-}
-
-/* Luksuzne kartice na gridu */
-.luxury-card {
-    background: #1f2833 !important;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
-    border-radius: 0px !important; /* Oštre ivice */
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.luxury-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5) !important;
-    border-color: rgba(212, 175, 55, 0.3) !important;
-}
-
-.luxury-card-img {
-    transition: transform 0.5s ease;
-}
-
-.luxury-card:hover .luxury-card-img {
-    transform: scale(1.03);
-}
-
-
-/* Senka na dnu hero sekcije */
-.luxury-hero-container::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 150px;
-    background: linear-gradient(to top, #0b0c10, transparent);
-    pointer-events: none;
-}
-
-/* Sličice galerije */
+/* Sličice u galeriji ispod glavnog klizača */
 .luxury-thumb {
-    height: 80px;
+    height: 75px;
     object-fit: cover;
     cursor: pointer;
     opacity: 0.4;
-    transition: all 0.3s ease;
-    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease-in-out;
+    border-bottom: 3px solid transparent;
 }
 
 .luxury-thumb:hover {
     opacity: 1;
-    border-bottom: 2px solid #d4af37;
+    border-bottom: 3px solid #d4af37; /* Zlatna linija kada se pređe mišem */
+}
+
+/* --- POČETNA STRANICA / SHOWROOM (INDEX) --- */
+.home-carousel-img {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+}
+
+@media (min-width: 768px) {
+    .home-carousel-img {
+        height: 520px;
+    }
+}
+
+/* Monolitne luksuzne kartice za automobile */
+.luxury-card {
+    background: #11141a !important; /* Suptilno svetlija nijansa crne za dubinu kartice */
+    border: 1px solid rgba(255, 255, 255, 0.03) !important;
+    border-radius: 0px !important; /* Oštre, skupe ivice umesto zaobljenih */
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.luxury-card:hover {
+    transform: translateY(-4px); /* Efekat levitacije */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6) !important;
+    border-color: rgba(212, 175, 55, 0.25) !important; /* Blagi zlatni sjaj na ivici */
+}
+
+/* Efekat zumiranja slike unutar kartice na hover */
+.luxury-card-img-wrapper {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.luxury-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.luxury-card:hover .luxury-card-img {
+    transform: scale(1.05); /* Nežan zoom */
+}
+
+/* --- PODRŠKA ZA LIGHT MOD (Prekidač na sunce/mesec) --- */
+[data-bs-theme="light"] body {
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+}
+[data-bs-theme="light"] .luxury-navbar {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+[data-bs-theme="light"] .luxury-nav-link {
+    color: #495057 !important;
+}
+[data-bs-theme="light"] .luxury-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+[data-bs-theme="light"] .text-white {
+    color: #212529 !important;
 }
