@@ -1,6 +1,5 @@
-﻿@model AutoOglasi.Web.ViewModels.Posts.SinglePostViewModel
-
-@{   ViewData["Title"] = $"{Model.Car.Make} {Model.Car.Model}"; }
+@using System.Globalization
+@model AutoOglasi.Web.ViewModels.Posts.SinglePostViewModel
 
 @{
     ViewData["Title"] = $"{Model.Car.Make} {Model.Car.Model}";
@@ -8,110 +7,232 @@
     ViewData["Image"] = $"{Context.Request.Scheme}://{Context.Request.Host}{Model.Car.Images.FirstOrDefault()}";
 }
 
+<style>
+    body {
+        background-color: #0b0c10 !important;
+        color: #c5c6c7;
+    }
+    /* Bioskopski Carousel na vrhu */
+    .luxury-hero-container {
+        position: relative;
+        background: #000;
+        width: 100vw;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        overflow: hidden;
+    }
+    .luxury-carousel-img {
+        height: 55vh;
+        width: 100%;
+        object-fit: cover;
+        opacity: 0.85;
+        transition: opacity 0.5s ease;
+    }
+    @media (min-width: 992px) {
+        .luxury-carousel-img {
+            height: 75vh;
+        }
+    }
+    /* Elegantno zatamnjenje na dnu slike */
+    .luxury-hero-container::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 150px;
+        background: linear-gradient(to top, #0b0c10, transparent);
+        pointer-events: none;
+    }
+    /* Zlatni / Bronzani Luxury Akcenti */
+    .text-luxury-gold {
+        color: #d4af37; /* Metalik zlatna */
+        letter-spacing: 1px;
+    }
+    .btn-luxury {
+        background: transparent;
+        border: 1px solid #d4af37;
+        color: #d4af37;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        transition: all 0.4s ease;
+        padding: 12px 30px;
+    }
+    .btn-luxury:hover {
+        background: #d4af37;
+        color: #000;
+        box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+    }
+    /* Sličice galerije */
+    .luxury-thumb {
+        height: 80px;
+        object-fit: cover;
+        cursor: pointer;
+        opacity: 0.4;
+        transition: all 0.3s ease;
+        border-bottom: 2px solid transparent;
+    }
+    .luxury-thumb:hover, .luxury-thumb.active-thumb {
+        opacity: 1;
+        border-bottom: 2px solid #d4af37;
+    }
+    /* Specifikacije - Minimalist Grid */
+    .luxury-spec-box {
+        background: #1f2833;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 0px; /* Oštre, moderne ivice za luksuzne sajtove */
+        padding: 25px;
+        transition: transform 0.3s;
+    }
+    .luxury-spec-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #858688;
+    }
+    .luxury-spec-value {
+        font-size: 1.25rem;
+        font-weight: 300;
+        color: #ffffff;
+    }
+    .brand-title {
+        font-family: 'Playfair Display', 'Times New Roman', serif;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+    }
+</style>
 
-<div class="d-flex justify-content-between align-items-center my-3">
-    <small class="text-muted">@Model.PublishedOn</small>
-    <h1 class="text-center text-primary">@ViewData["Title"]</h1>
-    <h4 class="text-success fw-bold">
-        € @Model.Car.Price.ToString("N0", CultureInfo.CurrentCulture)
-    </h4>
+<div class="luxury-hero-container mb-5">
+    <div id="postCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @for (int i = 0; i < Model.Car.Images.Count; i++)
+            {
+                var img = Model.Car.Images[i];
+                <div class="carousel-item @(i == 0 ? "active" : "")">
+                    <img src="@img" class="d-block luxury-carousel-img" alt="Hypercar view" />
+                </div>
+            }
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#postCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#postCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
 </div>
 
-
-<div class="justify-content-center">
-    <hr class="border-info" />
-    <div class="row">
-        @* Description *@
-        <div class="col-md-4 mt-3">
-
-            <h4 class="mb-3 text-center">Description</h4> @Model.Car.Description <hr class="my-3 border-info" />
-
-            @* Car details *@
-            <h4 class="mb-4 text-center mt-3">Car details</h4>
-
-            @* Model *@
-            <h6 class="mt-3 "> Model: <i> @Model.Car.Model</i></h6>
-
-            @* Make: *@
-            <h6 class="mt-3 ">Make: <i> @Model.Car.Make</i></h6>
-
-            @* Transmission *@
-            <h6 class="mt-3">Transmission: <i> @Model.Car.TransmissionType</i></h6>
-
-            @* Year: *@
-            <h6 class="mt-3 ">Year: <i>@Model.Car.Year</i></h6>
-
-            @* Fuel type: *@
-            <h6 class="mt-3">Fuel type: <i>@Model.Car.FuelType</i></h6>
-
-            @* Horse power: *@
-            <h6 class="mt-3">Horse power: <i>@(Model.Car.Horsepower)Hp</i></h6>
-
-            @* Price: *@            
-            <h4 class="text-success fw-bold">
-               Price:  € @Model.Car.Price.ToString("N0", CultureInfo.CurrentCulture)
-            </h4>
-
-            <hr class="border-info mt-lg-4 mb-3" />
-
-
-            @*  Seller information  *@
-            <div class="row mt-3 mb-3">
-                <div class="col-md-12">
-                    <div class="card shadow-info bg-body">
-                        <h6 class="text-center py-3"> Seller information:</h6>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"> <span class="text-info fas fa-user-alt"></span>&nbsp;&nbsp; @Model.SellerName</li>
-                            <li class="list-group-item"> <span class="text-info fas fa-phone-alt"></span> &nbsp;&nbsp; @Model.SellerPhoneNumber</li>
-                            <li class="list-group-item"><span class="text-info fas fa-map-marker-alt"></span>&nbsp;&nbsp; @Model.Car.LocationCity, @Model.Car.LocationCountry</li>
-                        </ul>
+<div class="container py-2">
+    
+    <div class="row g-2 justify-content-center mb-5">
+        <div class="col-12 col-lg-10">
+            <div class="row row-cols-5 g-2">
+                @for (int i = 0; i < Model.Car.Images.Count; i++)
+                {
+                    <div class="col">
+                        <img src="@Model.Car.Images[i]" 
+                             class="w-100 luxury-thumb" 
+                             data-bs-target="#postCarousel" 
+                             data-bs-slide-to="@i" />
                     </div>
-                </div>
+                }
             </div>
         </div>
+    </div>
 
+    <div class="row justify-content-center mb-5 text-center text-lg-start">
+        <div class="col-12 col-lg-10 d-flex flex-column flex-lg-row justify-content-between align-items-center">
+            <div>
+                <span class="text-luxury-gold text-uppercase small tracking-widest" style="letter-spacing: 4px;">Exclusive Collection</span>
+                <h1 class="display-4 text-white brand-title mt-1 mb-2">@Model.Car.Make @Model.Car.Model</h1>
+                <p class="text-muted small"><i class="light-text fas fa-clock me-2"></i>Curated on @Model.PublishedOn</p>
+            </div>
+            <div class="mt-4 mt-lg-0 text-center text-lg-end">
+                <span class="text-muted small text-uppercase d-block" style="letter-spacing: 2px;">Investment Value</span>
+                <span class="display-5 fw-bold text-luxury-gold">
+                    €@Model.Car.Price.ToString("N0", CultureInfo.CurrentCulture)
+                </span>
+            </div>
+        </div>
+    </div>
 
-        @* Cover image *@
-        <div class="col">
-            <div class="row justify-content-evenly">
-                <div id="postCarousel" class="carousel slide mb-3" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        @for (int i = 0; i < Model.Car.Images.Count; i++)
-                        {
-                            var img = Model.Car.Images[i];
-                            <div class="carousel-item @(i == 0 ? "active" : "")">
-                                <img src="@img" class="d-block w-100 rounded shadow" style="height:400px; object-fit:cover;" alt="car image" />
-                            </div>
-                        }
+    <div class="row justify-content-center g-4 mb-5">
+        <div class="col-12 col-lg-10">
+            <div class="row row-cols-2 row-cols-md-3 g-3">
+                <div class="col">
+                    <div class="luxury-spec-box">
+                        <div class="luxury-spec-label">Year of Production</div>
+                        <div class="luxury-spec-value">@Model.Car.Year</div>
                     </div>
                 </div>
-
-
-
-                @* Small images *@
-                <div class="pb-0 mt-2 ">
-                    <div class="row gy-3 row-cols-1 row-cols-sm-2 row-cols-md-3 ">
-                        @foreach (var image in Model.Car.Images)
-                        {
-                            <img src="@image" class="imgInCarousel rounded-4 py-2" style="height:11em auto;" alt="gallery" />
-                        }
+                <div class="col">
+                    <div class="luxury-spec-box">
+                        <div class="luxury-spec-label">Transmission</div>
+                        <div class="luxury-spec-value">@Model.Car.TransmissionType</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="luxury-spec-box">
+                        <div class="luxury-spec-label">Engine Performance</div>
+                        <div class="luxury-spec-value">@Model.Car.Horsepower <span class="fs-6 text-muted">BHP</span></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="luxury-spec-box">
+                        <div class="luxury-spec-label">Fuel & Drivetrain</div>
+                        <div class="luxury-spec-value">@Model.Car.FuelType</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="luxury-spec-box">
+                        <div class="luxury-spec-label">Location</div>
+                        <div class="luxury-spec-value text-truncate">@Model.Car.LocationCity</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="luxury-spec-box">
+                        <div class="luxury-spec-label">Status</div>
+                        <div class="luxury-spec-value text-luxury-gold">Available</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-@section Scripts
-{
-    <script src="~/js/owlcarousel/owl.carousel.min.js" asp-append-version="true"></script>
-    <script>
-        $(document).ready(function () {
-            $('.owl-carousel').owlCarousel({
-                lazyLoad: true,
-                loop: true,
-                response: true
-            })
-        });
-    </script>
-}
+    <div class="row justify-content-center g-5 mb-5">
+        <div class="col-12 col-lg-6">
+            <h3 class="text-white fw-light mb-4 pb-2 border-bottom border-secondary" style="letter-spacing: 2px;">The Story</h3>
+            <p class="lh-lg text-justify font-monospace small text-muted" style="white-space: pre-line; font-size: 0.95rem;">
+                @Model.Car.Description
+            </p>
+        </div>
+        
+        <div class="col-12 col-lg-4">
+            <div class="p-4 border border-secondary border-opacity-25 bg-black text-center">
+                <h4 class="text-white fw-light mb-2" style="letter-spacing: 2px;">Private Viewing</h4>
+                <p class="text-muted small mb-4">Serious inquiries only. Schedule a private inspection.</p>
+                
+                <hr class="border-secondary opacity-25 mb-4" />
+
+                <div class="mb-3">
+                    <span class="text-uppercase text-muted d-block small" style="letter-spacing: 1px;">Managing Concierge</span>
+                    <span class="fs-5 text-white fw-light">@Model.SellerName</span>
+                </div>
+
+                <div class="mb-4">
+                    <span class="text-uppercase text-muted d-block small" style="letter-spacing: 1px;">Origin</span>
+                    <span class="fs-6 text-muted">@Model.Car.LocationCity, @Model.Car.LocationCountry</span>
+                </div>
+
+                <a href="tel:@Model.SellerPhoneNumber" class="btn btn-luxury w-100 py-3">
+                    <i class="fas fa-phone-alt me-2"></i> Contact Agent
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
