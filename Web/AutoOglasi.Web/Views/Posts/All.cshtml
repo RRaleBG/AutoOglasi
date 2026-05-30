@@ -1,120 +1,81 @@
-﻿
-<h3> 
-    @{
-        ViewData["Title"] = "All";
-    } 
-</h3>
+@using System.Globalization
+@model AutoOglasi.Web.ViewModels.Posts.PostsListViewModel
 
+@{
+    ViewData["Title"] = "The Showroom";
+}
 
-@* <h2 class="heading-margin text-center">@(Model.PagesCount > 1 ? $" {Model.PageNumber}" : string.Empty)</h2> *@
+<div class="py-2">
+    <div class="p-3 mb-4 bg-black bg-opacity-30 border border-secondary border-opacity-10">
+        <partial name="_SortingPartial" model="@Model" />
+    </div>
 
-<partial name="_SortingPartial" model="@Model" />
+    <div class="row justify-content-center g-4">
+        @foreach (var post in Model.Posts)
+        {
+            <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                <div class="card h-100 luxury-card">
+                    
+                    <div class="d-flex justify-content-between align-items-center p-3" style="background: rgba(0,0,0,0.2);">
+                        <small class="text-muted" style="font-size: 0.75rem;">
+                            <i class="far fa-calendar-alt me-1"></i>@post.PublishedOn
+                        </small>
+                        <span class="fw-bold" style="color: #d4af37; font-size: 0.95rem;">
+                            € @post.Car.Price.ToString("N0", CultureInfo.InvariantCulture)
+                        </span>
+                    </div>
 
-<hr class="border-info" />
+                    <a asp-action="Offer" asp-route-id="@post.Id" class="text-decoration-none">
+                        <div class="luxury-card-img-wrapper">
+                            <img src="@post.Car.CoverImage"
+                                 class="luxury-card-img"
+                                 alt="@($"{post.Car.Make} {post.Car.Model}")" />
+                        </div>
+                    </a>
 
+                    <div class="card-body d-flex flex-column justify-content-between text-center p-3">
+                        <div>
+                            <h5 class="text-white text-uppercase tracking-wide mb-2" style="font-size: 1.1rem; letter-spacing: 1px;">
+                                @post.Car.Make <span class="fw-light text-muted">@post.Car.Model</span>
+                            </h5>
+                            
+                            <hr class="my-2 border-secondary opacity-10" />
 
-<div class="row justify-content-center g-3">
+                            <p class="text-muted small font-monospace m-0" style="font-size: 0.8rem;">
+                                @post.Car.Year • @post.Car.FuelType • @post.Car.Kilometers.ToString("N0", CultureInfo.InvariantCulture) km
+                            </p>
+                            <p class="text-muted small font-monospace mb-2" style="font-size: 0.8rem;">
+                                @post.Car.TransmissionType
+                            </p>
+                        </div>
 
-    @foreach (var post in Model.Posts)
-    {
-        <div class="col-md-4 col-lg-3">
-            <div class="card h-100 shadow-info border-0 rounded-3 overflow-hidden">
+                        <div class="mt-2">
+                            <span class="small tracking-wider text-uppercase" style="color: #bfa15f; font-size: 0.75rem; letter-spacing: 1px;">
+                                <i class="fas fa-map-marker-alt me-1"></i>@post.Car.LocationCity
+                            </span>
+                        </div>
+                    </div>
 
-                <!-- Header sa datumom i cenom -->
-                <div class="d-flex justify-content-between align-items-center p-2">
-                    <small class="text-muted">@post.PublishedOn</small>
-                    <span class="badge text-bg-warning fw-bold "> € @post.Car.Price.ToString("N", CultureInfo.InvariantCulture).Replace(".00", string.Empty)</span>
-                </div>
-
-                <!-- Slika -->
-                <a asp-action="Offer" asp-route-id="@post.Id" class="text-decoration-none">
-                    <img src="@post.Car.CoverImage"
-                         class="card-img-top img-fluid"
-                         style="height: 200px; object-fit: cover;"
-                         alt="@($"{post.Car.Make} {post.Car.Model}")" />
-                </a>
-
-                <!-- Body -->
-                <div class="card-body text-center">
-                    <h5 class="card-title fw-bold text-primary">
-                        @post.Car.Make @post.Car.Model
-                    </h5>
-
-                    <hr class="mt-2 mb-3 border-info" />
-
-                    <p class="card-text text-muted small">
-                        @post.Car.Year • @post.Car.FuelType • @post.Car.Kilometers km • @post.Car.TransmissionType
-                    </p>
-
-                    <p class="card-text text-info fw-semibold">
-                        @post.Car.LocationCity, @post.Car.LocationCountry
-                    </p>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
+
+    <div class="mt-5 p-3 border-top border-secondary border-opacity-10">
+        <partial name="_PagingPartial" model="@Model" />
+    </div>
 </div>
-
-<hr class="border-info" />
-
-<partial name="_PagingPartial" model="@Model" />
 
 @section Scripts
 {
     <script>
-        $(document).ready(function(){
-            $(".owl-carousel").owlCarousel();
-        });
-    </script>
-
-
-    <script>
-
         $(document).ready(function () {
             $("#sortingDropDown").change(function () {
                 const sortingValue = $(this).val();
                 const url = new URL(window.location.href);
-
                 url.searchParams.set("sorting", sortingValue);
                 window.location.href = url;
             });
         });
-
     </script>
 }
-
-@* <div class="row justify-content-evenly">
-
-    @foreach (var post in Model.Posts)
-    {
-        <div class="card rounded m-2 shadow-info" style="width: 18em;">
-
-            <div class="row p-1 text-center">
-                <p class="col float-start mt-sm-2">@post.PublishedOn</p>
-                <p class="col float-end mt-sm-2"><span class="badge text-bg-warning fw-bold "> € @post.Car.Price.ToString("N", CultureInfo.InvariantCulture).Replace(".00", string.Empty)</span></p>
-            </div>
-
-            <a asp-action="Offer" asp-route-id="@post.Id" class="text-decoration-none">
-
-                <img src="@post.Car.CoverImage"
-                     class="card-img-top img-fluid"
-                     style="height: 200px; object-fit: cover;"
-                     alt="@($"{post.Car.Make} {post.Car.Model}")" />
-
-                <div class="card-body d-flex flex-column text-white-50 text-center">
-
-                    <h5> @post.Car.Make @post.Car.Model</h5>
-
-                    <hr class="mt-1 mb-2 border-info" />
-
-                    <h6 class="card-title">@post.Car.Year, @post.Car.FuelType, @post.Car.Kilometers km, @post.Car.TransmissionType</h6>
-                   
-                    @* <p class="card-text fw-lighter mt-auto"><i>@post.Car.Description</i></p> *@
-                                    
-                    @* <p class="card-text text-info text-shadow">@post.Car.LocationCity, @post.Car.LocationCountry</p> *@
-                  
-@*                 </div>
-            </a>
-        </div>
-    } 
-</div> *@
