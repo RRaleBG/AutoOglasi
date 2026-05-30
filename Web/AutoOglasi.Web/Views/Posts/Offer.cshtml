@@ -2,7 +2,11 @@
 
 @{   ViewData["Title"] = $"{Model.Car.Make} {Model.Car.Model}"; }
 
-
+@{
+    ViewData["Title"] = $"{Model.Car.Make} {Model.Car.Model}";
+    ViewData["Description"] = Model.Car.Description;
+    ViewData["Image"] = $"{Context.Request.Scheme}://{Context.Request.Host}{Model.Car.Images.FirstOrDefault()}";
+}
 
 
 <div class="d-flex justify-content-between align-items-center my-3">
