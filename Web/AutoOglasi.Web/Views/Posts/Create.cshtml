@@ -1,163 +1,156 @@
-﻿@model AutoOglasi.Web.ViewModels.Posts.PostFormInputModel
+@model AutoOglasi.Web.ViewModels.Posts.PostFormInputModel
 
 @{
-    this.ViewData["Title"] = "Sell car";
+    ViewData["Title"] = "Asset Listing";
     var extraTypes = new Dictionary<int, string>();
 }
 
-<form method="post" class="container mt-3" enctype="multipart/form-data">
+<div class="py-4 justify-content-center row">
+    <div class="col-12 col-lg-10 col-xl-9">
 
-    @* Make *@
-    <div class="row mb-2">
-        <div class="col-md-6">
-            <label asp-for="@Model.Car.Make" class="form-label col-form-label-sm mt-1 m-0"></label>
-            <input asp-for="@Model.Car.Make" class="form-control form-control-sm" placeholder="Mercedes, BMW, Honda, etc...">
-            <span asp-validation-for="@Model.Car.Make" class="text-danger col-form-label-sm"></span>
+        <div class="text-center mb-5">
+            <span class="text-uppercase small font-monospace" style="letter-spacing: 4px; color: #d4af37;">Showroom Registration</span>
+            <h2 class="text-white fw-light text-uppercase mt-1" style="letter-spacing: 1px;">List Your Vehicle</h2>
+            <div class="mx-auto mt-2" style="width: 40px; height: 1px; background-color: #d4af37;"></div>
         </div>
 
-        @* Model *@
-        <div class="col-md-6">
-            <label asp-for="@Model.Car.Model" class="form-label col-form-label-sm mt-1 m-0"></label>
-            <input asp-for="@Model.Car.Model" class="form-control form-control-sm" placeholder="S-Class, 640D, Accord, etc...">
-            <span asp-validation-for="@Model.Car.Model" class="text-danger col-form-label-sm"></span>
-        </div>
+        <form method="post" class="bg-black bg-opacity-20 p-4 p-md-5 border border-secondary border-opacity-10" enctype="multipart/form-data">
+            
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger border-0 rounded-0 small mb-4" role="alert"></div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-6">
+                    <label asp-for="@Model.Car.Make" class="form-label text-uppercase small font-monospace text-muted tracking-wider" style="font-size: 0.75rem; letter-spacing: 1px;"></label>
+                    <input asp-for="@Model.Car.Make" class="form-control text-white bg-dark bg-opacity-20 border-secondary border-opacity-25 py-2.5 rounded-0" placeholder="e.g., Porsche, Ferrari, Aston Martin...">
+                    <span asp-validation-for="@Model.Car.Make" class="text-danger small"></span>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label asp-for="@Model.Car.Model" class="form-label text-uppercase small font-monospace text-muted tracking-wider" style="font-size: 0.75rem; letter-spacing: 1px;"></label>
+                    <input asp-for="@Model.Car.Model" class="form-control text-white bg-dark bg-opacity-20 border-secondary border-opacity-25 py-2.5 rounded-0" placeholder="e.g., 911 Turbo S, SF90, Vantage...">
+                    <span asp-validation-for="@Model.Car.Model" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-4">
+                    <label asp-for="@Model.Car.CategoryId" class="form-label text-uppercase small font-monospace text-muted tracking-wider" style="font-size: 0.75rem; letter-spacing: 1px;">Category</label>
+                    <select asp-for="@Model.Car.CategoryId" class="form-select text-white bg-dark border-secondary border-opacity-25 py-2.5 rounded-0" style="cursor: pointer;">
+                        <option disabled selected hidden>Select category</option>
+                        @foreach (var category in Model.Car.Categories)
+                        {
+                            <option value="@category.Id" class="bg-dark text-white">@category.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="@Model.Car.CategoryId" class="text-danger small"></span>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label asp-for="@Model.Car.FuelTypeId" class="form-label text-uppercase small font-monospace text-muted tracking-wider" style="font-size: 0.75rem; letter-spacing: 1px;">Propulsion</label>
+                    <select asp-for="@Model.Car.FuelTypeId" class="form-select text-white bg-dark border-secondary border-opacity-25 py-2.5 rounded-0" style="cursor: pointer;">
+                        <option disabled selected hidden>Select fuel type</option>
+                        @foreach (var fuelType in Model.Car.FuelTypes)
+                        {
+                            <option value="@fuelType.Id" class="bg-dark text-white">@fuelType.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="@Model.Car.FuelTypeId" class="text-danger small"></span>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label asp-for="@Model.Car.TransmissionTypeId" class="form-label text-uppercase small font-monospace text-muted tracking-wider" style="font-size: 0.75rem; letter-spacing: 1px;">Transmission</label>
+                    <select asp-for="@Model.Car.TransmissionTypeId" class="form-select text-white bg-dark border-secondary border-opacity-25 py-2.5 rounded-0" style="cursor: pointer;">
+                        <option disabled selected hidden>Select transmission</option>
+                        @foreach (var transmissionType in Model.Car.TransmissionTypes)
+                        {
+                            <option value="@transmissionType.Id" class="bg-dark text-white">@transmissionType.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="@Model.Car.TransmissionTypeId" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-4">
+                    <label asp-for="@Model.Car.Year" class="form-label text-uppercase small font-monospace text-muted tracking-wider" style="font-size: 0.75rem; letter-spacing: 1px;"></label>
+                    <input asp-for="@Model.Car.Year" min="1900" max="@DateTime.UtcNow.Year + 1" class="form-control text-white bg-dark bg-opacity-20 border-secondary border-opacity-25 py-2.5 rounded-0 font-monospace" placeholder="Year">
+                    <span asp-validation-for="@Model.Car.Year" class="text-danger small"></span>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label asp-for="@Model.Car.Kilometers" class="form-label text-uppercase small font-monospace text-muted tracking-wider" style="font-size: 0.75rem; letter-spacing: 1px;">Mileage (KM)</label>
+                    <input asp-for="@Model.Car.Kilometers" min="0" class="form-control text-white bg-dark bg-opacity-20 border-secondary border-opacity-25 py-2.5 rounded-0 font-monospace" placeholder="Kilometers">
+                    <span asp-validation-for="@Model.Car.Kilometers" class="text-danger small"></span>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label asp-for="@Model.Car.Horsepower" class="form-label text-uppercase small font-monospace text-muted tracking-wider" style="font-size: 0.75rem; letter-spacing: 1px;">Output (BHP)</label>
+                    <input asp-for="@Model.Car.Horsepower" min="0" class="form-control text-white bg-dark bg-opacity-20 border-secondary border-opacity-25 py-2.5 rounded-0 font-monospace" placeholder="Horsepower">
+                    <span asp-validation-for="@Model.Car.Horsepower" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-4">
+                    <label asp-for="@Model.Car.Price" class="form-label text-uppercase small font-monospace text-muted tracking-wider" style="font-size: 0.75rem; letter-spacing: 1px;">Requested Valuation (€)</label>
+                    <input asp-for="@Model.Car.Price" min="0" class="form-control text-white bg-dark bg-opacity-20 border-secondary border-opacity-25 py-2.5 rounded-0 font-monospace" placeholder="Price (€)">
+                    <span asp-validation-for="@Model.Car.Price" class="text-danger small"></span>
+                </div>
+
+                <div class="col-12 col-md-8">
+                    <label asp-for="@Model.Car.Images" class="form-label text-uppercase small font-monospace text-muted tracking-wider" style="font-size: 0.75rem; letter-spacing: 1px;">Media Assets Gallery</label>
+                    <input asp-for="@Model.Car.Images" class="form-control text-muted bg-dark bg-opacity-20 border-secondary border-opacity-25 py-2 rounded-0 small" />
+                    <span asp-validation-for="@Model.Car.Images" class="text-danger small d-block mt-1"></span>
+                    <span class="text-danger small d-block mt-1">@Html.ValidationMessage("CustomError")</span>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-6">
+                    <label asp-for="@Model.Car.LocationCountry" class="form-label text-uppercase small font-monospace text-muted tracking-wider" style="font-size: 0.75rem; letter-spacing: 1px;">Country</label>
+                    <input asp-for="@Model.Car.LocationCountry" class="form-control text-white bg-dark bg-opacity-20 border-secondary border-opacity-25 py-2.5 rounded-0" placeholder="Country location">
+                    <span asp-validation-for="@Model.Car.LocationCountry" class="text-danger small"></span>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label asp-for="@Model.Car.LocationCity" class="form-label text-uppercase small font-monospace text-muted tracking-wider" style="font-size: 0.75rem; letter-spacing: 1px;">City / Region</label>
+                    <input asp-for="@Model.Car.LocationCity" class="form-control text-white bg-dark bg-opacity-20 border-secondary border-opacity-25 py-2.5 rounded-0" placeholder="City location">
+                    <span asp-validation-for="@Model.Car.LocationCity" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="mb-5">
+                <label asp-for="@Model.Car.Description" class="form-label text-uppercase small font-monospace text-muted tracking-wider" style="font-size: 0.75rem; letter-spacing: 1px;">Detailed Overview</label>
+                <textarea asp-for="@Model.Car.Description" class="form-control text-white bg-dark bg-opacity-20 border-secondary border-opacity-25 rounded-0" rows="4" placeholder="Provide an exclusive description of technical packages, service history, and vehicle status..."></textarea>
+                <span asp-validation-for="@Model.Car.Description" class="text-danger small"></span>
+            </div>
+
+            <div class="p-4 mb-4 bg-black bg-opacity-40 border border-secondary border-opacity-10">
+                <h6 class="text-white text-uppercase font-monospace mb-4 text-center" style="font-size: 0.85rem; letter-spacing: 2px; color: #bfa15f !important;">
+                    <i class="far fa-address-card me-2"></i> Representative Contact Information
+                </h6>
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <label asp-for="@Model.SellerName" class="form-label text-uppercase small font-monospace text-muted tracking-wider" style="font-size: 0.7rem; letter-spacing: 1px;">Full Name / Agent Title</label>
+                        <input asp-for="@Model.SellerName" class="form-control text-white bg-dark bg-opacity-20 border-secondary border-opacity-25 py-2.5 rounded-0" placeholder="Your name">
+                        <span asp-validation-for="@Model.SellerName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label asp-for="@Model.SellerPhoneNumber" class="form-label text-uppercase small font-monospace text-muted tracking-wider" style="font-size: 0.7rem; letter-spacing: 1px;">Secure Direct Line</label>
+                        <input asp-for="@Model.SellerPhoneNumber" class="form-control text-white bg-dark bg-opacity-20 border-secondary border-opacity-25 py-2.5 rounded-0 font-monospace" placeholder="+381...">
+                        <span asp-validation-for="@Model.SellerPhoneNumber" class="text-danger small"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center pt-3">
+                <button type="submit" class="btn text-uppercase py-3 px-5 fw-bold border w-100 w-md-auto" 
+                   style="color: #d4af37; border-color: #d4af37 !important; letter-spacing: 3px; font-size: 0.85rem; background: transparent; transition: all 0.3s;">
+                    <i class="fas fa-file-upload me-2" style="font-size: 0.8rem;"></i> Authorize & Publish Listing
+                </button>
+            </div>
+
+        </form>
     </div>
-
-
-    @* Category *@
-    <div class="row mb-2">
-        <div class="col-md-4">
-            <label asp-for="@Model.Car.CategoryId" class="form-label col-form-label-sm mt-1 m-0"></label>
-            <select asp-for="@Model.Car.CategoryId" class="form-select form-select-sm">
-                <option disabled selected>Choose category</option>
-                @foreach (var category in Model.Car.Categories)
-                {
-                    <option value="@category.Id">@category.Name</option>
-                }
-            </select>
-            <span asp-validation-for="@Model.Car.CategoryId" class="small text-danger col-form-label-sm"></span>
-        </div>
-
-        @* FuelTypeId *@
-        <div class="col-md-4">
-            <label asp-for="@Model.Car.FuelTypeId" class="form-label col-form-label-sm mt-1 m-0"></label>
-            <select asp-for="@Model.Car.FuelTypeId" class="form-select form-select-sm">
-                <option disabled selected>Choose fuel type</option>
-                @foreach (var fuelType in Model.Car.FuelTypes)
-                {
-                    <option value="@fuelType.Id">@fuelType.Name</option>
-                }
-            </select>
-            <span asp-validation-for="@Model.Car.FuelTypeId" class="small text-dange col-form-label-sm"></span>
-        </div>
-
-        @* Transmission *@
-        <div class="col-md-4">
-            <label asp-for="@Model.Car.TransmissionTypeId" class="form-label col-form-label-sm mt-1 m-0"></label>
-            <select asp-for="@Model.Car.TransmissionTypeId" class="form-select form-select-sm ">
-                <option disabled selected>Choose transmission type</option>
-                @foreach (var transmissionType in Model.Car.TransmissionTypes)
-                {
-                    <option value="@transmissionType.Id">@transmissionType.Name</option>
-                }
-            </select>
-            <span asp-validation-for="@Model.Car.TransmissionTypeId" class="small text-danger col-form-label-sm"></span>
-        </div>
-    </div>
-
-    <div class="row mb-1">
-
-    @* Years *@
-        <div class="col-md-4 mb-1">
-            <label asp-for="@Model.Car.Year" class="form-label col-form-label-sm mt-1 m-0"></label>
-            <input asp-for="@Model.Car.Year" min="0" class="form-control form-control-sm">
-            <span asp-validation-for="@Model.Car.Year" class="text-danger col-form-label-sm"></span>
-        </div>
-
-        @* Kilometers *@
-        <div class="col-md-4 mb-1">
-            <label asp-for="@Model.Car.Kilometers" class="form-label col-form-label-sm mt-1 m-0">Kilometers</label>
-            <input asp-for="@Model.Car.Kilometers" min="0" class="form-control form-control-sm">
-            <span asp-validation-for="@Model.Car.Kilometers" class="text-danger col-form-label-sm"></span>
-        </div>
-
-        @* Horsepower *@
-        <div class="col-md-4 mb-1">
-            <label asp-for="@Model.Car.Horsepower" class="form-label col-form-label-sm mt-1 m-0"></label>
-            <input asp-for="@Model.Car.Horsepower" min="0" class="form-control form-control-sm">
-            <span asp-validation-for="@Model.Car.Horsepower" class="text-danger col-form-label-sm"></span>
-        </div>
-    </div>
-
-
-
-    @* Price *@
-    <div class="row">
-        <div class="col-md-4">
-            <label asp-for="@Model.Car.Price" class="form-label col-form-label-sm mt-1 m-0"></label>
-            <input asp-for="@Model.Car.Price" min="0" class="form-control form-control-sm">
-            <span asp-validation-for="@Model.Car.Price" class="text-danger col-form-label-sm"></span>
-        </div>
-
-        @* Images *@
-        <div class="col-md-8">
-            <label asp-for="@Model.Car.Images" class="form-label col-form-label-sm mt-1 m-0"></label>
-            <input asp-for="@Model.Car.Images" class="form-control form-control-sm" />
-            <span asp-validation-for="@Model.Car.Images" class="text-danger col-form-label-sm"></span>
-            <span class="text-danger">@Html.ValidationMessage("CustomError")</span>
-        </div>
-    </div>
-
-
-    @* LocationCountry *@
-    <div class="row mb-1">
-        <div class="col-md-6">
-            <label asp-for="@Model.Car.LocationCountry" class="form-label col-form-label-sm mt-1 m-0"></label>
-            <input asp-for="@Model.Car.LocationCountry" class="form-control form-control-sm">
-            <span asp-validation-for="@Model.Car.LocationCountry" class="text-danger col-form-label-sm"></span>
-        </div>
-
-        @* LocationCity *@
-        <div class="col-md-6 mb-1">
-            <label asp-for="@Model.Car.LocationCity" class="form-label col-form-label-sm mt-1 mt-1 m-0"></label>
-            <input asp-for="@Model.Car.LocationCity" class="form-control form-control-sm">
-            <span asp-validation-for="@Model.Car.LocationCity" class="text-danger col-form-label-sm"></span>
-        </div>
-    </div>
-
-
-
-
-
-
-    @* Description *@
-    <div class="mb-2">
-        <label asp-for="@Model.Car.Description" class="form-label col-form-label-sm mt-1 m-0"></label>
-        <textarea asp-for="@Model.Car.Description" class="form-control form-control-sm" rows="2" placeholder="This is the perfect car..."></textarea>
-        <span asp-validation-for="@Model.Car.Description" class="text-danger col-form-label-sm"></span>
-    </div>
-
-
-     <hr class="border-info"/>
-    @* Contact information *@
-    <h6 class="mb-1 text-center">Contact information:</h6>
-
-    <div class="row mb-2">
-        <div class="col-md-6">
-            <label asp-for="@Model.SellerName" class="form-label col-form-label-sm mt-1 m-0"></label>
-            <input asp-for="@Model.SellerName" class="form-control form-control-sm">
-            <span asp-validation-for="@Model.SellerName" class="text-danger col-form-label-sm"></span>
-        </div>
-
-        @* SellerPhoneNumber *@
-        <div class="col-md-6">
-            <label asp-for="@Model.SellerPhoneNumber" class="form-label col-form-label-sm mt-1 m-0"></label>
-            <input asp-for="@Model.SellerPhoneNumber" class="form-control form-control-sm">
-            <span asp-validation-for="@Model.SellerPhoneNumber" class="text-danger col-form-label-sm"></span>
-        </div>
-    </div>
-
-
-    <hr class="border-info" />
-    <div align="center"><input type="submit" class="btn btn-outline-info col-12 shadow-info" value="Create" /></div>
-</form>
+</div>
