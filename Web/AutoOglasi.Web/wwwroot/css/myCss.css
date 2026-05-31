@@ -1,5 +1,5 @@
 /* --- LUXURY ELITE GLOBAL STYLES --- */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght=500;700&family=Montserrat:wght=300;400;600&display=swap');
 
 /* Globalna tipografija i tamna podloga za ceo sajt */
 body {
@@ -129,9 +129,6 @@ body {
     background: #ffffff !important;
     border: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
-[data-bs-theme="light"] .text-white {
-    color: #212529 !important;
-}
 
 /* ==========================================================================
    --- FORME I UNOSI (Zajednički stilovi za oštre ivice i tranziciju) ---
@@ -185,7 +182,6 @@ body:not([data-bs-theme="light"]) .form-control:disabled {
 [data-bs-theme="light"] .form-select:focus {
     background-color: #ffffff !important;
     border-color: #bfa15f !important;
-    box-spacing: none !important;
     box-shadow: 0 0 8px rgba(191, 161, 95, 0.2) !important;
     color: #212529 !important;
 }
@@ -221,3 +217,36 @@ body:not([data-bs-theme="light"]) .form-floating > .form-control:focus ~ label {
     border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
+/* ==========================================================================
+   --- HIRURŠKA ZAŠTITA ZA STRANICU SA DETALJIMA (OFFER PAGE) ---
+   ========================================================================== */
+/* Kada je uključen Light mod, elementi unutar sekcija koji imaju tamnu pozadinu NE SMEJU potamneti */
+
+/* Popravka za glavni naslov (FERRARI F12) i "The Story" naslov na Offer stranici */
+[data-bs-theme="light"] .luxury-carousel-container ~ div h1,
+[data-bs-theme="light"] .luxury-carousel-container ~ div h2,
+[data-bs-theme="light"] .luxury-carousel-container ~ div h3,
+[data-bs-theme="light"] .luxury-carousel-container ~ div .text-white {
+    color: #ffffff !important;
+}
+
+/* Popravka za male boksove sa specifikacijama (Godište, Menjač, Snaga...) */
+/* Prisiljavamo tekst unutar tih tamno sivih modula da ostane beo/svetao i u light modu */
+[data-bs-theme="light"] .luxury-carousel-container ~ div .row .bg-dark,
+[data-bs-theme="light"] .luxury-carousel-container ~ div .row div[style*="background"] {
+    color: #ffffff !important;
+}
+
+/* Zaštita za male mutne podnaslove u tim boksovima (npr. "YEAR OF PRODUCTION", "TRANSMISSION") */
+[data-bs-theme="light"] .luxury-carousel-container ~ div .row small,
+[data-bs-theme="light"] .luxury-carousel-container ~ div .row .text-muted,
+[data-bs-theme="light"] .luxury-carousel-container ~ div .row .font-monospace {
+    color: rgba(255, 255, 255, 0.45) !important;
+}
+
+/* Zaštita za datum objave oglasa na vrhu ("Curated on...") */
+[data-bs-theme="light"] .luxury-carousel-container ~ div .opacity-75,
+[data-bs-theme="light"] .luxury-carousel-container ~ div .fa-clock ~ span,
+[data-bs-theme="light"] .luxury-carousel-container ~ div p.text-muted {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
