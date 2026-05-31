@@ -2,47 +2,62 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Concierge Sign In";
 }
 
-<div class="d-flex justify-content-center align-items-center">
-    <div class="card shadow-lg border-0 rounded-3" style="max-width:420px; width:100%;">
-        <div class="card-body p-4">
-            <h2 class="text-center mb-4 fw-bold text-primary">Welcome Back</h2>
-            <p class="text-center text-muted mb-4">Sign in to continue to AutoOglasi</p>
+<div class="d-flex justify-content-center align-items-center py-5">
+    <!-- Korišćenje klase luxury-card i uklonjen rounded-3 -->
+    <div class="card luxury-card shadow-lg" style="max-width:420px; width:100%;">
+        <div class="card-body p-4 p-md-5">
+            
+            <div class="text-center mb-4">
+                <span class="text-uppercase small font-monospace" style="letter-spacing: 3px; color: #d4af37;">Access Salon</span>
+                <h2 class="text-white fw-light text-uppercase mt-1" style="letter-spacing: 1px;">Welcome Back</h2>
+                <div class="mx-auto mt-2" style="width: 30px; height: 1px; background-color: #d4af37;"></div>
+            </div>
 
             <form id="account" method="post" asp-antiforgery="true">
-                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger border-0 rounded-0 small" role="alert"></div>
 
+                <!-- Input polja prilagođena tamnoj temi sa oštrim ivicama -->
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="name@example.com" />
-                    <label asp-for="Input.Email">Email address</label>
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    <input asp-for="Input.Email" class="form-control text-white bg-dark bg-opacity-20 border-secondary border-opacity-25 rounded-0" autocomplete="username" placeholder="name@example.com" />
+                    <label asp-for="Input.Email" class="text-muted">Email address</label>
+                    <span asp-validation-for="Input.Email" class="text-danger small"></span>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="password" />
-                    <label asp-for="Input.Password">Password</label>
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    <input asp-for="Input.Password" class="form-control text-white bg-dark bg-opacity-20 border-secondary border-opacity-25 rounded-0" autocomplete="current-password" placeholder="password" />
+                    <label asp-for="Input.Password" class="text-muted">Password</label>
+                    <span asp-validation-for="Input.Password" class="text-danger small"></span>
                 </div>
 
-                <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-4">
                     <div class="form-check">
-                        <input asp-for="Input.RememberMe" class="form-check-input" />
-                        <label asp-for="Input.RememberMe" class="form-check-label"></label>
+                        <input asp-for="Input.RememberMe" class="form-check-input rounded-0" style="background-color: transparent; border-color: rgba(255,255,255,0.2);" />
+                        <label asp-for="Input.RememberMe" class="form-check-label text-muted small">Remember me</label>
                     </div>
-                    <a asp-page="./ForgotPassword" class="small text-decoration-none">Forgot password?</a>
+                    <a asp-page="./ForgotPassword" class="small text-decoration-none font-monospace" style="color: #bfa15f; font-size: 0.8rem;">Forgot password?</a>
                 </div>
 
-                <button id="login-submit" type="submit" class="btn btn-primary btn-lg w-100">Log in</button>
+                <!-- Luksuzno zlatno dugme -->
+                <button id="login-submit" type="submit" class="btn text-uppercase py-3 w-100 fw-bold border mb-2" 
+                        style="color: #d4af37; border-color: #d4af37 !important; letter-spacing: 2px; font-size: 0.85rem; background: transparent; transition: all 0.3s;">
+                    Log In
+                </button>
             </form>
 
-            <hr class="my-4" />
+            <hr class="my-4 border-secondary opacity-10" />
 
             <div class="text-center">
-                <p class="mb-2">Don't have an account?</p>
-                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-outline-primary w-100 mb-2">Register</a>
-                <a asp-page="./ResendEmailConfirmation" class="btn btn-outline-secondary w-100">Resend email confirmation</a>
+                <p class="mb-3 text-muted small">Don't have an elite account?</p>
+                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-sm text-uppercase py-2 w-100 rounded-0 border mb-2"
+                   style="color: #c5c6c7; border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.02); font-size: 0.75rem; letter-spacing: 1px;">
+                    Create Account
+                </a>
+                <a asp-page="./ResendEmailConfirmation" class="text-decoration-none small d-block mt-3 font-monospace" style="color: #888; font-size: 0.75rem;">
+                    Resend email confirmation
+                </a>
             </div>
         </div>
     </div>
