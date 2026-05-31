@@ -639,4 +639,9 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     color: var(--text-main, #fff);
 }
 
+/* --- REGISTER VIEW SPECIFIC TUNING --- */
+.luxury-register-card {
+    max-width: 480px;
+    width: 100%;
+}
 
