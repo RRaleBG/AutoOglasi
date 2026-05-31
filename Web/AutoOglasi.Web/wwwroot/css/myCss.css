@@ -231,3 +231,30 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     cursor: pointer;
 }
 
+
+
+
+/* --- DETAILS VIEW TYPOGRAPHY TUNING --- */
+.luxury-sub-spacing {
+    letter-spacing: 4px;
+}
+.luxury-heading-spacing {
+    letter-spacing: 2px;
+}
+.luxury-label-spacing {
+    letter-spacing: 1px;
+}
+.luxury-spec-size {
+    font-size: 0.75rem;
+}
+.luxury-story-custom {
+    white-space: pre-line;
+    font-size: 0.95rem;
+    font-family: monospace;
+}
+
+
+
+
+
+
