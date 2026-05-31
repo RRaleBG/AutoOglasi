@@ -644,4 +644,27 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     max-width: 480px;
     width: 100%;
 }
+/* --- RECOVERY VAULT CLEANUP (1:1 ORIGINAL PRESETS) --- */
+.autooglasi-recovery-title {
+    letter-spacing: 2px;
+    font-size: 1.6rem;
+}
+
+.autooglasi-recovery-subtitle {
+    color: #bfa15f !important;
+}
+
+.autooglasi-recovery-btn {
+    color: #d4af37;
+    border-color: #d4af37 !important;
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+    background: transparent;
+    transition: all 0.3s;
+}
+
+.autooglasi-recovery-btn:hover {
+    background: rgba(212, 175, 55, 0.1) !important;
+    color: #d4af37 !important;
+}
 
