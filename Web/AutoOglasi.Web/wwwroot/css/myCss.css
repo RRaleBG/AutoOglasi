@@ -553,6 +553,55 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 
 
 
+/* --- ROLE UPDATE VIEW TUNING --- */
+.luxury-title-highlight {
+    color: var(--gold, #d4af37);
+}
+
+.luxury-card-subtitle {
+    color: var(--text-main, #fff);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.luxury-role-scroll-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.luxury-checkbox-col {
+    width: 40px;
+}
+
+.luxury-admin-checkbox {
+    background-color: transparent !important;
+    border-color: rgba(128, 128, 128, 0.3) !important;
+}
+
+.luxury-admin-checkbox:checked {
+    background-color: var(--gold, #d4af37) !important;
+    border-color: var(--gold, #d4af37) !important;
+}
+
+.luxury-card-footer-bg {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.luxury-footer-counter-size {
+    font-size: 0.75rem;
+}
+
+.luxury-text-danger {
+    color: #ff6b6b !important;
+}
+
+.luxury-btn-size-md {
+    font-size: 0.85rem;
+}
+
+.luxury-tracking-wide {
+    letter-spacing: 2px;
+}
 
 
 
