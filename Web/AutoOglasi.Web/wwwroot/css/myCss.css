@@ -667,4 +667,31 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     background: rgba(212, 175, 55, 0.1) !important;
     color: #d4af37 !important;
 }
+/* --- RECOVERY VAULT COMPLETE TUNING --- */
+.autooglasi-recovery-box {
+    background-color: var(--card-bg, rgba(33, 37, 41, 0.25)) !important;
+}
+
+.autooglasi-recovery-title {
+    letter-spacing: 2px;
+    font-size: 1.6rem;
+}
+
+.autooglasi-recovery-subtitle {
+    color: var(--gold-muted, #bfa15f) !important;
+}
+
+.autooglasi-recovery-btn {
+    color: var(--gold, #d4af37) !important;
+    border-color: var(--gold, #d4af37) !important;
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+    background: transparent;
+    transition: all 0.3s ease-in-out;
+}
+
+.autooglasi-recovery-btn:hover {
+    background-color: rgba(212, 175, 55, 0.1) !important;
+    color: var(--gold, #d4af37) !important;
+}
 
