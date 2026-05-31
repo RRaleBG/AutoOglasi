@@ -1,1 +1,32 @@
 
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="py-4 justify-content-center row">
+    <div class="col-12 col-lg-11 col-xl-10">
+        
+        <div class="text-center mb-5">
+            <span class="text-uppercase small font-monospace" style="letter-spacing: 4px; color: #d4af37;">Account Settings</span>
+            <h2 class="text-white fw-light text-uppercase mt-1" style="letter-spacing: 1px;">Manage Your Profile</h2>
+            <div class="mx-auto mt-2" style="width: 40px; height: 1px; background-color: #d4af37;"></div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-12 col-md-3">
+                <div class="card luxury-card p-2">
+                    <partial name="_ManageNav" />
+                </div>
+            </div>
+            
+            <div class="col-12 col-md-9">
+                <div class="card luxury-card p-4 p-md-5">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@RenderSection("Scripts", required: false)
