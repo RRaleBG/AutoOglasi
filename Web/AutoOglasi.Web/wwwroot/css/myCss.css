@@ -790,3 +790,13 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     border-color: var(--gold, #d4af37) !important;
 }
 
+
+/* --- EXTERNAL LOGIN VIEW TUNING --- */
+.luxury-redirect-text {
+    color: var(--text-muted, #888) !important;
+}
+
+.luxury-spinner-gold {
+    color: var(--gold, #d4af37) !important;
+}
+
