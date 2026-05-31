@@ -132,3 +132,92 @@ body {
 [data-bs-theme="light"] .text-white {
     color: #212529 !important;
 }
+
+/* ==========================================================================
+   --- FORME I UNOSI (Zajednički stilovi za oštre ivice i tranziciju) ---
+   ========================================================================== */
+.form-control, .form-select, .form-floating input, .form-floating textarea {
+    border-radius: 0px !important; /* Elitne oštre ivice */
+    transition: all 0.3s ease-in-out !important;
+}
+
+/* ==========================================================================
+   --- PODRAZUMEVANI MRAČNI REŽIM (Dark Mode - Salon) ---
+   ========================================================================== */
+body:not([data-bs-theme="light"]) .form-control,
+body:not([data-bs-theme="light"]) .form-select {
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body:not([data-bs-theme="light"]) .form-control:focus,
+body:not([data-bs-theme="light"]) .form-select:focus {
+    background-color: rgba(212, 175, 55, 0.04) !important;
+    border-color: #d4af37 !important;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.15) !important;
+    color: #ffffff !important;
+}
+
+body:not([data-bs-theme="light"]) .form-select option {
+    background-color: #11141a !important;
+    color: #ffffff !important;
+}
+
+body:not([data-bs-theme="light"]) .form-control:disabled {
+    background-color: rgba(255, 255, 255, 0.01) !important;
+    color: rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ==========================================================================
+   --- PODRŠKA ZA SVETLI REŽIM (Light Mode - White Showroom) ---
+   ========================================================================== */
+[data-bs-theme="light"] .form-control,
+[data-bs-theme="light"] .form-select {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Zlatno/bronzani fokus u svetloj temi umesto Bootstrap plave */
+[data-bs-theme="light"] .form-control:focus,
+[data-bs-theme="light"] .form-select:focus {
+    background-color: #ffffff !important;
+    border-color: #bfa15f !important;
+    box-spacing: none !important;
+    box-shadow: 0 0 8px rgba(191, 161, 95, 0.2) !important;
+    color: #212529 !important;
+}
+
+[data-bs-theme="light"] .form-select option {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+}
+
+[data-bs-theme="light"] .form-control:disabled {
+    background-color: #e9ecef !important;
+    color: #6c757d !important;
+}
+
+/* Popravka za tekstualne labele u form-floating strukturama */
+.form-floating > label {
+    transition: all 0.2s ease;
+}
+body:not([data-bs-theme="light"]) .form-floating > .form-control:focus ~ label {
+    color: #d4af37 !important;
+}
+[data-bs-theme="light"] .form-floating > .form-control:focus ~ label {
+    color: #bfa15f !important;
+}
+
+/* Globalna popravka za tabele i paginaciju u svetlom modu */
+[data-bs-theme="light"] .table {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+}
+[data-bs-theme="light"] .table-responsive {
+    background-color: #ffffff !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
