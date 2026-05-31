@@ -298,3 +298,35 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     color: var(--gold);
 }
 
+/* --- PAGINATION LUXURY TUNING --- */
+.luxury-pagination .page-link {
+    background-color: var(--card-bg, rgba(30, 30, 30, 0.2));
+    border-color: rgba(128, 128, 128, 0.15);
+    color: var(--text-muted, #a0a0a0);
+    transition: all 0.2s ease-in-out;
+}
+
+.luxury-pagination .page-link:hover:not(.luxury-page-active) {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-main, #fff);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.luxury-pagination .luxury-page-active {
+    background-color: rgba(212, 175, 55, 0.15) !important;
+    color: var(--gold, #d4af37) !important;
+    border-color: rgba(212, 175, 55, 0.3) !important;
+}
+
+.luxury-pagination .page-item.disabled .page-link {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    border-color: rgba(128, 128, 128, 0.05) !important;
+    color: rgba(128, 128, 128, 0.3) !important;
+    cursor: not-allowed;
+}
+
+
+
+
+
+
