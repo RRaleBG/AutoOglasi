@@ -18,6 +18,9 @@
     --gold: #d4af37;
 }
 
+
+
+
 [data-bs-theme="light"] {
     --bg-main: #f8f9fa;
     --bg-card: #ffffff;
@@ -186,3 +189,41 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 .luxury-stats-box { background-color: var(--bg-main) !important; }
 .luxury-stats-label { color: var(--text-muted) !important; }
 .luxury-stats-value { color: var(--text-title) !important; }
+
+
+
+/* --- REGISTRATION & FORM SPECIFIC TUNING --- */
+.luxury-gold-sub-text {
+    letter-spacing: 4px;
+    color: var(--gold) !important;
+}
+.luxury-title-spacing {
+    letter-spacing: 1px;
+}
+.luxury-deco-line {
+    width: 40px;
+    height: 1px;
+    background-color: var(--gold);
+}
+.luxury-label-size {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+.luxury-select-pointer {
+    cursor: pointer;
+}
+.luxury-agent-header-text {
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+}
+.luxury-agent-header-text i {
+    color: var(--gold);
+}
+.luxury-agent-label-size {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+}
+.luxury-search-btn {
+    letter-spacing: 3px;
+}
+
