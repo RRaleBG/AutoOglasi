@@ -1,61 +1,108 @@
-﻿@model AutoOglasi.Web.ViewModels.Posts.PostsByUserViewModel
+@using System.Globalization
+@model AutoOglasi.Web.ViewModels.Posts.PostsByUserViewModel
 
 @{
-    this.ViewData["Title"] = "My cars";
+    ViewData["Title"] = "My Garage";
 }
 
-<h1 class="text-center">@(Model.PagesCount > 1 ? $", page {Model.PageNumber}" : string.Empty)</h1>
-
-@if (!Model.Posts.Any())
-{
-    <hr class="pb-3 border-info">
-
-    <div class="alert alert-warning text-center shadow">
-        <p class="lead">Unfortunately, you have no car to sell, so why don't you just add one?</p>
-
-        <p class="mt-4">
-            <a asp-controller="Posts" asp-action="Create" class="btn btn-sm btn-outline-info" role="button">Add a car to sell</a>
-        </p>
+<div class="py-2">
+    <div class="text-center mb-5">
+        <span class="text-uppercase small font-monospace" style="letter-spacing: 4px; color: #d4af37;">Personal Collection</span>
+        <h2 class="text-white fw-light text-uppercase mt-1" style="letter-spacing: 1px;">My Garage</h2>
+        <div class="mx-auto mt-2" style="width: 40px; height: 1px; background-color: #d4af37;"></div>
     </div>
-}
-else
-{
-    <partial name="_SortingPartial" model="@Model" />
 
-    <hr class="border-info"/>
+    @if (!Model.Posts.Any())
+    {
+        <div class="text-center py-5 px-4 bg-black bg-opacity-20 border border-secondary border-opacity-10 max-w-md mx-auto">
+            <i class="fas fa-car-alt mb-3 opacity-20 text-white" style="font-size: 3.5rem;"></i>
+            <h4 class="text-white fw-light text-uppercase mb-2" style="letter-spacing: 1px;">Your Garage is Empty</h4>
+            <p class="text-muted small max-w-sm mx-auto mb-4">
+                Unfortunately, you currently have no active vehicle listings in our showroom. Why not register one?
+            </p>
+            <a asp-controller="Posts" asp-action="Create" class="btn text-uppercase py-2.5 px-4 fw-bold border" 
+               style="color: #d4af37; border-color: #d4af37 !important; letter-spacing: 1px; font-size: 0.75rem; background: transparent; transition: all 0.3s;">
+                <i class="fas fa-plus me-1"></i> Add Vehicle to Sell
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="p-3 mb-4 bg-black bg-opacity-30 border border-secondary border-opacity-10">
+            <partial name="_SortingPartial" model="@Model" />
+        </div>
 
-    <div class="row justify-content-evenly">
-        @foreach (var post in Model.Posts)
-        {
-            <div class="card rounded-3 m-3 shadow-info-lg" style="width: 18em;">
-
-                <a asp-controller="Posts" class="text-decoration-none" asp-action="Offer" asp-route-id="@post.Id">
-                    <div class="row py-3 text-center text-white">
-                        <div class="col float-end">@post.PublishedOn</div>
-                        <h6 class="col float-start">€@post.Car.Price.ToString("N", CultureInfo.InvariantCulture).Replace(".00", string.Empty)</h6>
-                    </div>
-                                        
-                    <img src="@post.Car.CoverImage" class="img-fluid rounded-3" style="height: 13em; width: 23em;" sizes="(min-width: 768px) 480px, 87.5vw" rel="preload" fetchpriority="high" alt="image" type="image/webp" />
-                                  
-                    <h5 class="text-white-60 py-3 text-center">@post.Car.Year @post.Car.Make @post.Car.Model</h5>  
+        <div class="row justify-content-center g-4">
+            @foreach (var post in Model.Posts)
+            {
+                <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="card h-100 luxury-card">
                         
-                    <hr class="mt-1 mb-1" />
+                        <div class="d-flex justify-content-between align-items-center p-3" style="background: rgba(0,0,0,0.2);">
+                            <small class="text-muted font-monospace" style="font-size: 0.75rem;">
+                                @post.PublishedOn
+                            </small>
+                            <span class="fw-bold" style="color: #d4af37; font-size: 0.95rem;">
+                                € @post.Car.Price.ToString("N0", CultureInfo.InvariantCulture)
+                            </span>
+                        </div>
 
-                    <div class="row justify-content-evenly mx-0 py-3">
-                        <div class="col-4"><a asp-action="Offer" asp-route-id="@post.Id" class="btn btn-outline-info btn-sm">View</a></div>
-                        <div class="col-4"><a asp-action="Edit" asp-route-id="@post.Id" class="btn btn-outline-primary btn-sm">Edit</a></div>
-                        <div class="col-4"><a asp-action="Delete" asp-route-id="@post.Id" class="btn btn-outline-danger btn-sm">Delete</a></div>
-                    </div>                  
-                </a>
-            </div>
-        }
-    </div>
+                        <div class="luxury-card-img-wrapper">
+                            <a asp-action="Offer" asp-route-id="@post.Id">
+                                <img src="@post.Car.CoverImage"
+                                     class="luxury-card-img"
+                                     alt="@($"{post.Car.Make} {post.Car.Model}")" />
+                            </a>
+                        </div>
 
-    <hr class="border-info"/>
+                        <div class="card-body p-3 text-center d-flex flex-column justify-content-between">
+                            <div>
+                                <h5 class="text-white text-uppercase tracking-wide mb-2" style="font-size: 1.1rem; letter-spacing: 1px;">
+                                    @post.Car.Make <span class="fw-light text-muted">@post.Car.Model</span>
+                                </h5>
+                                
+                                <p class="text-muted small font-monospace m-0" style="font-size: 0.8rem;">
+                                    Year: @post.Car.Year
+                                </p>
+                            </div>
 
-    <partial name="_PagingPartial" model="@Model" />
-}
+                            <div class="mt-3 pt-3 border-top border-secondary border-opacity-10">
+                                <div class="row g-2">
+                                    <div class="col-4">
+                                        <a asp-action="Offer" asp-route-id="@post.Id" 
+                                           class="btn btn-sm rounded-0 text-uppercase font-monospace text-decoration-none w-100 py-1.5"
+                                           style="font-size: 0.65rem; letter-spacing: 1px; color: #bfa15f; background: transparent; border: 1px solid rgba(191,161,95,0.2);">
+                                            View
+                                        </a>
+                                    </div>
+                                    <div class="col-4">
+                                        <a asp-action="Edit" asp-route-id="@post.Id" 
+                                           class="btn btn-sm rounded-0 text-uppercase font-monospace text-decoration-none w-100 py-1.5"
+                                           style="font-size: 0.65rem; letter-spacing: 1px; color: #fff; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                                            Edit
+                                        </a>
+                                    </div>
+                                    <div class="col-4">
+                                        <a asp-action="Delete" asp-route-id="@post.Id" 
+                                           class="btn btn-sm rounded-0 text-uppercase font-monospace text-decoration-none w-100 py-1.5"
+                                           style="font-size: 0.65rem; letter-spacing: 1px; color: #ff6b6b; background: rgba(255,107,107,0.03); border: 1px solid rgba(255,107,107,0.15);">
+                                            Delete
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="mt-5 p-3 border-top border-secondary border-opacity-10">
+            <partial name="_PagingPartial" model="@Model" />
+        </div>
+    }
+</div>
 
 @section Scripts
 {
@@ -64,7 +111,6 @@ else
             $("#sortingDropDown").change(function () {
                 const sortingValue = $(this).val();
                 const url = new URL(window.location.href);
-
                 url.searchParams.set("sorting", sortingValue);
                 window.location.href = url;
             });
