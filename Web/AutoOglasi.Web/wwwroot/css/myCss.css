@@ -694,4 +694,26 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     background-color: rgba(212, 175, 55, 0.1) !important;
     color: var(--gold, #d4af37) !important;
 }
+/* --- MANAGEMENT SIDE NAVIGATION (1:1 SEPARATED) --- */
+.luxury-manage-nav {
+    letter-spacing: 1px;
+}
+
+.luxury-manage-nav .nav-link {
+    color: var(--text-main, #fff) !important;
+    transition: all 0.3s ease;
+}
+
+.luxury-manage-nav .nav-link.active {
+    background-color: rgba(212, 175, 55, 0.1) !important;
+    color: var(--gold, #d4af37) !important;
+    border-left: 2px solid var(--gold, #d4af37) !important;
+}
+
+.luxury-manage-nav .nav-link:hover:not(.active) {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+    color: var(--gold, #d4af37) !important;
+}
+
+
 
