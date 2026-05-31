@@ -1,4 +1,3 @@
-
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
 }
@@ -13,12 +12,14 @@
         </div>
 
         <div class="row g-4">
+            <!-- Levi Navigacioni Meni -->
             <div class="col-12 col-md-3">
                 <div class="card luxury-card p-2">
                     <partial name="_ManageNav" />
                 </div>
             </div>
             
+            <!-- Desni Sadržaj (Forme) -->
             <div class="col-12 col-md-9">
                 <div class="card luxury-card p-4 p-md-5">
                     @RenderBody()
