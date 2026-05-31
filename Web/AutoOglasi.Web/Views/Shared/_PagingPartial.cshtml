@@ -4,7 +4,6 @@
     var pageNumberAsString = Model.PageNumber.ToString();
     var urlPathWithoutAPageNumber = this.Context.Request.Path.ToString().Replace(pageNumberAsString, "");
 
-    // Rešen Sonar warning S1075 izbegavanjem hardkodovanog karaktera '/'
     if (!urlPathWithoutAPageNumber.EndsWith(System.IO.Path.AltDirectorySeparatorChar))
     {
         urlPathWithoutAPageNumber = $"{urlPathWithoutAPageNumber}{System.IO.Path.AltDirectorySeparatorChar}";
@@ -14,13 +13,11 @@
 <nav aria-label="Pager" class="my-4">
     <ul class="pagination justify-content-center font-monospace small luxury-pagination">
         
-        <!-- First Page -->
         <li class="page-item @if (!Model.HasPreviousPage) { <text>disabled</text> }">
             <a class="page-link rounded-0 px-3 py-2" 
                href=@($"{urlPathWithoutAPageNumber}{Model.FirstPage}{this.Context.Request.QueryString}")>First</a>
         </li>
         
-        <!-- Previous Page -->
         <li class="page-item @if (!Model.HasPreviousPage) { <text>disabled</text> }">
             <a class="page-link px-3 py-2" 
                href=@($"{urlPathWithoutAPageNumber}{Model.PreviousPageNumber}{this.Context.Request.QueryString}")>
@@ -28,7 +25,6 @@
             </a>
         </li>
 
-        <!-- Pages Before Current -->
         @for (int i = Model.PageNumber - 4; i < Model.PageNumber; i++)
         {
             if (i > 0)
@@ -40,14 +36,12 @@
             }
         }
 
-        <!-- Current Active Page -->
         <li class="page-item active" aria-current="page">
-            <span class="page-link px-3 py-2 rounded-0 fw-bold luxury-page-active">
+            <span class="page-link px-3 py-2 rounded-0 fw-bold">
                 @Model.PageNumber
             </span>
         </li>
 
-        <!-- Pages After Current -->
         @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + 4; i++)
         {
             if (i <= Model.PagesCount)
@@ -59,7 +53,6 @@
             }
         }
 
-        <!-- Next Page -->
         <li class="page-item @if (!Model.HasNextPage) { <text>disabled</text> }">
             <a class="page-link px-3 py-2" 
                href=@($"{urlPathWithoutAPageNumber}{Model.NextPageNumber}{this.Context.Request.QueryString}")>
@@ -67,7 +60,6 @@
             </a>
         </li>
 
-        <!-- Last Page -->
         <li class="page-item @if (!Model.HasNextPage) { <text>disabled</text> }">
             <a class="page-link rounded-0 px-3 py-2" 
                href=@($"{urlPathWithoutAPageNumber}{Model.LastPage}{this.Context.Request.QueryString}")>Last</a>
