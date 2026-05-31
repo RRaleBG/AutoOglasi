@@ -374,4 +374,28 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 }
 
 
+/* --- DASHBOARD & SHOWROOM SPECIFIC TUNING --- */
+.luxury-carousel-caption-bottom {
+    bottom: 40px;
+}
+.luxury-gold-link-text {
+    color: var(--gold, #d4af37);
+    transition: opacity 0.2s ease;
+}
+.luxury-gold-link-text:hover {
+    color: var(--gold, #d4af37);
+    opacity: 0.8;
+}
+.luxury-link-spacing {
+    letter-spacing: 1px;
+}
+.luxury-arrow-size {
+    font-size: 0.75rem;
+}
+
+
+
+
+
+
 
