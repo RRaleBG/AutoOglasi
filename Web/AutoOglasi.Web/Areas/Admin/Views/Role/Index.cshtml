@@ -1,36 +1,83 @@
-﻿@model IEnumerable<IdentityRole>
+@model IEnumerable<IdentityRole>
 @using Microsoft.AspNetCore.Identity
 
 @{
-    ViewData["Title"] = "Roles";
+    ViewData["Title"] = "Role Registry";
 }
-<div class="row justify-content-center">
-    <div class="card shadow">
-        <div class="card-header bg-transparent">
-            <a asp-action="Create" class="btn btn-outline-info mt-2 mb-2">Create new role</a>
+
+<div class="py-3 justify-content-center row">
+    <div class="col-12 col-md-10 col-lg-8">
+
+        <!-- Naslov sekcije -->
+        <div class="text-center mb-5">
+            <span class="text-uppercase small font-monospace" style="letter-spacing: 4px; color: #d4af37;">Security Hub</span>
+            <h2 class="text-white fw-light text-uppercase mt-1" style="letter-spacing: 1px;">Access Roles</h2>
+            <div class="mx-auto mt-2" style="width: 40px; height: 1px; background-color: #d4af37;"></div>
         </div>
-        <div class="card-body">
-            <table class="table table-sm table-borderless table-responsive table-hover text-center">
-                <tr class="border-bottom border-info">
-                    <th>Role name</th>
-                    <th>Update</th>
-                    <th>Delete</th>
-                </tr>
-                @foreach (var role in Model)
-                {
-                    <tr>
-                        <td class="fw-bold">@role.Name</td>
-                        <td>
-                            <a class="btn btn-sm btn-outline-info" asp-action="Update" asp-route-id="@role.Id">Update</a>
-                        </td>
-                        <td>
-                            <form asp-action="Delete" asp-route-id="@role.Id" method="post">
-                                <button type="submit" class="btn btn-sm btn-outline-danger"> Delete  </button>
-                            </form>
-                        </td>
-                    </tr>
-                }
-            </table>
+
+        <!-- Glavna luksuzna kartica -->
+        <div class="card luxury-card shadow-lg">
+            
+            <!-- Header sa dugmetom za kreiranje nove uloge -->
+            <div class="card-header bg-black bg-opacity-30 border-bottom border-secondary border-opacity-10 p-3 d-flex justify-content-between align-items-center">
+                <span class="text-uppercase small font-monospace text-muted" style="letter-spacing: 1px;">System Privileges</span>
+                <a asp-action="Create" class="btn btn-sm text-uppercase py-2 px-3 fw-bold border" 
+                   style="color: #d4af37; border-color: #d4af37 !important; letter-spacing: 1px; font-size: 0.75rem; background: transparent; transition: all 0.3s;">
+                    <i class="fas fa-plus-circle me-1"></i> Create New Role
+                </a>
+            </div>
+
+            <!-- Telo kartice sa tabelom -->
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle m-0 text-white-50 text-center">
+                        
+                        <!-- Glava tabele -->
+                        <thead class="text-white text-uppercase font-monospace small" style="background: rgba(0,0,0,0.2); font-size: 0.8rem; letter-spacing: 1px;">
+                            <tr class="border-bottom border-secondary border-opacity-25">
+                                <th scope="col" class="py-3 text-start ps-4">Role Name</th>
+                                <th scope="col" class="py-3" style="width: 120px;">Configuration</th>
+                                <th scope="col" class="py-3 text-end pe-4" style="width: 120px;">Authorization</th>
+                            </tr>
+                        </thead>
+                        
+                        <!-- Redovi sa ulogama -->
+                        <tbody>
+                            @foreach (var role in Model)
+                            {
+                                <tr class="border-bottom border-secondary border-opacity-10" style="transition: background 0.2s;">
+                                    <!-- Ime uloge -->
+                                    <td class="text-start ps-4 text-white fw-light py-3">
+                                        <i class="fas fa-user-tag me-2 text-muted" style="font-size: 0.85rem;"></i>@role.Name
+                                    </td>
+                                    
+                                    <!-- Update dugme -->
+                                    <td class="py-3">
+                                        <a class="btn btn-sm rounded-0 text-uppercase font-monospace text-decoration-none px-3 py-1.5 d-block" 
+                                           asp-action="Update" asp-route-id="@role.Id"
+                                           style="font-size: 0.7rem; letter-spacing: 1px; color: #fff; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);">
+                                            Update
+                                        </a>
+                                    </td>
+                                    
+                                    <!-- Delete dugme unutar forme -->
+                                    <td class="py-3 text-end pe-4">
+                                        <form asp-action="Delete" asp-route-id="@role.Id" method="post" class="m-0">
+                                            <button type="submit" class="btn btn-sm rounded-0 text-uppercase font-monospace px-3 py-1.5 d-block w-100" 
+                                                    style="font-size: 0.7rem; letter-spacing: 1px; color: #ff6b6b; background: rgba(255,107,107,0.05); border: 1px solid rgba(255,107,107,0.15); transition: all 0.2s;"
+                                                    onclick="return confirm('Are you certain you want to permanently revoke this role?');">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
