@@ -725,3 +725,29 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 .luxury-manage-title-spacing {
     letter-spacing: 1px;
 }
+/* --- PROFILE EDIT VIEW TUNING --- */
+.luxury-profile-section-title {
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    color: var(--gold-muted, #bfa15f) !important;
+}
+
+.luxury-input-field-disabled {
+    color: var(--text-muted, rgba(255, 255, 255, 0.5)) !important;
+    background-color: var(--card-bg, rgba(30, 30, 30, 0.1)) !important;
+    border-color: rgba(128, 128, 128, 0.25) !important;
+}
+
+.luxury-profile-save-btn {
+    color: var(--gold, #d4af37) !important;
+    border-color: var(--gold, #d4af37) !important;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    background: transparent;
+    transition: all 0.3s ease-in-out;
+}
+
+.luxury-profile-save-btn:hover {
+    background-color: rgba(212, 175, 55, 0.1) !important;
+    color: var(--gold, #d4af37) !important;
+}
