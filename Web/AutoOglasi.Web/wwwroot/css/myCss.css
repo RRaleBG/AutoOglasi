@@ -751,3 +751,42 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     background-color: rgba(212, 175, 55, 0.1) !important;
     color: var(--gold, #d4af37) !important;
 }
+
+/* --- ACCESS DENIED VIEW TUNING --- */
+.autooglasi-denied-box {
+    background-color: var(--card-bg, rgba(33, 37, 41, 0.25)) !important;
+}
+
+.autooglasi-denied-icon {
+    font-size: 2.5rem;
+    color: #ff6b6b;
+    opacity: 0.8;
+}
+
+.autooglasi-denied-sub-spacing {
+    letter-spacing: 3px;
+}
+
+.autooglasi-denied-title {
+    letter-spacing: 1px;
+}
+
+.autooglasi-denied-text {
+    color: var(--text-muted, #888) !important;
+}
+
+.autooglasi-denied-btn {
+    color: var(--text-muted, #c5c6c7) !important;
+    border-color: rgba(128, 128, 128, 0.2) !important;
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    transition: all 0.3s ease-in-out;
+}
+
+.autooglasi-denied-btn:hover {
+    background-color: rgba(255, 255, 255, 0.07) !important;
+    color: var(--text-main, #fff) !important;
+    border-color: var(--gold, #d4af37) !important;
+}
+
