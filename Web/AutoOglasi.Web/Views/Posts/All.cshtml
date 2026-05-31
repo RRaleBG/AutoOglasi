@@ -6,7 +6,8 @@
 }
 
 <div class="py-2">
-    <div class="p-3 mb-4 bg-black bg-opacity-30 border border-secondary border-opacity-10">
+    <!-- Traka za sortiranje na vrhu - sada koristi klasu koja menja boju prema temi -->
+    <div class="p-3 mb-4 luxury-sorting-bar border border-secondary border-opacity-10">
         <partial name="_SortingPartial" model="@Model" />
     </div>
 
@@ -16,15 +17,17 @@
             <div class="col-12 col-md-6 col-lg-4 col-xl-3">
                 <div class="card h-100 luxury-card">
                     
-                    <div class="d-flex justify-content-between align-items-center p-3" style="background: rgba(0,0,0,0.2);">
-                        <small class="text-muted" style="font-size: 0.75rem;">
+                    <!-- Gornja traka sa datumom i cenom -->
+                    <div class="d-flex justify-content-between align-items-center p-3 luxury-card-header">
+                        <small class="luxury-card-date">
                             <i class="far fa-calendar-alt me-1"></i>@post.PublishedOn
                         </small>
-                        <span class="fw-bold" style="color: #d4af37; font-size: 0.95rem;">
+                        <span class="fw-bold luxury-card-price">
                             € @post.Car.Price.ToString("N0", CultureInfo.InvariantCulture)
                         </span>
                     </div>
 
+                    <!-- Slika automobila sa wrap-erom za hover efekat -->
                     <a asp-action="Offer" asp-route-id="@post.Id" class="text-decoration-none">
                         <div class="luxury-card-img-wrapper">
                             <img src="@post.Car.CoverImage"
@@ -33,24 +36,27 @@
                         </div>
                     </a>
 
-                    <div class="card-body d-flex flex-column justify-content-between text-center p-3">
+                    <!-- Telo kartice sa detaljima -->
+                    <div class="card-body d-flex flex-column justify-content-between text-center p-3 luxury-card-body">
                         <div>
-                            <h5 class="text-white text-uppercase tracking-wide mb-2" style="font-size: 1.1rem; letter-spacing: 1px;">
-                                @post.Car.Make <span class="fw-light text-muted">@post.Car.Model</span>
+                            <h5 class="text-uppercase tracking-wide mb-2 luxury-card-title">
+                                @post.Car.Make <span class="fw-light luxury-card-model">@post.Car.Model</span>
                             </h5>
                             
                             <hr class="my-2 border-secondary opacity-10" />
 
-                            <p class="text-muted small font-monospace m-0" style="font-size: 0.8rem;">
+                            <!-- Tehničke specifikacije vozila -->
+                            <p class="small font-monospace m-0 luxury-card-specs">
                                 @post.Car.Year • @post.Car.FuelType • @post.Car.Kilometers.ToString("N0", CultureInfo.InvariantCulture) km
                             </p>
-                            <p class="text-muted small font-monospace mb-2" style="font-size: 0.8rem;">
+                            <p class="small font-monospace mb-2 luxury-card-specs">
                                 @post.Car.TransmissionType
                             </p>
                         </div>
 
+                        <!-- Lokacija na dnu kartice -->
                         <div class="mt-2">
-                            <span class="small tracking-wider text-uppercase" style="color: #bfa15f; font-size: 0.75rem; letter-spacing: 1px;">
+                            <span class="small tracking-wider text-uppercase luxury-card-location">
                                 <i class="fas fa-map-marker-alt me-1"></i>@post.Car.LocationCity
                             </span>
                         </div>
@@ -61,6 +67,7 @@
         }
     </div>
 
+    <!-- Paginacija na dnu -->
     <div class="mt-5 p-3 border-top border-secondary border-opacity-10">
         <partial name="_PagingPartial" model="@Model" />
     </div>
