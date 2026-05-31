@@ -1,4 +1,4 @@
-@using AutoOglasi.Data.Models;
+@using AutoOglasi.Data.Models @* <-- Promeni ovaj namespace ako ti se ApplicationUser nalazi u drugom folderu *@
 @inject SignInManager<ApplicationUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
