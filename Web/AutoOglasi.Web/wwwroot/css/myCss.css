@@ -604,5 +604,39 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 }
 
 
+/* --- IDENTITY & AUTHENTICATION VIEWS TUNING --- */
+.luxury-auth-card {
+    max-width: 420px;
+    width: 100%;
+}
+
+.luxury-sub-spacing-sm {
+    letter-spacing: 3px;
+}
+
+.luxury-forgot-password-link {
+    color: #bfa15f;
+    font-size: 0.8rem;
+    transition: color 0.2s ease;
+}
+
+.luxury-forgot-password-link:hover {
+    color: var(--gold, #d4af37);
+}
+
+.luxury-auth-btn-register {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+.luxury-resend-link {
+    color: var(--text-muted, #888);
+    font-size: 0.75rem;
+    transition: color 0.2s ease;
+}
+
+.luxury-resend-link:hover {
+    color: var(--text-main, #fff);
+}
 
 
