@@ -1,12 +1,28 @@
 @page
 @model AutoOglasi.Web.Areas.Identity.Pages.Account.ExternalLoginModel
 @{
-    ViewData["Title"] = "External login";
+    ViewData["Title"] = "External Login";
 }
 
 <div class="d-flex justify-content-center align-items-center min-vh-100">
-    <div class="card p-4" style="max-width:420px; width:100%;">
-        <h2 class="text-center mb-3">External login</h2>
-        <p class="text-center">Redirecting...</p>
+    <div class="card luxury-card shadow-lg luxury-auth-card">
+        <div class="card-body p-4 p-md-5 text-center">
+            
+            <div class="mb-4">
+                <span class="text-uppercase small font-monospace luxury-gold-sub-text luxury-sub-spacing-sm">Gateway</span>
+                <h2 class="fw-light text-uppercase mt-1 text-theme-heading luxury-title-spacing">@ViewData["Title"]</h2>
+                <div class="mx-auto mt-2 luxury-deco-line-sm"></div>
+            </div>
+
+            <div class="py-3">
+                <div class="spinner-border text-gold mb-3 luxury-spinner-gold" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="font-monospace small m-0 luxury-redirect-text">
+                    Redirecting to secure provider...
+                </p>
+            </div>
+
+        </div>
     </div>
 </div>
