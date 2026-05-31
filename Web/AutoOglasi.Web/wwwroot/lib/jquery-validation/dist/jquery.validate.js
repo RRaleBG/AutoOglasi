@@ -1075,6 +1075,12 @@ $.extend( $.validator, {
 
 			// Always apply ignore filter
 			if ( typeof element === "string" ) {
+
+				// Defensive check: plugin selector input must not be HTML-like
+				if ( /^\s*</.test( element ) ) {
+					return;
+				}
+
 				return $( $.find( element, this.currentForm ) ).not( this.settings.ignore )[ 0 ];
 			}
 			return $( element ).not( this.settings.ignore )[ 0 ];
