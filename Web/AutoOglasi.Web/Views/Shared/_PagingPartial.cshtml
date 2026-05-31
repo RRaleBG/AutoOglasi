@@ -12,17 +12,17 @@
 }
 
 <nav aria-label="Pager" class="my-4">
-    <ul class="pagination justify-content-center font-monospace small">
+    <ul class="pagination justify-content-center font-monospace small luxury-pagination">
         
         <!-- First Page -->
         <li class="page-item @if (!Model.HasPreviousPage) { <text>disabled</text> }">
-            <a class="page-link border-secondary border-opacity-10 bg-dark bg-opacity-20 text-white-50 rounded-0 px-3 py-2" 
+            <a class="page-link rounded-0 px-3 py-2" 
                href=@($"{urlPathWithoutAPageNumber}{Model.FirstPage}{this.Context.Request.QueryString}")>First</a>
         </li>
         
         <!-- Previous Page -->
         <li class="page-item @if (!Model.HasPreviousPage) { <text>disabled</text> }">
-            <a class="page-link border-secondary border-opacity-10 bg-dark bg-opacity-20 text-white-50 px-3 py-2" 
+            <a class="page-link px-3 py-2" 
                href=@($"{urlPathWithoutAPageNumber}{Model.PreviousPageNumber}{this.Context.Request.QueryString}")>
                 <i class="fas fa-chevron-left small opacity-50"></i>
             </a>
@@ -34,7 +34,7 @@
             if (i > 0)
             {
                 <li class="page-item">
-                    <a class="page-link border-secondary border-opacity-10 bg-dark bg-opacity-20 text-white-50 px-3 py-2" 
+                    <a class="page-link px-3 py-2" 
                        href=@($"{urlPathWithoutAPageNumber}{i}{this.Context.Request.QueryString}")>@i</a>
                 </li>
             }
@@ -42,8 +42,7 @@
 
         <!-- Current Active Page -->
         <li class="page-item active" aria-current="page">
-            <span class="page-link px-3 py-2 rounded-0 fw-bold" 
-                  style="background-color: rgba(212, 175, 55, 0.15) !important; color: #d4af37 !important; border-color: rgba(212, 175, 55, 0.3) !important;">
+            <span class="page-link px-3 py-2 rounded-0 fw-bold luxury-page-active">
                 @Model.PageNumber
             </span>
         </li>
@@ -54,7 +53,7 @@
             if (i <= Model.PagesCount)
             {
                 <li class="page-item">
-                    <a class="page-link border-secondary border-opacity-10 bg-dark bg-opacity-20 text-white-50 px-3 py-2" 
+                    <a class="page-link px-3 py-2" 
                        href=@($"{urlPathWithoutAPageNumber}{i}{this.Context.Request.QueryString}")>@i</a>
                 </li>
             }
@@ -62,7 +61,7 @@
 
         <!-- Next Page -->
         <li class="page-item @if (!Model.HasNextPage) { <text>disabled</text> }">
-            <a class="page-link border-secondary border-opacity-10 bg-dark bg-opacity-20 text-white-50 px-3 py-2" 
+            <a class="page-link px-3 py-2" 
                href=@($"{urlPathWithoutAPageNumber}{Model.NextPageNumber}{this.Context.Request.QueryString}")>
                 <i class="fas fa-chevron-right small opacity-50"></i>
             </a>
@@ -70,26 +69,9 @@
 
         <!-- Last Page -->
         <li class="page-item @if (!Model.HasNextPage) { <text>disabled</text> }">
-            <a class="page-link border-secondary border-opacity-10 bg-dark bg-opacity-20 text-white-50 rounded-0 px-3 py-2" 
+            <a class="page-link rounded-0 px-3 py-2" 
                href=@($"{urlPathWithoutAPageNumber}{Model.LastPage}{this.Context.Request.QueryString}")>Last</a>
         </li>
 
     </ul>
 </nav>
-
-<style>
-    .pagination .page-link {
-        transition: all 0.2s ease-in-out;
-    }
-    .pagination .page-link:hover:not(.active) {
-        background-color: rgba(255, 255, 255, 0.05) !important;
-        color: #fff !important;
-        border-color: rgba(255, 255, 255, 0.15) !important;
-    }
-    .pagination .page-item.disabled .page-link {
-        background-color: rgba(0, 0, 0, 0.1) !important;
-        border-color: rgba(255, 255, 255, 0.03) !important;
-        color: rgba(255, 255, 255, 0.15) !important;
-        cursor: not-allowed;
-    }
-</style>
