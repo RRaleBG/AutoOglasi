@@ -52,14 +52,14 @@
     <div class="row justify-content-center mb-5 text-center text-lg-start">
         <div class="col-12 col-lg-10 d-flex flex-column flex-lg-row justify-content-between align-items-center">
             <div>
-                <span class="text-uppercase small luxury-gold-sub" style="letter-spacing: 4px;">Exclusive Collection</span>
-                <h1 class="display-5 fw-bold text-uppercase mt-1 mb-2 text-theme-heading" style="letter-spacing: 2px;">
+                <span class="text-uppercase small luxury-gold-sub-text luxury-sub-spacing">Exclusive Collection</span>
+                <h1 class="display-5 fw-bold text-uppercase mt-1 mb-2 text-theme-heading luxury-heading-spacing">
                     @Model.Car.Make @Model.Car.Model
                 </h1>
                 <p class="small luxury-text-muted"><i class="fas fa-clock me-2"></i>Curated on @Model.PublishedOn</p>
             </div>
             <div class="mt-4 mt-lg-0 text-center text-lg-end">
-                <span class="small text-uppercase d-block luxury-text-muted" style="letter-spacing: 2px;">Investment Value</span>
+                <span class="small text-uppercase d-block luxury-text-muted luxury-heading-spacing">Investment Value</span>
                 <span class="display-5 fw-bold luxury-price-tag">
                     €@Model.Car.Price.ToString("N0", CultureInfo.CurrentCulture)
                 </span>
@@ -73,37 +73,37 @@
             <div class="row row-cols-2 row-cols-md-3 g-3">
                 <div class="col">
                     <div class="p-4 h-100 border border-secondary border-opacity-10 luxury-spec-box">
-                        <div class="text-uppercase small pb-1 luxury-spec-label" style="letter-spacing: 2px; font-size: 0.75rem;">Year of Production</div>
+                        <div class="text-uppercase small pb-1 luxury-spec-label luxury-heading-spacing luxury-spec-size">Year of Production</div>
                         <div class="fs-4 fw-light luxury-spec-value">@Model.Car.Year</div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="p-4 h-100 border border-secondary border-opacity-10 luxury-spec-box">
-                        <div class="text-uppercase small pb-1 luxury-spec-label" style="letter-spacing: 2px; font-size: 0.75rem;">Transmission</div>
+                        <div class="text-uppercase small pb-1 luxury-spec-label luxury-heading-spacing luxury-spec-size">Transmission</div>
                         <div class="fs-4 fw-light luxury-spec-value">@Model.Car.TransmissionType</div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="p-4 h-100 border border-secondary border-opacity-10 luxury-spec-box">
-                        <div class="text-uppercase small pb-1 luxury-spec-label" style="letter-spacing: 2px; font-size: 0.75rem;">Engine Performance</div>
+                        <div class="text-uppercase small pb-1 luxury-spec-label luxury-heading-spacing luxury-spec-size">Engine Performance</div>
                         <div class="fs-4 fw-light luxury-spec-value">@Model.Car.Horsepower <span class="fs-6 luxury-text-muted">BHP</span></div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="p-4 h-100 border border-secondary border-opacity-10 luxury-spec-box">
-                        <div class="text-uppercase small pb-1 luxury-spec-label" style="letter-spacing: 2px; font-size: 0.75rem;">Fuel & Drivetrain</div>
+                        <div class="text-uppercase small pb-1 luxury-spec-label luxury-heading-spacing luxury-spec-size">Fuel & Drivetrain</div>
                         <div class="fs-4 fw-light luxury-spec-value">@Model.Car.FuelType</div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="p-4 h-100 border border-secondary border-opacity-10 luxury-spec-box">
-                        <div class="text-uppercase small pb-1 luxury-spec-label" style="letter-spacing: 2px; font-size: 0.75rem;">Location</div>
+                        <div class="text-uppercase small pb-1 luxury-spec-label luxury-heading-spacing luxury-spec-size">Location</div>
                         <div class="fs-4 fw-light text-truncate luxury-spec-value">@Model.Car.LocationCity</div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="p-4 h-100 border border-secondary border-opacity-10 luxury-spec-box">
-                        <div class="text-uppercase small pb-1 luxury-spec-label" style="letter-spacing: 2px; font-size: 0.75rem;">Status</div>
+                        <div class="text-uppercase small pb-1 luxury-spec-label luxury-heading-spacing luxury-spec-size">Status</div>
                         <div class="fs-4 fw-light luxury-status-active">Available</div>
                     </div>
                 </div>
@@ -114,26 +114,26 @@
     <!-- Opis i Kontakt podaci agenta -->
     <div class="row justify-content-center g-5 mb-5">
         <div class="col-12 col-lg-6">
-            <h3 class="fw-light mb-4 pb-2 border-bottom border-secondary border-opacity-25 text-theme-heading" style="letter-spacing: 2px;">The Story</h3>
-            <p class="lh-lg luxury-story-text" style="white-space: pre-line; font-size: 0.95rem; font-family: monospace;">
+            <h3 class="fw-light mb-4 pb-2 border-bottom border-secondary border-opacity-25 text-theme-heading luxury-heading-spacing">The Story</h3>
+            <p class="lh-lg luxury-story-text luxury-story-custom">
                 @Model.Car.Description
             </p>
         </div>
         
         <div class="col-12 col-lg-4">
             <div class="p-4 border border-secondary border-opacity-25 text-center luxury-agent-card">
-                <h4 class="fw-light mb-2 text-theme-heading" style="letter-spacing: 2px;">Private Viewing</h4>
+                <h4 class="fw-light mb-2 text-theme-heading luxury-heading-spacing">Private Viewing</h4>
                 <p class="small mb-4 luxury-text-muted">Serious inquiries only. Schedule a private inspection.</p>
                 
                 <hr class="border-secondary opacity-25 mb-4" />
 
                 <div class="mb-3">
-                    <span class="text-uppercase d-block small pb-1 luxury-text-muted" style="letter-spacing: 1px;">Managing Concierge</span>
+                    <span class="text-uppercase d-block small pb-1 luxury-text-muted luxury-label-spacing">Managing Concierge</span>
                     <span class="fs-5 fw-light luxury-agent-value">@Model.SellerName</span>
                 </div>
 
                 <div class="mb-4">
-                    <span class="text-uppercase d-block small pb-1 luxury-text-muted" style="letter-spacing: 1px;">Origin</span>
+                    <span class="text-uppercase d-block small pb-1 luxury-text-muted luxury-label-spacing">Origin</span>
                     <span class="fs-6 luxury-text-muted">@Model.Car.LocationCity, @Model.Car.LocationCountry</span>
                 </div>
 
