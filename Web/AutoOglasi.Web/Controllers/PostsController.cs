@@ -56,6 +56,7 @@ namespace AutoOglasi.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize]
         public async Task<IActionResult> Create(PostFormInputModel input)
         {
