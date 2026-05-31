@@ -799,4 +799,17 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 .luxury-spinner-gold {
     color: var(--gold, #d4af37) !important;
 }
+/* --- ABOUT VIEW TUNING --- */
+.luxury-about-wrapper {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.luxury-about-sub-spacing {
+    letter-spacing: 4px;
+}
+
+.luxury-about-title-spacing {
+    letter-spacing: 1px;
+}
 
