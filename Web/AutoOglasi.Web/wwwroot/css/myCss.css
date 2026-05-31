@@ -839,3 +839,35 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     pointer-events: none;
 }
 
+/* --- GLOBAL ERROR VIEW TUNING --- */
+.luxury-error-request {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-family: var(--font-monospace, monospace);
+    font-size: 0.85rem;
+    color: var(--text-muted, #888);
+}
+
+.luxury-error-container {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.luxury-error-code {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    color: #ff6b6b; /* Zadržana crvena, ali kontrolisana samo za kôd greške */
+    letter-spacing: 2px;
+}
+
+.luxury-error-message {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-weight: 300;
+    color: var(--text-main, #fff);
+    letter-spacing: 1px;
+}
+
