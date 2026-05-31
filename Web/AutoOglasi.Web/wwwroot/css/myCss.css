@@ -263,3 +263,38 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- LAYOUT & NAVBAR CORE TUNING --- */
+.luxury-theme-toggle-icon {
+    font-size: 1.25rem; /* Menja stari fs-5 */
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+.luxury-theme-toggle-icon:hover {
+    transform: scale(1.1);
+}
+.theme-dark-active {
+    color: var(--gold) !important; /* Ili specifična narandžasta/žuta za mesec */
+}
+.theme-light-active {
+    color: var(--text-main) !important; /* Prilagođava se svetlom tekstu/kontrastu */
+}
+.luxury-navbar-logo {
+    height: 38px;
+    width: auto;
+}
+.luxury-dot-gold {
+    color: var(--gold);
+}
+
