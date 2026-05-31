@@ -1,204 +1,74 @@
 /* --- LUXURY ELITE GLOBAL STYLES --- */
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght=500;700&family=Montserrat:wght=300;400;600&display=swap');
 
-/* Globalna tipografija i tamna podloga za ceo sajt */
+/* ==========================================================================
+   --- ARHITEKTURA BOJA (CSS Promenljive kontrolišu sve) ---
+   ========================================================================== */
+:root, [data-bs-theme="dark"] {
+    --bg-main: #0b0c10;
+    --bg-card: #11141a;
+    --bg-navbar: #050508;
+    --bg-box: #1f2833;
+    --bg-black-flat: #000000;
+    --text-main: #c5c6c7;
+    --text-title: #ffffff;
+    --text-muted: #888888;
+    --text-muted-light: rgba(255, 255, 255, 0.4);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --gold: #d4af37;
+}
+
+[data-bs-theme="light"] {
+    --bg-main: #f8f9fa;
+    --bg-card: #ffffff;
+    --bg-navbar: #ffffff;
+    --bg-box: #f1f3f5;
+    --bg-black-flat: #ffffff;
+    --text-main: #212529;
+    --text-title: #050508;
+    --text-muted: #6c757d;
+    --text-muted-light: #495057;
+    --border-color: rgba(0, 0, 0, 0.08);
+    --gold: #bfa15f;
+}
+
+/* ==========================================================================
+   --- TIPOGRAFIJA I OSNOVA ---
+   ========================================================================== */
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #0b0c10 !important;
-    color: #c5c6c7 !important;
-}
-/* ==========================================================================
-   --- STRANICA POJEDINAČNOG OGLASA (DETAILS / OFFER) ---
-   ========================================================================== */
-
-/* Podrazumevani mračni režim (Dark Mode) */
-.luxury-gold-sub { color: rgba(212, 175, 55, 0.75) !important; }
-.luxury-text-muted { color: #888888 !important; }
-.luxury-price-tag { color: #d4af37 !important; }
-.luxury-spec-box { background-color: #1f2833 !important; }
-.luxury-spec-label { color: #888888 !important; }
-.luxury-spec-value { color: #ffffff !important; }
-.luxury-status-active { color: #d4af37 !important; }
-.luxury-story-text { color: #c5c6c7 !important; }
-.luxury-agent-card { background-color: #000000 !important; }
-.luxury-agent-value { color: #ffffff !important; }
-.luxury-agent-btn {
-    color: #d4af37 !important;
-    border-color: #d4af37 !important;
-    letter-spacing: 2px;
-    font-size: 0.85rem;
-    background: transparent !important;
-    transition: all 0.3s;
-}
-.luxury-agent-btn:hover { background-color: rgba(214, 175, 55, 0.1) !important; }
-
-/* --------------------------------------------------------------------------
-   --- PRELAZAK U SVETLI REŽIM (Light Mode) ---
-   -------------------------------------------------------------------------- */
-[data-bs-theme="light"] .luxury-gold-sub { color: #8a6d3b !important; }
-[data-bs-theme="light"] .luxury-text-muted { color: #6c757d !important; }
-[data-bs-theme="light"] .luxury-price-tag { color: #bfa15f !important; }
-
-/* Tehničke specifikacije dobijaju svetlo sivu modernu pozadinu umesto tamne */
-[data-bs-theme="light"] .luxury-spec-box { background-color: #f8f9fa !important; }
-[data-bs-theme="light"] .luxury-spec-label { color: #6c757d !important; }
-[data-bs-theme="light"] .luxury-spec-value { color: #212529 !important; }
-[data-bs-theme="light"] .luxury-status-active { color: #8a6d3b !important; }
-
-/* Opis i tekst priče */
-[data-bs-theme="light"] .luxury-story-text { color: #333333 !important; }
-
-/* Kartica agenta postaje potpuno bela sa blagom senkom */
-[data-bs-theme="light"] .luxury-agent-card { 
-    background-color: #ffffff !important; 
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
-}
-[data-bs-theme="light"] .luxury-agent-value { color: #212529 !important; }
-[data-bs-theme="light"] .luxury-agent-btn {
-    color: #bfa15f !important;
-    border-color: #bfa15f !important;
-}
-[data-bs-theme="light"] .luxury-agent-btn:hover { background-color: rgba(191, 161, 95, 0.1) !important; }
-
-/* ==========================================================================
-   --- STRANICA ZA NAPREDNU PRETRAGU (SEARCH ENGINE) ---
-   ========================================================================== */
-
-/* Podrazumevani mračni režim (Dark Mode) */
-.luxury-search-form { background-color: rgba(0, 0, 0, 0.2) !important; }
-.luxury-search-label { color: rgba(255, 255, 255, 0.5) !important; font-size: 0.75rem; letter-spacing: 1px; }
-.luxury-search-section-title { color: #ffffff !important; font-size: 0.8rem; letter-spacing: 1px; }
-.luxury-checkbox { background-color: transparent !important; border-color: rgba(255, 255, 255, 0.2) !important; }
-.luxury-checkbox:checked { background-color: #d4af37 !important; border-color: #d4af37 !important; }
-.luxury-checkbox-label { color: rgba(255, 255, 255, 0.5) !important; font-size: 0.85rem; }
-.luxury-search-btn {
-    color: #d4af37 !important;
-    border-color: #d4af37 !important;
-    letter-spacing: 3px;
-    font-size: 0.85rem;
-    background: transparent !important;
-    transition: all 0.3s ease;
-}
-.luxury-search-btn:hover {
-    background-color: rgba(214, 175, 55, 0.1) !important;
+    background-color: var(--bg-main) !important;
+    color: var(--text-main) !important;
 }
 
-/* --------------------------------------------------------------------------
-   --- PRELAZAK U SVETLI REŽIM (Light Mode) ---
-   -------------------------------------------------------------------------- */
-[data-bs-theme="light"] .luxury-search-form { 
-    background-color: #ffffff !important; 
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
-}
-[data-bs-theme="light"] .luxury-search-label { color: #495057 !important; }
-[data-bs-theme="light"] .luxury-search-section-title { color: #212529 !important; }
-[data-bs-theme="light"] .luxury-checkbox { border-color: rgba(0, 0, 0, 0.25) !important; }
-[data-bs-theme="light"] .luxury-checkbox:checked { background-color: #bfa15f !important; border-color: #bfa15f !important; }
-[data-bs-theme="light"] .luxury-checkbox-label { color: #212529 !important; }
-[data-bs-theme="light"] .luxury-search-btn {
-    color: #bfa15f !important;
-    border-color: #bfa15f !important;
-}
-[data-bs-theme="light"] .luxury-search-btn:hover {
-    background-color: rgba(191, 161, 95, 0.1) !important;
+h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
+    color: var(--text-title) !important;
 }
 
-
-/* ==========================================================================
-   --- DODATNE LUKSUZNE KLASE ZA STRANICU SA LISTOM (SHOWROOM) ---
-   ========================================================================== */
-
-/* Podrazumevani mračni režim (Dark Mode) */
-.luxury-sorting-bar { background-color: rgba(0, 0, 0, 0.3) !important; }
-.luxury-card-specs { color: rgba(255, 255, 255, 0.5) !important; font-size: 0.8rem; }
-.luxury-card-location { color: #bfa15f; font-size: 0.75rem; letter-spacing: 1px; }
-
-/* Tranzicija za svetli režim (Light Mode) */
-[data-bs-theme="light"] .luxury-sorting-bar { 
-    background-color: #ffffff !important; 
-    color: #212529 !important;
+.text-muted, small, .font-monospace, .luxury-text-muted, .luxury-card-specs {
+    color: var(--text-muted) !important;
 }
-/* Osiguravamo da selektori i tekstovi unutar parcijalnog sortiranja poprime tamnu boju */
-[data-bs-theme="light"] .luxury-sorting-bar select,
-[data-bs-theme="light"] .luxury-sorting-bar label,
-[data-bs-theme="light"] .luxury-sorting-bar span {
-    color: #212529 !important;
-}
-/* Popravka kontrasta za specifikacije i lokaciju unutar bele kartice */
-[data-bs-theme="light"] .luxury-card-specs { color: #495057 !important; }
-[data-bs-theme="light"] .luxury-card-location { color: #8a6d3b !important; }
 
-
-
-/* ==========================================================================
-   --- DOPUNA ZA INDEX STRANICU I KARTICE OGLASA ---
-   ========================================================================== */
-
-/* Podrazumevani mračni režim (Dark) */
-.text-theme-heading { color: #ffffff !important; }
-.luxury-card-link { color: #c5c6c7 !important; }
-.luxury-card-header { background-color: rgba(0, 0, 0, 0.4) !important; }
-.luxury-card-date { color: rgba(255, 255, 255, 0.4) !important; font-size: 0.75rem; }
-.luxury-card-price { color: #d4af37; font-size: 0.95rem; }
-.luxury-card-body { background-color: rgba(0, 0, 0, 0.2) !important; }
-.luxury-card-title { color: #ffffff !important; font-size: 1.05rem; letter-spacing: 1px; }
-.luxury-card-model { color: rgba(255, 255, 255, 0.5) !important; font-size: 0.9rem; }
-
-/* Market Insights dugme i boks (Dark) */
-.luxury-stats-btn {
-    color: #c5c6c7 !important;
-    border-color: rgba(255,255,255,0.15) !important;
-    letter-spacing: 2px;
-    font-size: 0.8rem;
-    background: #1f2833 !important;
-}
-.luxury-stats-box { background-color: #050508 !important; }
-.luxury-stats-label { color: rgba(255, 255, 255, 0.4) !important; letter-spacing: 1px; font-size: 0.65rem; }
-.luxury-stats-value { color: #ffffff !important; }
-.luxury-btn-gold { color: #d4af37; border-color: #d4af37 !important; letter-spacing: 2px; font-size: 0.85rem; }
-
-/* --------------------------------------------------------------------------
-   --- TRANZICIJA U SVETLI REŽIM (Light Mode) ---
-   -------------------------------------------------------------------------- */
-[data-bs-theme="light"] .text-theme-heading { color: #212529 !important; }
-[data-bs-theme="light"] .luxury-card-link { color: #212529 !important; }
-
-/* Gornji deo kartice u light modu dobija luksuznu tamnu traku kako bi cena i datum blistali kao u katalogu */
-[data-bs-theme="light"] .luxury-card-header { background-color: #11141a !important; }
-[data-bs-theme="light"] .luxury-card-date { color: rgba(255, 255, 255, 0.6) !important; }
-[data-bs-theme="light"] .luxury-card-price { color: #d4af37 !important; }
-
-/* Donji deo kartice sa nazivom i modelom postaje nežno beo sa jasnim kontrastom */
-[data-bs-theme="light"] .luxury-card-body { background-color: #f8f9fa !important; }
-[data-bs-theme="light"] .luxury-card-title { color: #212529 !important; }
-[data-bs-theme="light"] .luxury-card-model { color: #6c757d !important; }
-
-/* Market Insights u light modu */
-[data-bs-theme="light"] .luxury-stats-btn {
-    color: #212529 !important;
-    border-color: rgba(0, 0, 0, 0.15) !important;
-    background: #ffffff !important;
-}
-[data-bs-theme="light"] .luxury-stats-box { background-color: #ffffff !important; }
-[data-bs-theme="light"] .luxury-stats-label { color: #6c757d !important; }
-[data-bs-theme="light"] .luxury-stats-value { color: #212529 !important; }
-
-
-/* Ekskluzivni font za brendiranje (koristi se u _Layout za logo) */
 .luxury-brand-font {
     font-family: 'Cinzel', serif;
     letter-spacing: 2px;
 }
 
-/* --- PREMIUM HEADER / NAVBAR --- */
+/* ==========================================================================
+   --- PREMIUM HEADER / NAVBAR ---
+   ========================================================================== */
 .luxury-navbar {
-    background-color: #050508 !important; /* Duboka crna za premium kontrast */
-    border-bottom: 1px solid rgba(214, 175, 55, 0.15) !important; /* Elegantna zlatna nit */
+    background-color: var(--bg-navbar) !important;
+    border-bottom: 1px solid rgba(214, 175, 55, 0.15) !important;
     padding: 12px 0 !important;
 }
 
+[data-bs-theme="light"] .luxury-navbar {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
 .luxury-nav-link {
-    color: #c5c6c7 !important;
+    color: var(--text-muted-light) !important;
     text-transform: uppercase;
     font-size: 0.8rem;
     letter-spacing: 2px;
@@ -206,237 +76,113 @@ body {
 }
 
 .luxury-nav-link:hover {
-    color: #d4af37 !important; /* Zlatni hover efekat za linkove */
+    color: var(--gold) !important;
 }
 
-/* --- STRANICA SA DETALJIMA (OFFER PAGE) --- */
-.luxury-carousel-container {
-    background: #000;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    overflow: hidden;
+[data-bs-theme="light"] .luxury-navbar .luxury-brand-font,
+[data-bs-theme="light"] .luxury-navbar a:not(.luxury-nav-link),
+[data-bs-theme="light"] .luxury-navbar span:not([class*="text-warning"]) {
+    color: var(--text-title) !important;
 }
 
-.luxury-carousel-img {
-    height: 350px;
-    width: 100%;
-    object-fit: cover;
-}
-
-@media (min-width: 768px) {
-    .luxury-carousel-img {
-        height: 500px; /* Moćna visina za desktop ekrane */
-    }
-}
-
-/* Sličice u galeriji ispod glavnog klizača */
-.luxury-thumb {
-    height: 75px;
-    object-fit: cover;
-    cursor: pointer;
-    opacity: 0.4;
-    transition: all 0.2s ease-in-out;
-    border-bottom: 3px solid transparent;
-}
-
-.luxury-thumb:hover {
-    opacity: 1;
-    border-bottom: 3px solid #d4af37; /* Zlatna linija kada se pređe mišem */
-}
-
-/* --- POČETNA STRANICA / SHOWROOM (INDEX) --- */
-.home-carousel-img {
-    height: 300px;
-    width: 100%;
-    object-fit: cover;
-    opacity: 0.8;
-}
-
-@media (min-width: 768px) {
-    .home-carousel-img {
-        height: 520px;
-    }
-}
-
-/* Monolitne luksuzne kartice za automobile */
+/* ==========================================================================
+   --- ELEMENTI I KARTICE (SHOWROOM / INDEX) ---
+   ========================================================================== */
 .luxury-card {
-    background: #11141a !important; /* Suptilno svetlija nijansa crne za dubinu kartice */
-    border: 1px solid rgba(255, 255, 255, 0.03) !important;
-    border-radius: 0px !important; /* Oštre, skupe ivice umesto zaobljenih */
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 0px !important;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .luxury-card:hover {
-    transform: translateY(-4px); /* Efekat levitacije */
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6) !important;
-    border-color: rgba(212, 175, 55, 0.25) !important; /* Blagi zlatni sjaj na ivici */
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+    border-color: var(--gold) !important;
 }
 
-/* Efekat zumiranja slike unutar kartice na hover */
-.luxury-card-img-wrapper {
-    height: 200px;
-    overflow: hidden;
-    position: relative;
+.luxury-card-header { 
+    background-color: #11141a !important; 
 }
 
-.luxury-card-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s ease;
+.luxury-card-date { 
+    color: rgba(255, 255, 255, 0.4) !important; 
+    font-size: 0.75rem; 
 }
 
-.luxury-card:hover .luxury-card-img {
-    transform: scale(1.05); /* Nežan zoom */
+.luxury-card-price, .luxury-price-tag, .luxury-card-location, .luxury-status-active { 
+    color: var(--gold) !important; 
 }
 
-/* --- PODRŠKA ZA LIGHT MOD (Prekidač na sunce/mesec) --- */
-[data-bs-theme="light"] body {
-    background-color: #f8f9fa !important;
-    color: #212529 !important;
-}
-[data-bs-theme="light"] .luxury-navbar {
-    background-color: #ffffff !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
-}
-[data-bs-theme="light"] .luxury-nav-link {
-    color: #495057 !important;
-}
-[data-bs-theme="light"] .luxury-card {
-    background: #ffffff !important;
-    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+.luxury-card-body { 
+    background-color: var(--bg-card) !important; 
 }
 
-/* Popravka da reč OGLASI u logou dobije tamnu boju na belom navbaru umesto da nestane */
-[data-bs-theme="light"] .luxury-navbar .luxury-brand-font,
-[data-bs-theme="light"] .luxury-navbar a:not(.luxury-nav-link),
-[data-bs-theme="light"] .luxury-navbar span:not([class*="text-warning"]) {
-    color: #050508 !important;
-}
+.luxury-card-title { color: var(--text-title) !important; font-size: 1.05rem; letter-spacing: 1px; }
+.luxury-card-model { color: var(--text-muted) !important; font-size: 0.9rem; }
+.luxury-card-link { color: var(--text-main) !important; }
+
+.luxury-card-img-wrapper { height: 200px; overflow: hidden; position: relative; }
+.luxury-card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.luxury-card:hover .luxury-card-img { transform: scale(1.05); }
 
 /* ==========================================================================
-   --- FORME I UNOSI (Zajednički stilovi za oštre ivice i tranziciju) ---
+   --- STRANICA POJEDINAČNOG OGLASA (DETAILS / OFFER) ---
    ========================================================================== */
-.form-control, .form-select, .form-floating input, .form-floating textarea {
-    border-radius: 0px !important; /* Elitne oštre ivice */
+.luxury-carousel-container { background: #000; border: 1px solid rgba(255, 255, 255, 0.05); overflow: hidden; }
+.luxury-carousel-img { height: 350px; width: 100%; object-fit: cover; }
+@media (min-width: 768px) { .luxury-carousel-img { height: 500px; } }
+
+.luxury-thumb { height: 75px; object-fit: cover; cursor: pointer; opacity: 0.4; transition: all 0.2s ease; border-bottom: 3px solid transparent; }
+.luxury-thumb:hover { opacity: 1; border-bottom: 3px solid var(--gold); }
+
+.luxury-spec-box { background-color: var(--bg-box) !important; }
+.luxury-spec-label { color: var(--text-muted) !important; }
+.luxury-spec-value { color: var(--text-title) !important; }
+.luxury-story-text { color: var(--text-main) !important; }
+
+.luxury-agent-card { 
+    background-color: var(--bg-black-flat) !important; 
+    border: 1px solid var(--border-color) !important;
+    box-shadow: [data-bs-theme="light"] 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+}
+
+.luxury-agent-value { color: var(--text-title) !important; }
+.luxury-agent-btn, .luxury-search-btn {
+    color: var(--gold) !important;
+    border-color: var(--gold) !important;
+    background: transparent !important;
+    transition: all 0.3s ease;
+    border-radius: 0px !important;
+}
+.luxury-agent-btn:hover, .luxury-search-btn:hover { background-color: rgba(191, 161, 95, 0.1) !important; }
+
+/* ==========================================================================
+   --- FORME, POLJA I PRETRAGA (SEARCH ENGINE) ---
+   ========================================================================== */
+.luxury-search-form { background-color: var(--bg-card) !important; }
+
+.form-control, .form-select {
+    border-radius: 0px !important;
+    background-color: var(--bg-main) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color) !important;
     transition: all 0.3s ease-in-out !important;
 }
 
-/* ==========================================================================
-   --- PODRAZUMEVANI MRAČNI REŽIM (Dark Mode - Salon) ---
-   ========================================================================== */
-body:not([data-bs-theme="light"]) .form-control,
-body:not([data-bs-theme="light"]) .form-select {
-    background-color: rgba(255, 255, 255, 0.02) !important;
-    color: #ffffff !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-}
-
-body:not([data-bs-theme="light"]) .form-control:focus,
-body:not([data-bs-theme="light"]) .form-select:focus {
-    background-color: rgba(212, 175, 55, 0.04) !important;
-    border-color: #d4af37 !important;
-    box-shadow: 0 0 8px rgba(212, 175, 55, 0.15) !important;
-    color: #ffffff !important;
-}
-
-body:not([data-bs-theme="light"]) .form-select option {
-    background-color: #11141a !important;
-    color: #ffffff !important;
-}
-
-body:not([data-bs-theme="light"]) .form-control:disabled {
-    background-color: rgba(255, 255, 255, 0.01) !important;
-    color: rgba(255, 255, 255, 0.3) !important;
-    border-color: rgba(255, 255, 255, 0.05) !important;
-}
-
-/* ==========================================================================
-   --- PODRŠKA ZA SVETLI REŽIM (Light Mode - White Showroom) ---
-   ========================================================================== */
-[data-bs-theme="light"] .form-control,
-[data-bs-theme="light"] .form-select {
-    background-color: #ffffff !important;
-    color: #212529 !important;
-    border: 1px solid rgba(0, 0, 0, 0.15) !important;
-}
-
-/* Zlatno/bronzani fokus u svetloj temi umesto Bootstrap plave */
-[data-bs-theme="light"] .form-control:focus,
-[data-bs-theme="light"] .form-select:focus {
-    background-color: #ffffff !important;
-    border-color: #bfa15f !important;
+.form-control:focus, .form-select:focus {
+    background-color: var(--bg-main) !important;
+    border-color: var(--gold) !important;
     box-shadow: 0 0 8px rgba(191, 161, 95, 0.2) !important;
-    color: #212529 !important;
+    color: var(--text-main) !important;
 }
 
-[data-bs-theme="light"] .form-select option {
-    background-color: #ffffff !important;
-    color: #212529 !important;
-}
+.luxury-checkbox { background-color: transparent !important; border-color: var(--text-muted) !important; border-radius: 0px !important;}
+.luxury-checkbox:checked { background-color: var(--gold) !important; border-color: var(--gold) !important; }
 
-[data-bs-theme="light"] .form-control:disabled {
-    background-color: #e9ecef !important;
-    color: #6c757d !important;
-}
-
-/* Popravka za tekstualne labele u form-floating strukturama */
-.form-floating > label {
-    transition: all 0.2s ease;
-}
-body:not([data-bs-theme="light"]) .form-floating > .form-control:focus ~ label {
-    color: #d4af37 !important;
-}
-[data-bs-theme="light"] .form-floating > .form-control:focus ~ label {
-    color: #bfa15f !important;
-}
-
-/* Globalna popravka za tabele i paginaciju u svetlom modu */
-[data-bs-theme="light"] .table {
-    background-color: #ffffff !important;
-    color: #212529 !important;
-}
-[data-bs-theme="light"] .table-responsive {
-    background-color: #ffffff !important;
-    border-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-/* ==========================================================================
-   --- ZAŠTITA ZA CRNE GRANIČNIKE I DETALJE NA KARTICAMA ---
-   ========================================================================== */
-/* Popravka za datume ("subota 30.maj") u gornjoj crnoj traci kartice na početnoj stranici */
-[data-bs-theme="light"] .luxury-card .text-muted,
-[data-bs-theme="light"] .luxury-card small,
-[data-bs-theme="light"] .luxury-card span[class*="text-"] {
-    color: rgba(255, 255, 255, 0.6) !important; /* Forsira svetlu boju unutar crne trake kartice */
-}
-
-/* ==========================================================================
-   --- HIRURŠKA ZAŠTITA ZA STRANICU SA DETALJIMA (OFFER PAGE) ---
-   ========================================================================== */
-/* Popravka za glavni naslov (FERRARI F12) i "The Story" naslov na Offer stranici */
-[data-bs-theme="light"] .luxury-carousel-container ~ div h1,
-[data-bs-theme="light"] .luxury-carousel-container ~ div h2,
-[data-bs-theme="light"] .luxury-carousel-container ~ div h3,
-[data-bs-theme="light"] .luxury-carousel-container ~ div .text-white {
-    color: #ffffff !important;
-}
-
-/* Popravka za male boksove sa specifikacijama (Godište, Menjač, Snaga...) */
-[data-bs-theme="light"] .luxury-carousel-container ~ div .row .bg-dark,
-[data-bs-theme="light"] .luxury-carousel-container ~ div .row div[style*="background"] {
-    color: #ffffff !important;
-}
-
-/* Zaštita za male mutne podnaslove u tim boksovima (npr. "YEAR OF PRODUCTION") */
-[data-bs-theme="light"] .luxury-carousel-container ~ div .row small,
-[data-bs-theme="light"] .luxury-carousel-container ~ div .row .text-muted,
-[data-bs-theme="light"] .luxury-carousel-container ~ div .row .font-monospace {
-    color: rgba(255, 255, 255, 0.45) !important;
-}
-
-/* Zaštita za datum objave oglasa na vrhu stranice sa detaljima ("Curated on...") */
-[data-bs-theme="light"] .luxury-carousel-container ~ div .opacity-75,
-[data-bs-theme="light"] .luxury-carousel-container ~ div .fa-clock ~ span,
-[data-bs-theme="light"] .luxury-carousel-container ~ div p.text-muted {
-    color: rgba(255, 255, 255, 0.6) !important;
-}
+/* Market Insights */
+.luxury-sorting-bar { background-color: var(--bg-card) !important; }
+.luxury-stats-btn { color: var(--text-main) !important; border-color: var(--border-color) !important; background: var(--bg-box) !important; }
+.luxury-stats-box { background-color: var(--bg-main) !important; }
+.luxury-stats-label { color: var(--text-muted) !important; }
+.luxury-stats-value { color: var(--text-title) !important; }
