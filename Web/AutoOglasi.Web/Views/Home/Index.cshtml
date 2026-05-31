@@ -5,15 +5,14 @@
     ViewData["Title"] = "Exclusive Fleet";
 }
 
-<div class="container-xl py-2" style="background-color: #0b0c10; color: #c5c6c7;">
+<div class="container-xl py-2">
 
     @if (!Model.LatestPosts.Any())
     {
         <div class="text-center py-5 my-5">
             <span class="text-warning text-uppercase small d-block mb-2" style="letter-spacing: 3px;">Showroom Empty</span>
-            <h2 class="text-white fw-light mb-4">Currently, there are no hypercars available.</h2>
-            <a asp-controller="Posts" asp-action="Create" class="btn border text-uppercase px-4 py-2" 
-               style="color: #d4af37; border-color: #d4af37 !important; letter-spacing: 2px; font-size: 0.85rem;">
+            <h2 class="fw-light mb-4 text-theme-heading">Currently, there are no hypercars available.</h2>
+            <a asp-controller="Posts" asp-action="Create" class="btn border text-uppercase px-4 py-2 luxury-btn-gold">
                 Deliver a Vehicle
             </a>
         </div>
@@ -54,7 +53,7 @@
 
         <div class="text-center mb-5">
             <span class="text-warning text-uppercase small" style="letter-spacing: 4px;">Available Portfolio</span>
-            <h2 class="text-white fw-light text-uppercase mt-1" style="letter-spacing: 2px;">The Latest Acquisitions</h2>
+            <h2 class="fw-light text-uppercase mt-1 text-theme-heading" style="letter-spacing: 2px;">The Latest Acquisitions</h2>
             <div class="mx-auto mt-3" style="width: 50px; height: 1px; background-color: #d4af37;"></div>
         </div>
 
@@ -63,25 +62,27 @@
             {
                 <div class="col-12 col-md-6 col-lg-4 col-xl-3">
                     <div class="card h-100 luxury-card overflow-hidden">
-                        <a asp-controller="Posts" asp-action="Offer" asp-route-id="@post.Id" class="text-decoration-none text-light d-flex flex-column h-100">
+                        <a asp-controller="Posts" asp-action="Offer" asp-route-id="@post.Id" class="text-decoration-none d-flex flex-column h-100 luxury-card-link">
                             
-                            <div class="d-flex justify-content-between align-items-center p-3 bg-black bg-opacity-20">
-                                <small class="text-muted" style="font-size: 0.75rem;"><i class="far fa-calendar-alt me-1"></i>@post.PublishedOn</small>
-                                <span class="fw-bold" style="color: #d4af37; font-size: 0.95rem;">
+                            <!-- Gornja traka sa datumom i cenom -->
+                            <div class="d-flex justify-content-between align-items-center p-3 luxury-card-header">
+                                <small class="luxury-card-date"><i class="far fa-calendar-alt me-1"></i>@post.PublishedOn</small>
+                                <span class="fw-bold luxury-card-price">
                                     €@post.Car.Price.ToString("N0", CultureInfo.InvariantCulture)
                                 </span>
                             </div>
 
-                            <div class="overflow-hidden" style="height: 200px;">
+                            <!-- Slika automobila -->
+                            <div class="overflow-hidden luxury-card-img-wrapper">
                                 <img src="@post.Car.CoverImage"
                                      class="w-100 h-100 luxury-card-img"
-                                     style="object-fit: cover;"
                                      alt="@($"{post.Car.Make} {post.Car.Model}")" />
                             </div>
 
-                            <div class="card-body bg-black bg-opacity-10 text-center py-3 mt-auto">
-                                <h5 class="m-0 text-white fw-normal text-uppercase tracking-wide" style="font-size: 1.05rem; letter-spacing: 1px;">
-                                    @post.Car.Make <span class="fw-bold text-muted" style="font-size: 0.9rem;">@post.Car.Model</span>
+                            <!-- Donji deo sa nazivom i modelom -->
+                            <div class="card-body text-center py-3 mt-auto luxury-card-body">
+                                <h5 class="m-0 text-uppercase tracking-wide luxury-card-title">
+                                    @post.Car.Make <span class="fw-bold luxury-card-model">@post.Car.Model</span>
                                 </h5>
                             </div>
                         </a>
@@ -90,27 +91,27 @@
             }
         </div>
 
+        <!-- Market Insights Sekcija na dnu -->
         <div class="text-center my-5 pt-4">
-            <button id="statistics-button" class="btn border text-uppercase px-4 py-3" 
-                    style="color: #c5c6c7; border-color: rgba(255,255,255,0.15) !important; letter-spacing: 2px; font-size: 0.8rem; background: #1f2833;">
+            <button id="statistics-button" class="btn border text-uppercase px-4 py-3 luxury-stats-btn">
                 <span><i class="bi bi-graph-up me-2"></i></span> Show Market Insights
             </button>
 
             <div id="statistics" class="d-none mt-4 row justify-content-center g-3">
                 <div class="col-12 col-md-8 col-lg-6">
-                    <div class="p-4 border border-secondary border-opacity-10 bg-black">
+                    <div class="p-4 border border-secondary border-opacity-10 luxury-stats-box">
                         <div class="row text-center">
                             <div class="col-4">
-                                <small class="text-muted d-block text-uppercase small" style="letter-spacing: 1px; font-size: 0.65rem;">Active Investors</small>
-                                <span id="total-users" class="fs-4 fw-light text-white">-</span>
+                                <small class="d-block text-uppercase luxury-stats-label">Active Investors</small>
+                                <span id="total-users" class="fs-4 fw-light luxury-stats-value">-</span>
                             </div>
                             <div class="col-4 border-start border-secondary border-opacity-25">
-                                <small class="text-muted d-block text-uppercase small" style="letter-spacing: 1px; font-size: 0.65rem;">Vehicles Curated</small>
-                                <span id="total-posts" class="fs-4 fw-light text-white">-</span>
+                                <small class="d-block text-uppercase luxury-stats-label">Vehicles Curated</small>
+                                <span id="total-posts" class="fs-4 fw-light luxury-stats-value">-</span>
                             </div>
                             <div class="col-4 border-start border-secondary border-opacity-25">
-                                <small class="text-muted d-block text-uppercase small" style="letter-spacing: 1px; font-size: 0.65rem;">Segments</small>
-                                <span id="total-categories" class="fs-4 fw-light text-white">-</span>
+                                <small class="d-block text-uppercase luxury-stats-label">Segments</small>
+                                <span id="total-categories" class="fs-4 fw-light luxury-stats-value">-</span>
                             </div>
                         </div>
                     </div>
