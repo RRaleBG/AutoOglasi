@@ -86,6 +86,36 @@
 	};
 
 	/**
+	 * Sanitizes URL values read from DOM attributes before assigning to DOM sinks.
+	 * @param {String} url - Candidate URL.
+	 * @returns {String|null} Sanitized URL or null if unsafe/invalid.
+	 * @protected
+	 */
+	Lazy.prototype._sanitizeUrl = function(url) {
+		if (typeof url !== 'string') {
+			return null;
+		}
+
+		url = $.trim(url);
+
+		if (!url) {
+			return null;
+		}
+
+		// Disallow dangerous schemes explicitly.
+		if (/^(?:javascript|vbscript):/i.test(url)) {
+			return null;
+		}
+
+		// Allow common safe URL forms used by Owl lazy loading.
+		if (/^(?:https?:)?\/\//i.test(url) || /^\//.test(url) || /^[^:?#\s][^?#\s]*$/.test(url)) {
+			return url;
+		}
+
+		return null;
+	};
+
+	/**
 	 * Loads all resources of an item at the specified position.
 	 * @param {Number} position - The absolute position of the item.
 	 * @protected
@@ -101,6 +131,11 @@
 		$elements.each($.proxy(function(index, element) {
 			var $element = $(element), image,
                 url = (window.devicePixelRatio > 1 && $element.attr('data-src-retina')) || $element.attr('data-src') || $element.attr('data-srcset');
+
+			url = this._sanitizeUrl(url);
+			if (!url) {
+				return;
+			}
 
 			this._core.trigger('load', { element: $element, url: url }, 'lazy');
 

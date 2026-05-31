@@ -684,7 +684,16 @@ $.extend( $.validator, {
 		},
 
 		clean: function( selector ) {
-			return $( selector )[ 0 ];
+			if ( selector && selector.nodeType ) {
+				return selector;
+			}
+			if ( selector && selector.jquery ) {
+				return selector[ 0 ];
+			}
+			if ( typeof selector === "string" ) {
+				return $.find( selector, this.currentForm )[ 0 ];
+			}
+			return undefined;
 		},
 
 		errors: function() {
@@ -1065,6 +1074,15 @@ $.extend( $.validator, {
 			}
 
 			// Always apply ignore filter
+			if ( typeof element === "string" ) {
+
+				// Defensive check: plugin selector input must not be HTML-like
+				if ( /^\s*</.test( element ) ) {
+					return;
+				}
+
+				return $( $.find( element, this.currentForm ) ).not( this.settings.ignore )[ 0 ];
+			}
 			return $( element ).not( this.settings.ignore )[ 0 ];
 		},
 
