@@ -7,6 +7,58 @@ body {
     background-color: #0b0c10 !important;
     color: #c5c6c7 !important;
 }
+/* ==========================================================================
+   --- STRANICA POJEDINAČNOG OGLASA (DETAILS / OFFER) ---
+   ========================================================================== */
+
+/* Podrazumevani mračni režim (Dark Mode) */
+.luxury-gold-sub { color: rgba(212, 175, 55, 0.75) !important; }
+.luxury-text-muted { color: #888888 !important; }
+.luxury-price-tag { color: #d4af37 !important; }
+.luxury-spec-box { background-color: #1f2833 !important; }
+.luxury-spec-label { color: #888888 !important; }
+.luxury-spec-value { color: #ffffff !important; }
+.luxury-status-active { color: #d4af37 !important; }
+.luxury-story-text { color: #c5c6c7 !important; }
+.luxury-agent-card { background-color: #000000 !important; }
+.luxury-agent-value { color: #ffffff !important; }
+.luxury-agent-btn {
+    color: #d4af37 !important;
+    border-color: #d4af37 !important;
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+    background: transparent !important;
+    transition: all 0.3s;
+}
+.luxury-agent-btn:hover { background-color: rgba(214, 175, 55, 0.1) !important; }
+
+/* --------------------------------------------------------------------------
+   --- PRELAZAK U SVETLI REŽIM (Light Mode) ---
+   -------------------------------------------------------------------------- */
+[data-bs-theme="light"] .luxury-gold-sub { color: #8a6d3b !important; }
+[data-bs-theme="light"] .luxury-text-muted { color: #6c757d !important; }
+[data-bs-theme="light"] .luxury-price-tag { color: #bfa15f !important; }
+
+/* Tehničke specifikacije dobijaju svetlo sivu modernu pozadinu umesto tamne */
+[data-bs-theme="light"] .luxury-spec-box { background-color: #f8f9fa !important; }
+[data-bs-theme="light"] .luxury-spec-label { color: #6c757d !important; }
+[data-bs-theme="light"] .luxury-spec-value { color: #212529 !important; }
+[data-bs-theme="light"] .luxury-status-active { color: #8a6d3b !important; }
+
+/* Opis i tekst priče */
+[data-bs-theme="light"] .luxury-story-text { color: #333333 !important; }
+
+/* Kartica agenta postaje potpuno bela sa blagom senkom */
+[data-bs-theme="light"] .luxury-agent-card { 
+    background-color: #ffffff !important; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+}
+[data-bs-theme="light"] .luxury-agent-value { color: #212529 !important; }
+[data-bs-theme="light"] .luxury-agent-btn {
+    color: #bfa15f !important;
+    border-color: #bfa15f !important;
+}
+[data-bs-theme="light"] .luxury-agent-btn:hover { background-color: rgba(191, 161, 95, 0.1) !important; }
 
 /* ==========================================================================
    --- STRANICA ZA NAPREDNU PRETRAGU (SEARCH ENGINE) ---
