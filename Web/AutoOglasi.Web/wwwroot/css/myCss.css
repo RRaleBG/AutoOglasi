@@ -484,4 +484,41 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 
 
 
+/* --- ROLE MANAGEMENT SPECIFIC TUNING --- */
+.luxury-card-header-bg {
+    background-color: var(--navbar-bg, rgba(0, 0, 0, 0.3)) !important;
+}
+
+.luxury-btn-gold-outline {
+    color: var(--gold, #d4af37) !important;
+    border-color: var(--gold, #d4af37) !important;
+    letter-spacing: 1px;
+    font-size: 0.75rem;
+    background: transparent;
+    transition: all 0.3s ease;
+}
+
+.luxury-btn-gold-outline:hover {
+    background-color: rgba(212, 175, 55, 0.1) !important;
+    transform: translateY(-1px);
+}
+
+.luxury-col-width-config {
+    width: 120px;
+}
+
+.luxury-col-width-auth {
+    width: 120px;
+}
+
+.luxury-role-icon-size {
+    font-size: 0.85rem;
+}
+
+
+
+
+
+
+
 
