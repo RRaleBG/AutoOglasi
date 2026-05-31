@@ -395,6 +395,92 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 
 
 
+/* --- ADMIN DASHBOARD & TABLE TUNING --- */
+.luxury-table-container {
+    background-color: var(--card-bg, rgba(30, 30, 30, 0.2));
+}
+
+.luxury-admin-table {
+    color: var(--text-muted, #a0a0a0) !important;
+}
+
+.luxury-table-header {
+    background: var(--navbar-bg, rgba(0, 0, 0, 0.4));
+    color: var(--text-main, #fff) !important;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.luxury-table-row {
+    transition: background-color 0.2s ease;
+}
+
+.luxury-table-row:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.luxury-table-price {
+    color: var(--gold, #d4af37);
+}
+
+/* Badges */
+.luxury-badge-active {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.25);
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+}
+
+.luxury-badge-hidden {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+    border: 1px solid rgba(255, 193, 7, 0.25);
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+}
+
+/* Admin Action Buttons */
+.luxury-admin-btn-hide, 
+.luxury-admin-btn-show, 
+.luxury-admin-btn-edit, 
+.luxury-admin-btn-view, 
+.luxury-admin-btn-delete {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+}
+
+.luxury-admin-btn-hide {
+    color: var(--text-muted, #c5c6c7);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.luxury-admin-btn-show {
+    color: var(--gold, #d4af37);
+    background: rgba(212, 175, 55, 0.05);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.luxury-admin-btn-edit {
+    color: var(--text-main, #fff);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid transparent;
+}
+
+.luxury-admin-btn-view {
+    color: #bfa15f;
+    background: transparent;
+    border: 1px solid transparent;
+}
+
+.luxury-admin-btn-delete {
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.05);
+    border: 1px solid rgba(255, 107, 107, 0.15);
+}
+
+
 
 
 
