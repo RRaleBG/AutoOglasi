@@ -8,6 +8,60 @@ body {
     color: #c5c6c7 !important;
 }
 
+/* ==========================================================================
+   --- DOPUNA ZA INDEX STRANICU I KARTICE OGLASA ---
+   ========================================================================== */
+
+/* Podrazumevani mračni režim (Dark) */
+.text-theme-heading { color: #ffffff !important; }
+.luxury-card-link { color: #c5c6c7 !important; }
+.luxury-card-header { background-color: rgba(0, 0, 0, 0.4) !important; }
+.luxury-card-date { color: rgba(255, 255, 255, 0.4) !important; font-size: 0.75rem; }
+.luxury-card-price { color: #d4af37; font-size: 0.95rem; }
+.luxury-card-body { background-color: rgba(0, 0, 0, 0.2) !important; }
+.luxury-card-title { color: #ffffff !important; font-size: 1.05rem; letter-spacing: 1px; }
+.luxury-card-model { color: rgba(255, 255, 255, 0.5) !important; font-size: 0.9rem; }
+
+/* Market Insights dugme i boks (Dark) */
+.luxury-stats-btn {
+    color: #c5c6c7 !important;
+    border-color: rgba(255,255,255,0.15) !important;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    background: #1f2833 !important;
+}
+.luxury-stats-box { background-color: #050508 !important; }
+.luxury-stats-label { color: rgba(255, 255, 255, 0.4) !important; letter-spacing: 1px; font-size: 0.65rem; }
+.luxury-stats-value { color: #ffffff !important; }
+.luxury-btn-gold { color: #d4af37; border-color: #d4af37 !important; letter-spacing: 2px; font-size: 0.85rem; }
+
+/* --------------------------------------------------------------------------
+   --- TRANZICIJA U SVETLI REŽIM (Light Mode) ---
+   -------------------------------------------------------------------------- */
+[data-bs-theme="light"] .text-theme-heading { color: #212529 !important; }
+[data-bs-theme="light"] .luxury-card-link { color: #212529 !important; }
+
+/* Gornji deo kartice u light modu dobija luksuznu tamnu traku kako bi cena i datum blistali kao u katalogu */
+[data-bs-theme="light"] .luxury-card-header { background-color: #11141a !important; }
+[data-bs-theme="light"] .luxury-card-date { color: rgba(255, 255, 255, 0.6) !important; }
+[data-bs-theme="light"] .luxury-card-price { color: #d4af37 !important; }
+
+/* Donji deo kartice sa nazivom i modelom postaje nežno beo sa jasnim kontrastom */
+[data-bs-theme="light"] .luxury-card-body { background-color: #f8f9fa !important; }
+[data-bs-theme="light"] .luxury-card-title { color: #212529 !important; }
+[data-bs-theme="light"] .luxury-card-model { color: #6c757d !important; }
+
+/* Market Insights u light modu */
+[data-bs-theme="light"] .luxury-stats-btn {
+    color: #212529 !important;
+    border-color: rgba(0, 0, 0, 0.15) !important;
+    background: #ffffff !important;
+}
+[data-bs-theme="light"] .luxury-stats-box { background-color: #ffffff !important; }
+[data-bs-theme="light"] .luxury-stats-label { color: #6c757d !important; }
+[data-bs-theme="light"] .luxury-stats-value { color: #212529 !important; }
+
+
 /* Ekskluzivni font za brendiranje (koristi se u _Layout za logo) */
 .luxury-brand-font {
     font-family: 'Cinzel', serif;
