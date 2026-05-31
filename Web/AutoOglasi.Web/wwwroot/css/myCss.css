@@ -226,4 +226,8 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 .luxury-search-btn {
     letter-spacing: 3px;
 }
+.luxury-checkbox-label-size {
+    font-size: 0.7rem;
+    cursor: pointer;
+}
 
