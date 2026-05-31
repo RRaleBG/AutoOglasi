@@ -10,7 +10,7 @@
     @if (!Model.LatestPosts.Any())
     {
         <div class="text-center py-5 my-5">
-            <span class="text-warning text-uppercase small d-block mb-2" style="letter-spacing: 3px;">Showroom Empty</span>
+            <span class="text-uppercase small d-block mb-2 luxury-gold-sub-text luxury-sub-spacing">Showroom Empty</span>
             <h2 class="fw-light mb-4 text-theme-heading">Currently, there are no hypercars available.</h2>
             <a asp-controller="Posts" asp-action="Create" class="btn border text-uppercase px-4 py-2 luxury-btn-gold">
                 Deliver a Vehicle
@@ -28,14 +28,14 @@
                         {
                             <div class="carousel-item @(i == 0 ? "active" : "")">
                                 <img src="@postsList[i].Car.CoverImage" class="d-block home-carousel-img" alt="Featured Hypercar" />
-                                <div class="carousel-caption d-none d-md-block text-start start-50 translate-middle-x w-75" style="bottom: 40px;">
-                                    <span class="text-warning text-uppercase small" style="letter-spacing: 3px;">Just Arrived</span>
-                                    <h1 class="display-4 text-white fw-bold text-uppercase m-0" style="letter-spacing: 2px;">
+                                <div class="carousel-caption d-none d-md-block text-start start-50 translate-middle-x w-75 luxury-carousel-caption-bottom">
+                                    <span class="text-uppercase small luxury-gold-sub-text luxury-sub-spacing">Just Arrived</span>
+                                    <h1 class="display-4 fw-bold text-uppercase m-0 luxury-heading-spacing text-theme-heading">
                                         @postsList[i].Car.Make @postsList[i].Car.Model
                                     </h1>
                                     <a asp-controller="Posts" asp-action="Offer" asp-route-id="@postsList[i].Id" 
-                                       class="text-decoration-none small text-warning" style="letter-spacing: 1px;">
-                                        VIEW ASSET <i class="fas fa-arrow-right ms-1" style="font-size: 0.75rem;"></i>
+                                       class="text-decoration-none small luxury-gold-link-text luxury-link-spacing">
+                                        VIEW ASSET <i class="fas fa-arrow-right ms-1 luxury-arrow-size"></i>
                                     </a>
                                 </div>
                             </div>
@@ -52,9 +52,9 @@
         </div>
 
         <div class="text-center mb-5">
-            <span class="text-warning text-uppercase small" style="letter-spacing: 4px;">Available Portfolio</span>
-            <h2 class="fw-light text-uppercase mt-1 text-theme-heading" style="letter-spacing: 2px;">The Latest Acquisitions</h2>
-            <div class="mx-auto mt-3" style="width: 50px; height: 1px; background-color: #d4af37;"></div>
+            <span class="text-uppercase small luxury-gold-sub-text luxury-sub-spacing">Available Portfolio</span>
+            <h2 class="fw-light text-uppercase mt-1 text-theme-heading luxury-heading-spacing">The Latest Acquisitions</h2>
+            <div class="mx-auto mt-3 luxury-deco-line"></div>
         </div>
 
         <div class="row g-4 justify-content-center mb-5">
@@ -64,7 +64,6 @@
                     <div class="card h-100 luxury-card overflow-hidden">
                         <a asp-controller="Posts" asp-action="Offer" asp-route-id="@post.Id" class="text-decoration-none d-flex flex-column h-100 luxury-card-link">
                             
-                            <!-- Gornja traka sa datumom i cenom -->
                             <div class="d-flex justify-content-between align-items-center p-3 luxury-card-header">
                                 <small class="luxury-card-date"><i class="far fa-calendar-alt me-1"></i>@post.PublishedOn</small>
                                 <span class="fw-bold luxury-card-price">
@@ -72,14 +71,12 @@
                                 </span>
                             </div>
 
-                            <!-- Slika automobila -->
                             <div class="overflow-hidden luxury-card-img-wrapper">
                                 <img src="@post.Car.CoverImage"
                                      class="w-100 h-100 luxury-card-img"
                                      alt="@($"{post.Car.Make} {post.Car.Model}")" />
                             </div>
 
-                            <!-- Donji deo sa nazivom i modelom -->
                             <div class="card-body text-center py-3 mt-auto luxury-card-body">
                                 <h5 class="m-0 text-uppercase tracking-wide luxury-card-title">
                                     @post.Car.Make <span class="fw-bold luxury-card-model">@post.Car.Model</span>
@@ -91,7 +88,6 @@
             }
         </div>
 
-        <!-- Market Insights Sekcija na dnu -->
         <div class="text-center my-5 pt-4">
             <button id="statistics-button" class="btn border text-uppercase px-4 py-3 luxury-stats-btn">
                 <span><i class="bi bi-graph-up me-2"></i></span> Show Market Insights
