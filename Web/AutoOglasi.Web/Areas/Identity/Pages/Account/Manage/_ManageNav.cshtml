@@ -2,32 +2,20 @@
 @inject SignInManager<ApplicationUser> SignInManager
 
 @{
-    // Uzimamo trenutnu putanju da bismo znali koji je tab aktivan
     var currentPath = ViewContext.ActionDescriptor.DisplayName ?? string.Empty;
 }
 
-<ul class="nav nav-pills flex-column font-monospace small text-uppercase" style="letter-spacing: 1px;">
+<ul class="nav nav-pills flex-column font-monospace small text-uppercase luxury-manage-nav">
     <li class="nav-item mb-1">
         <a class="nav-link rounded-0 text-start py-2.5 @(currentPath.Contains("Index") ? "active" : string.Empty)" 
-           id="profile" asp-page="./Index" style="color: #fff; transition: all 0.3s;">
+           id="profile" asp-page="./Index">
             <i class="fas fa-user-edit me-2 opacity-50"></i> Profile
         </a>
     </li>
     <li class="nav-item mb-1">
         <a class="nav-link rounded-0 text-start py-2.5 @(currentPath.Contains("ChangePassword") ? "active" : string.Empty)" 
-           id="change-password" asp-page="./ChangePassword" style="color: #fff; transition: all 0.3s;">
+           id="change-password" asp-page="./ChangePassword">
             <i class="fas fa-key me-2 opacity-50"></i> Password
         </a>
     </li>
 </ul>
-
-<style>
-    .nav-pills .nav-link.active {
-        background-color: rgba(212, 175, 55, 0.1) !important;
-        color: #d4af37 !important;
-        border-left: 2px solid #d4af37;
-    }
-    .nav-pills .nav-link:hover:not(.active) {
-        background-color: rgba(255, 255, 255, 0.03) !important;
-    }
-</style>
