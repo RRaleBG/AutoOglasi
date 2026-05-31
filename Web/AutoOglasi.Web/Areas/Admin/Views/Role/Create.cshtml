@@ -7,9 +7,9 @@
     <div class="col-12 col-md-6 col-lg-5">
 
         <div class="text-center mb-4">
-            <span class="text-uppercase small font-monospace" style="letter-spacing: 4px; color: #d4af37;">Security Hub</span>
-            <h2 class="text-white fw-light text-uppercase mt-1" style="letter-spacing: 1px;">Create New Role</h2>
-            <div class="mx-auto mt-2" style="width: 30px; height: 1px; background-color: #d4af37;"></div>
+            <span class="text-uppercase small font-monospace luxury-gold-sub-text luxury-sub-spacing">Security Hub</span>
+            <h2 class="fw-light text-uppercase mt-1 text-theme-heading luxury-title-spacing">Create New Role</h2>
+            <div class="mx-auto mt-2 luxury-deco-line-sm"></div>
         </div>
 
         <div class="card luxury-card shadow-lg">
@@ -19,19 +19,17 @@
 
                 <form asp-action="Create" method="post">
 
-                    <div class="form-floating mb-4">
-                        <input name="name" id="roleNameInput" class="form-control text-white bg-dark bg-opacity-20 border-secondary border-opacity-25 rounded-0" placeholder="Role name" required />
+                    <div class="form-floating mb-4 luxury-form-floating">
+                        <input name="name" id="roleNameInput" class="form-control rounded-0 luxury-input-field" placeholder="Role name" required />
                         <label for="roleNameInput" class="text-muted">Role Name</label>
                     </div>
 
                     <div class="d-grid gap-2 d-md-flex justify-content-md-between pt-2">
-                        <button type="submit" class="btn text-uppercase py-2.5 px-4 fw-bold border order-md-2" 
-                                style="color: #d4af37; border-color: #d4af37 !important; letter-spacing: 1px; font-size: 0.8rem; background: transparent; transition: all 0.3s;">
+                        <button type="submit" class="btn text-uppercase py-2.5 px-4 fw-bold border order-md-2 luxury-btn-gold-outline luxury-btn-size-sm">
                             <i class="fas fa-check-circle me-1"></i> Create Role
                         </button>
                         
-                        <a asp-action="Index" class="btn text-uppercase py-2.5 px-4 rounded-0 border order-md-1"
-                           style="color: #c5c6c7; border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.02); font-size: 0.8rem; letter-spacing: 1px;">
+                        <a asp-action="Index" class="btn text-uppercase py-2.5 px-4 rounded-0 border order-md-1 luxury-btn-cancel luxury-btn-size-sm">
                             Cancel
                         </a>
                     </div>
