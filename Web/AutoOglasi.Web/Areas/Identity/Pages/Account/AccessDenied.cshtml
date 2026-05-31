@@ -1,8 +1,32 @@
 @page
 @model AutoOglasi.Web.Areas.Identity.Pages.Account.AccessDeniedModel
 @{
-    ViewData["Title"] = "Access denied";
+    ViewData["Title"] = "Access Denied";
 }
 
-<h1>Access denied</h1>
-<p>You do not have access to this resource.</p>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="col-12 col-md-6 col-lg-5 p-4 border border-secondary border-opacity-10 shadow-lg autooglasi-denied-box">
+        
+        <div class="text-center mb-4">
+            <div class="mb-3">
+                <i class="fas fa-ban autooglasi-denied-icon"></i>
+            </div>
+            <span class="text-uppercase small font-monospace luxury-gold-sub-text autooglasi-denied-sub-spacing">Security Alert</span>
+            <h2 class="fw-light text-uppercase mt-1 text-theme-heading autooglasi-denied-title">
+                @ViewData["Title"]
+            </h2>
+            <div class="mx-auto mt-2 luxury-deco-line-sm"></div>
+        </div>
+
+        <p class="text-center font-monospace small mb-4 autooglasi-denied-text">
+            You do not have the required privileges to access this secure resource.
+        </p>
+
+        <div class="text-center">
+            <a asp-area="" asp-page="/Index" class="btn text-uppercase py-2.5 px-4 rounded-0 border autooglasi-denied-btn">
+                Return to Salon
+            </a>
+        </div>
+
+    </div>
+</div>
