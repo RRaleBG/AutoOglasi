@@ -238,6 +238,7 @@ namespace AutoOglasi.Web.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, EditPostViewModel editedPost)
         {
             var userId = this.GetCurrentUserId();
