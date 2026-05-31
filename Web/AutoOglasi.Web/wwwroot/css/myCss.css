@@ -7,6 +7,51 @@ body {
     background-color: #0b0c10 !important;
     color: #c5c6c7 !important;
 }
+
+/* ==========================================================================
+   --- STRANICA ZA NAPREDNU PRETRAGU (SEARCH ENGINE) ---
+   ========================================================================== */
+
+/* Podrazumevani mračni režim (Dark Mode) */
+.luxury-search-form { background-color: rgba(0, 0, 0, 0.2) !important; }
+.luxury-search-label { color: rgba(255, 255, 255, 0.5) !important; font-size: 0.75rem; letter-spacing: 1px; }
+.luxury-search-section-title { color: #ffffff !important; font-size: 0.8rem; letter-spacing: 1px; }
+.luxury-checkbox { background-color: transparent !important; border-color: rgba(255, 255, 255, 0.2) !important; }
+.luxury-checkbox:checked { background-color: #d4af37 !important; border-color: #d4af37 !important; }
+.luxury-checkbox-label { color: rgba(255, 255, 255, 0.5) !important; font-size: 0.85rem; }
+.luxury-search-btn {
+    color: #d4af37 !important;
+    border-color: #d4af37 !important;
+    letter-spacing: 3px;
+    font-size: 0.85rem;
+    background: transparent !important;
+    transition: all 0.3s ease;
+}
+.luxury-search-btn:hover {
+    background-color: rgba(214, 175, 55, 0.1) !important;
+}
+
+/* --------------------------------------------------------------------------
+   --- PRELAZAK U SVETLI REŽIM (Light Mode) ---
+   -------------------------------------------------------------------------- */
+[data-bs-theme="light"] .luxury-search-form { 
+    background-color: #ffffff !important; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+}
+[data-bs-theme="light"] .luxury-search-label { color: #495057 !important; }
+[data-bs-theme="light"] .luxury-search-section-title { color: #212529 !important; }
+[data-bs-theme="light"] .luxury-checkbox { border-color: rgba(0, 0, 0, 0.25) !important; }
+[data-bs-theme="light"] .luxury-checkbox:checked { background-color: #bfa15f !important; border-color: #bfa15f !important; }
+[data-bs-theme="light"] .luxury-checkbox-label { color: #212529 !important; }
+[data-bs-theme="light"] .luxury-search-btn {
+    color: #bfa15f !important;
+    border-color: #bfa15f !important;
+}
+[data-bs-theme="light"] .luxury-search-btn:hover {
+    background-color: rgba(191, 161, 95, 0.1) !important;
+}
+
+
 /* ==========================================================================
    --- DODATNE LUKSUZNE KLASE ZA STRANICU SA LISTOM (SHOWROOM) ---
    ========================================================================== */
