@@ -6,17 +6,14 @@
 }
 
 <div class="py-3">
-    <!-- Naslov Admin Panela -->
     <div class="text-center mb-4">
         <span class="text-uppercase small font-monospace" style="letter-spacing: 4px; color: #d4af37;">Management Area</span>
         <h2 class="text-white fw-light text-uppercase mt-1" style="letter-spacing: 1px;">@ViewData["Title"]</h2>
         <div class="mx-auto mt-2" style="width: 40px; height: 1px; background-color: #d4af37;"></div>
     </div>
 
-    <!-- Kontejner za Tabelu sa horizontalnim skrolom za mobilne uređaje -->
     <div class="table-responsive border border-secondary border-opacity-10 bg-black bg-opacity-20 p-2">
         <table class="table table-hover align-middle m-0 text-white-50">
-            <!-- Glava Tabele -->
             <thead class="text-white text-uppercase font-monospace small" style="background: rgba(0,0,0,0.4); font-size: 0.8rem; letter-spacing: 1px;">
                 <tr class="border-bottom border-secondary border-opacity-25">
                     <th scope="col" class="py-3 ps-3">Id</th>
@@ -29,80 +26,72 @@
                 </tr>
             </thead>
             
-            <!-- Telo Tabele -->
             <tbody>
-                @foreach (var post in Model.Posts)
+                @* Primenjen LINQ .Where() direktno u petlji da se očisti Sonar warning *@
+                @foreach (var post in Model.Posts.Where(p => p != null))
                 {
-                    if (post != null)
-                    {
-                        <tr class="border-bottom border-secondary border-opacity-10" style="transition: background 0.2s;">
-                            <td class="font-monospace small ps-3">@post.Car.Id</td>
-                            <td class="text-white fw-semibold">@post.Car.Make</td>
-                            <td>@post.Car.Model</td>
-                            <td class="font-monospace">@post.Car.Year</td>
-                            <td class="fw-bold" style="color: #d4af37;">
-                                € @post.Car.Price.ToString("N0", CultureInfo.InvariantCulture)
-                            </td>
-                            <td class="text-center">
+                    <tr class="border-bottom border-secondary border-opacity-10" style="transition: background 0.2s;">
+                        <td class="font-monospace small ps-3">@post.Car.Id</td>
+                        <td class="text-white fw-semibold">@post.Car.Make</td>
+                        <td>@post.Car.Model</td>
+                        <td class="font-monospace">@post.Car.Year</td>
+                        <td class="fw-bold" style="color: #d4af37;">
+                            € @post.Car.Price.ToString("N0", CultureInfo.InvariantCulture)
+                        </td>
+                        <td class="text-center">
+                            @if (post.IsPublic)
+                            {
+                                <span class="badge rounded-0 px-2 py-1 bg-success bg-opacity-10 text-success border border-success border-opacity-25 small text-uppercase font-monospace" style="font-size: 0.7rem; letter-spacing: 1px;">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge rounded-0 px-2 py-1 bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 small text-uppercase font-monospace" style="font-size: 0.7rem; letter-spacing: 1px;">Hidden</span>
+                            }
+                        </td>
+                        <td class="text-end pe-3">
+                            <div class="d-inline-flex gap-1">
                                 @if (post.IsPublic)
                                 {
-                                    <span class="badge rounded-0 px-2 py-1 bg-success bg-opacity-10 text-success border border-success border-opacity-25 small text-uppercase font-monospace" style="font-size: 0.7rem; letter-spacing: 1px;">Active</span>
+                                    <a asp-area="Admin" asp-controller="Posts" asp-action="ChangeVisibility" asp-route-id="@post.Id" 
+                                       class="btn btn-sm rounded-0 text-uppercase font-monospace text-decoration-none px-2 py-1" 
+                                       style="font-size: 0.7rem; letter-spacing: 1px; color: #c5c6c7; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                                        Hide
+                                    </a>
                                 }
                                 else
                                 {
-                                    <span class="badge rounded-0 px-2 py-1 bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 small text-uppercase font-monospace" style="font-size: 0.7rem; letter-spacing: 1px;">Hidden</span>
+                                    <a asp-area="Admin" asp-controller="Posts" asp-action="ChangeVisibility" asp-route-id="@post.Id" 
+                                       class="btn btn-sm rounded-0 text-uppercase font-monospace text-decoration-none px-2 py-1" 
+                                       style="font-size: 0.7rem; letter-spacing: 1px; color: #d4af37; background: rgba(212,175,55,0.05); border: 1px solid rgba(212,175,55,0.2);">
+                                        Show
+                                    </a>
                                 }
-                            </td>
-                            <td class="text-end pe-3">
-                                <div class="d-inline-flex gap-1">
-                                    <!-- Vidljivost prekidač (Show/Hide) -->
-                                    @if (post.IsPublic)
-                                    {
-                                        <a asp-area="Admin" asp-controller="Posts" asp-action="ChangeVisibility" asp-route-id="@post.Id" 
-                                           class="btn btn-sm rounded-0 text-uppercase font-monospace text-decoration-none px-2 py-1" 
-                                           style="font-size: 0.7rem; letter-spacing: 1px; color: #c5c6c7; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
-                                            Hide
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <a asp-area="Admin" asp-controller="Posts" asp-action="ChangeVisibility" asp-route-id="@post.Id" 
-                                           class="btn btn-sm rounded-0 text-uppercase font-monospace text-decoration-none px-2 py-1" 
-                                           style="font-size: 0.7rem; letter-spacing: 1px; color: #d4af37; background: rgba(212,175,55,0.05); border: 1px solid rgba(212,175,55,0.2);">
-                                            Show
-                                        </a>
-                                    }
 
-                                    <!-- Edit dugme -->
-                                    <a asp-area="" asp-controller="Posts" asp-action="Edit" asp-route-id="@post.Id" 
-                                       class="btn btn-sm rounded-0 text-uppercase font-monospace text-decoration-none px-2 py-1"
-                                       style="font-size: 0.7rem; letter-spacing: 1px; color: #fff; background: rgba(255,255,255,0.1); border: 1px solid transparent;">
-                                        Edit
-                                    </a>
+                                <a asp-area="" asp-controller="Posts" asp-action="Edit" asp-route-id="@post.Id" 
+                                   class="btn btn-sm rounded-0 text-uppercase font-monospace text-decoration-none px-2 py-1"
+                                   style="font-size: 0.7rem; letter-spacing: 1px; color: #fff; background: rgba(255,255,255,0.1); border: 1px solid transparent;">
+                                    Edit
+                                </a>
 
-                                    <!-- View dugme -->
-                                    <a asp-area="" asp-controller="Posts" asp-action="Offer" asp-route-id="@post.Id" 
-                                       class="btn btn-sm rounded-0 text-uppercase font-monospace text-decoration-none px-2 py-1"
-                                       style="font-size: 0.7rem; letter-spacing: 1px; color: #bfa15f; background: transparent; border: 1px solid transparent;">
-                                        View
-                                    </a>
+                                <a asp-area="" asp-controller="Posts" asp-action="Offer" asp-route-id="@post.Id" 
+                                   class="btn btn-sm rounded-0 text-uppercase font-monospace text-decoration-none px-2 py-1"
+                                   style="font-size: 0.7rem; letter-spacing: 1px; color: #bfa15f; background: transparent; border: 1px solid transparent;">
+                                    View
+                                </a>
 
-                                    <!-- Delete dugme -->
-                                    <a asp-area="" asp-controller="Posts" asp-action="Delete" asp-route-id="@post.Id" 
-                                       class="btn btn-sm rounded-0 text-uppercase font-monospace text-decoration-none px-2 py-1"
-                                       style="font-size: 0.7rem; letter-spacing: 1px; color: #ff6b6b; background: rgba(255,107,107,0.05); border: 1px solid rgba(255,107,107,0.15);">
-                                        Delete
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    }
+                                <a asp-area="" asp-controller="Posts" asp-action="Delete" asp-route-id="@post.Id" 
+                                   class="btn btn-sm rounded-0 text-uppercase font-monospace text-decoration-none px-2 py-1"
+                                   style="font-size: 0.7rem; letter-spacing: 1px; color: #ff6b6b; background: rgba(255,107,107,0.05); border: 1px solid rgba(255,107,107,0.15);">
+                                    Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
     </div>
 
-    <!-- Paginacija na dnu -->
     <div class="mt-4 p-2 border-top border-secondary border-opacity-10">
         <partial name="_PagingPartial" model="@Model" />
     </div>
