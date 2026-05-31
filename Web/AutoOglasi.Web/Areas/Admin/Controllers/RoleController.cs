@@ -117,6 +117,7 @@ public async Task<IActionResult> Update(string id)
 }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(RoleModification model)
         {
             IdentityResult result;
