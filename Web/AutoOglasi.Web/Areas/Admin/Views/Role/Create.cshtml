@@ -1,28 +1,44 @@
-﻿@model string
+@model string
 @{
-    ViewData["Title"] = "Create new role";
+    ViewData["Title"] = "Create Privilege";
 }
 
-<div class="row justify-content-center shadow">
+<div class="py-5 justify-content-center row">
+    <div class="col-12 col-md-6 col-lg-5">
 
-    <div class="card">
-
-        <div class="card-header bg-transparent">
-            <h3 class="text-white-50">Create new role</h3>
+        <div class="text-center mb-4">
+            <span class="text-uppercase small font-monospace" style="letter-spacing: 4px; color: #d4af37;">Security Hub</span>
+            <h2 class="text-white fw-light text-uppercase mt-1" style="letter-spacing: 1px;">Create New Role</h2>
+            <div class="mx-auto mt-2" style="width: 30px; height: 1px; background-color: #d4af37;"></div>
         </div>
 
-        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="card luxury-card shadow-lg">
+            <div class="card-body p-4 p-md-5">
 
-        <form asp-action="Create" method="post">
+                <div asp-validation-summary="All" class="alert alert-danger border-0 rounded-0 small mb-4" role="alert"></div>
 
-            <div class="form-group mb-3">
-                <label for="name">Role name</label>
-                <input name="name" class="form-control" />
+                <form asp-action="Create" method="post">
+
+                    <div class="form-floating mb-4">
+                        <input name="name" id="roleNameInput" class="form-control text-white bg-dark bg-opacity-20 border-secondary border-opacity-25 rounded-0" placeholder="Role name" required />
+                        <label for="roleNameInput" class="text-muted">Role Name</label>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-between pt-2">
+                        <button type="submit" class="btn text-uppercase py-2.5 px-4 fw-bold border order-md-2" 
+                                style="color: #d4af37; border-color: #d4af37 !important; letter-spacing: 1px; font-size: 0.8rem; background: transparent; transition: all 0.3s;">
+                            <i class="fas fa-check-circle me-1"></i> Create Role
+                        </button>
+                        
+                        <a asp-action="Index" class="btn text-uppercase py-2.5 px-4 rounded-0 border order-md-1"
+                           style="color: #c5c6c7; border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.02); font-size: 0.8rem; letter-spacing: 1px;">
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+
             </div>
+        </div>
 
-            <button type="submit" class="btn btn-sm btn-outline-info mb-3 col-md-2 fw-semibold">Create</button>
-
-            <a asp-action="Index" class="btn btn-sm btn-outline-danger mb-3 col-md-2 fw-semibold">Back</a>
-        </form>
     </div>
 </div>
