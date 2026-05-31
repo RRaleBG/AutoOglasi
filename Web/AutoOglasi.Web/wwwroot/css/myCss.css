@@ -516,6 +516,41 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 }
 
 
+/* --- ROLE CREATE VIEW TUNING --- */
+.luxury-deco-line-sm {
+    width: 30px;
+    height: 1px;
+    background-color: var(--gold, #d4af37);
+}
+
+.luxury-form-floating .luxury-input-field {
+    color: var(--text-main, #fff) !important;
+    background-color: var(--card-bg, rgba(30, 30, 30, 0.2)) !important;
+    border-color: rgba(128, 128, 128, 0.25) !important;
+}
+
+.luxury-form-floating .luxury-input-field:focus {
+    border-color: var(--gold, #d4af37) !important;
+    box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.1) !important;
+}
+
+.luxury-btn-size-sm {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.luxury-btn-cancel {
+    color: var(--text-muted, #c5c6c7) !important;
+    border-color: rgba(128, 128, 128, 0.2) !important;
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    transition: all 0.3s ease;
+}
+
+.luxury-btn-cancel:hover {
+    background-color: rgba(255, 255, 255, 0.07) !important;
+    color: var(--text-main, #fff) !important;
+}
+
 
 
 
