@@ -7,6 +7,31 @@ body {
     background-color: #0b0c10 !important;
     color: #c5c6c7 !important;
 }
+/* ==========================================================================
+   --- DODATNE LUKSUZNE KLASE ZA STRANICU SA LISTOM (SHOWROOM) ---
+   ========================================================================== */
+
+/* Podrazumevani mračni režim (Dark Mode) */
+.luxury-sorting-bar { background-color: rgba(0, 0, 0, 0.3) !important; }
+.luxury-card-specs { color: rgba(255, 255, 255, 0.5) !important; font-size: 0.8rem; }
+.luxury-card-location { color: #bfa15f; font-size: 0.75rem; letter-spacing: 1px; }
+
+/* Tranzicija za svetli režim (Light Mode) */
+[data-bs-theme="light"] .luxury-sorting-bar { 
+    background-color: #ffffff !important; 
+    color: #212529 !important;
+}
+/* Osiguravamo da selektori i tekstovi unutar parcijalnog sortiranja poprime tamnu boju */
+[data-bs-theme="light"] .luxury-sorting-bar select,
+[data-bs-theme="light"] .luxury-sorting-bar label,
+[data-bs-theme="light"] .luxury-sorting-bar span {
+    color: #212529 !important;
+}
+/* Popravka kontrasta za specifikacije i lokaciju unutar bele kartice */
+[data-bs-theme="light"] .luxury-card-specs { color: #495057 !important; }
+[data-bs-theme="light"] .luxury-card-location { color: #8a6d3b !important; }
+
+
 
 /* ==========================================================================
    --- DOPUNA ZA INDEX STRANICU I KARTICE OGLASA ---
