@@ -812,4 +812,30 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 .luxury-about-title-spacing {
     letter-spacing: 1px;
 }
+/* --- LUXURY PAGINATION SYSTEM --- */
+.luxury-pagination .page-link {
+    color: var(--text-muted, #a0a0a0) !important;
+    background-color: var(--card-bg, rgba(30, 30, 30, 0.2)) !important;
+    border: 1px solid rgba(128, 128, 128, 0.15) !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.luxury-pagination .page-link:hover {
+    color: var(--gold, #d4af37) !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(128, 128, 128, 0.3) !important;
+}
+
+.luxury-pagination .page-item.active .page-link {
+    color: var(--gold, #d4af37) !important;
+    background-color: rgba(212, 175, 55, 0.1) !important;
+    border-color: var(--gold, #d4af37) !important;
+}
+
+.luxury-pagination .page-item.disabled .page-link {
+    color: rgba(128, 128, 128, 0.4) !important;
+    background-color: transparent !important;
+    border-color: rgba(128, 128, 128, 0.08) !important;
+    pointer-events: none;
+}
 
