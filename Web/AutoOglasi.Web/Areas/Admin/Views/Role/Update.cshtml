@@ -8,11 +8,12 @@
 <div class="py-3 justify-content-center row">
     <div class="col-12 col-xl-10">
 
-        <!-- Naslov i validacija -->
         <div class="text-center mb-5">
-            <span class="text-uppercase small font-monospace" style="letter-spacing: 4px; color: #d4af37;">Security Dashboard</span>
-            <h2 class="text-white fw-light text-uppercase mt-1" style="letter-spacing: 1px;">Update Role: <span class="fw-normal" style="color: #d4af37;">@Model.Role.Name</span></h2>
-            <div class="mx-auto mt-2" style="width: 40px; height: 1px; background-color: #d4af37;"></div>
+            <span class="text-uppercase small font-monospace luxury-gold-sub-text luxury-sub-spacing">Security Dashboard</span>
+            <h2 class="fw-light text-uppercase mt-1 text-theme-heading luxury-title-spacing">
+                Update Role: <span class="fw-normal luxury-title-highlight">@Model.Role.Name</span>
+            </h2>
+            <div class="mx-auto mt-2 luxury-deco-line"></div>
         </div>
 
         <div asp-validation-summary="All" class="alert alert-danger border-0 rounded-0 small mb-4" role="alert"></div>
@@ -21,17 +22,16 @@
             <input type="hidden" name="roleName" value="@Model.Role.Name" />
             <input type="hidden" name="roleId" value="@Model.Role.Id" />
 
-            <!-- LEVA KARTICA: Dodavanje korisnika (Non-Members) -->
             <div class="col-12 col-md-6">
                 <div class="card h-100 luxury-card">
-                    <div class="card-header bg-black bg-opacity-30 border-bottom border-secondary border-opacity-10 p-3 text-center">
-                        <h5 class="text-white text-uppercase tracking-wider m-0" style="font-size: 0.9rem; letter-spacing: 1px;">
+                    <div class="card-header border-bottom border-secondary border-opacity-10 p-3 text-center luxury-card-header-bg">
+                        <h5 class="text-uppercase tracking-wider m-0 luxury-card-subtitle">
                             <i class="fas fa-user-plus me-2 text-muted"></i> Assign to Role
                         </h5>
                     </div>
                     
-                    <div class="card-body p-3 table-responsive" style="max-height: 400px; overflow-y: auto;">
-                        <table class="table table-hover align-middle m-0 text-white-50">
+                    <div class="card-body p-3 table-responsive luxury-role-scroll-container">
+                        <table class="table table-hover align-middle m-0 luxury-admin-table">
                             <tbody>
                                 @if (!Model.NonMembers.Any())
                                 {
@@ -45,11 +45,11 @@
                                 {
                                     @foreach (IdentityUser user in Model.NonMembers)
                                     {
-                                        <tr class="border-bottom border-secondary border-opacity-10">
-                                            <td class="text-white fw-light py-2 ps-2">@user.UserName</td>
-                                            <td class="text-end pe-2 py-2" style="width: 40px;">
+                                        <tr class="border-bottom border-secondary border-opacity-10 luxury-table-row">
+                                            <td class="fw-light py-2 ps-2 text-theme-heading">@user.UserName</td>
+                                            <td class="text-end pe-2 py-2 luxury-checkbox-col">
                                                 <div class="form-check d-inline-block">
-                                                    <input type="checkbox" name="AddIds" value="@user.Id" class="form-check-input rounded-0" style="background-color: transparent; border-color: rgba(255,255,255,0.2);">
+                                                    <input type="checkbox" name="AddIds" value="@user.Id" class="form-check-input rounded-0 luxury-admin-checkbox">
                                                 </div>
                                             </td>
                                         </tr>
@@ -61,22 +61,21 @@
                 </div>
             </div>
 
-            <!-- DESNA KARTICA: Uklanjanje korisnika (Members) -->
             <div class="col-12 col-md-6">
                 <div class="card h-100 luxury-card">
-                    <div class="card-header bg-black bg-opacity-30 border-bottom border-secondary border-opacity-10 p-3 text-center">
-                        <h5 class="text-white text-uppercase tracking-wider m-0" style="font-size: 0.9rem; letter-spacing: 1px;">
+                    <div class="card-header border-bottom border-secondary border-opacity-10 p-3 text-center luxury-card-header-bg">
+                        <h5 class="text-uppercase tracking-wider m-0 luxury-card-subtitle">
                             <i class="fas fa-user-shield me-2 text-muted"></i> Current Members
                         </h5>
                     </div>
                     
-                    <div class="card-body p-3 table-responsive" style="max-height: 400px; overflow-y: auto;">
-                        <table class="table table-hover align-middle m-0 text-white-50">
+                    <div class="card-body p-3 table-responsive luxury-role-scroll-container">
+                        <table class="table table-hover align-middle m-0 luxury-admin-table">
                             <tbody>
                                 @if (!Model.Members.Any())
                                 {
                                     <tr>
-                                        <td colspan="2" class="text-center py-4 font-monospace small text-muted" style="color: #ff6b6b !important;">
+                                        <td colspan="2" class="text-center py-4 font-monospace small luxury-text-danger">
                                             No users currently assigned to this privilege.
                                         </td>
                                     </tr>
@@ -85,11 +84,11 @@
                                 {
                                     @foreach (IdentityUser user in Model.Members)
                                     {
-                                        <tr class="border-bottom border-secondary border-opacity-10">
-                                            <td class="text-white fw-light py-2 ps-2">@user.UserName</td>
-                                            <td class="text-end pe-2 py-2" style="width: 40px;">
+                                        <tr class="border-bottom border-secondary border-opacity-10 luxury-table-row">
+                                            <td class="fw-light py-2 ps-2 text-theme-heading">@user.UserName</td>
+                                            <td class="text-end pe-2 py-2 luxury-checkbox-col">
                                                 <div class="form-check d-inline-block">
-                                                    <input type="checkbox" name="DeleteIds" value="@user.Id" class="form-check-input rounded-0" style="background-color: transparent; border-color: rgba(255,255,255,0.2);">
+                                                    <input type="checkbox" name="DeleteIds" value="@user.Id" class="form-check-input rounded-0 luxury-admin-checkbox">
                                                 </div>
                                             </td>
                                         </tr>
@@ -99,25 +98,21 @@
                         </table>
                     </div>
 
-                    <!-- Footer sa brojačem članova -->
-                    <div class="card-footer bg-black bg-opacity-10 border-top border-secondary border-opacity-10 p-3 text-center">
-                        <span class="text-uppercase small font-monospace tracking-wider text-muted" style="font-size: 0.75rem;">
+                    <div class="card-footer border-top border-secondary border-opacity-10 p-3 text-center luxury-card-footer-bg">
+                        <span class="text-uppercase small font-monospace tracking-wider text-muted luxury-footer-counter-size">
                             Total Active Members: 
-                            <span class="fw-bold ms-1" style="color: #d4af37;">@Model.Members.Count()</span>
+                            <span class="fw-bold ms-1 luxury-table-price">@Model.Members.Count()</span>
                         </span>
                     </div>
                 </div>
             </div>
 
-            <!-- Dugmad za akciju na dnu -->
             <div class="col-12 text-center pt-4 d-md-flex justify-content-center gap-3">
-                <button type="submit" class="btn text-uppercase py-3 px-5 fw-bold border mb-2 mb-md-0 d-block d-md-inline-block w-100 w-md-auto" 
-                        style="color: #d4af37; border-color: #d4af37 !important; letter-spacing: 2px; font-size: 0.85rem; background: transparent; transition: all 0.3s;">
+                <button type="submit" class="btn text-uppercase py-3 px-5 fw-bold border mb-2 mb-md-0 d-block d-md-inline-block w-100 w-md-auto luxury-btn-gold-outline luxury-btn-size-md luxury-tracking-wide">
                     Save Changes
                 </button>
                 
-                <a asp-action="Index" class="btn text-uppercase py-3 px-5 rounded-0 border d-block d-md-inline-block w-100 w-md-auto"
-                   style="color: #c5c6c7; border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.02); font-size: 0.85rem; letter-spacing: 2px;">
+                <a asp-action="Index" class="btn text-uppercase py-3 px-5 rounded-0 border d-block d-md-inline-block w-100 w-md-auto luxury-btn-cancel luxury-btn-size-md luxury-tracking-wide">
                     Back to Registry
                 </a>
             </div>
