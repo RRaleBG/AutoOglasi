@@ -1,0 +1,55 @@
+@page
+@model Microsoft.AspNetCore.Identity.UI.Pages.Account.Manage.Internal.TwoFactorAuthenticationModel
+@{
+    ViewData["Title"] = "Two-factor Authentication";
+}
+
+<h4 class="text-uppercase font-monospace mb-4 luxury-profile-section-title">Two-factor Authentication</h4>
+
+<partial name="_StatusMessage" model="@((string)ViewData["StatusMessage"] ?? (string)TempData["StatusMessage"])" />
+
+<div class="mb-4">
+    <p class="small text-muted">Manage two-factor authentication (2FA) for your account. Enabling 2FA adds an extra layer of security.</p>
+</div>
+
+<div class="mb-4">
+    <dl class="row">
+        <dt class="col-sm-4 small text-muted">Authenticator app configured</dt>
+        <dd class="col-sm-8 font-monospace">@(Model.HasAuthenticator ? "Yes" : "No")</dd>
+
+        <dt class="col-sm-4 small text-muted">Two-factor enabled</dt>
+        <dd class="col-sm-8 font-monospace">@(Model.Is2faEnabled ? "Yes" : "No")</dd>
+
+        <dt class="col-sm-4 small text-muted">Remembered on this browser</dt>
+        <dd class="col-sm-8 font-monospace">@(Model.IsMachineRemembered ? "Yes" : "No")</dd>
+
+        <dt class="col-sm-4 small text-muted">Recovery codes left</dt>
+        <dd class="col-sm-8 font-monospace">@Model.RecoveryCodesLeft</dd>
+    </dl>
+</div>
+
+<div class="mb-3">
+    @if (!Model.HasAuthenticator)
+    {
+        <a asp-page="./EnableAuthenticator" class="btn btn-outline-primary rounded-0 me-2">Set up authenticator app</a>
+    }
+    else
+    {
+        <a asp-page="./EnableAuthenticator" class="btn btn-outline-secondary rounded-0 me-2">Manage authenticator app</a>
+    }
+
+    @if (Model.Is2faEnabled)
+    {
+        <form method="post" asp-page-handler="ForgetBrowser" class="d-inline-block me-2">
+            <button type="submit" class="btn btn-outline-warning rounded-0">Forget this browser</button>
+        </form>
+
+        <form method="post" asp-page-handler="GenerateRecoveryCodes" class="d-inline-block me-2">
+            <button type="submit" class="btn btn-outline-success rounded-0">Generate new recovery codes</button>
+        </form>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

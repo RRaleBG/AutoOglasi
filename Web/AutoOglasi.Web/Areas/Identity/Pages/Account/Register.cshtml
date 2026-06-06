@@ -6,9 +6,9 @@
 }
 
 <div class="d-flex justify-content-center align-items-center py-5">
-    <div class="card luxury-card shadow-lg luxury-register-card">
+    <div class="card luxury-card shadow-lg luxury-auth-card">
         <div class="card-body p-4 p-md-5">
-            
+
             <div class="text-center mb-4">
                 <span class="text-uppercase small font-monospace luxury-gold-sub-text luxury-sub-spacing-sm">Membership</span>
                 <h2 class="fw-light text-uppercase mt-1 text-theme-heading luxury-title-spacing">Create Account</h2>
@@ -36,7 +36,7 @@
                     <span asp-validation-for="Input.Password" class="text-danger small"></span>
                 </div>
 
-                <div class="form-floating mb-4">
+                <div class="form-floating mb-4 luxury-form-floating">
                     <input asp-for="Input.ConfirmPassword" class="form-control rounded-0 luxury-input-field" autocomplete="new-password" placeholder="confirm password" />
                     <label asp-for="Input.ConfirmPassword" class="text-muted">Confirm Password</label>
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span>
@@ -48,6 +48,22 @@
             </form>
 
             <hr class="my-4 border-secondary opacity-10" />
+
+            @if ((Model.ExternalLogins?.Count ?? 0) > 0)
+            {
+                <div class="text-center mb-3">
+                    <p class="mb-3 text-muted small">Or register with</p>
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="d-grid gap-2">
+                        @foreach (var provider in Model.ExternalLogins)
+                        {
+                            <button type="submit" class="btn btn-outline-secondary py-2 text-uppercase small" name="provider" value="@provider.Name" title="Register using your @provider.DisplayName account">
+                                @provider.DisplayName
+                            </button>
+                        }
+                    </form>
+                </div>
+                <hr class="my-4 border-secondary opacity-10" />
+            }
 
             <div class="text-center">
                 <p class="mb-3 text-muted small">Already a registered investor?</p>

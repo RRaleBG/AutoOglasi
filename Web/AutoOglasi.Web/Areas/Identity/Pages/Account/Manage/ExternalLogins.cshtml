@@ -1,0 +1,58 @@
+@page
+@model Microsoft.AspNetCore.Identity.UI.Pages.Account.Manage.Internal.ExternalLoginsModel
+@{
+    ViewData["Title"] = "External Logins";
+}
+
+<h4 class="text-uppercase font-monospace mb-4 luxury-profile-section-title">External Logins</h4>
+
+<partial name="_StatusMessage" model="@((string)ViewData["StatusMessage"] ?? (string)TempData["StatusMessage"])" />
+
+<div class="mb-4">
+    <p class="small text-muted">Manage your external login providers linked to this account.</p>
+</div>
+
+<div class="mb-4">
+    <h6 class="small text-uppercase text-muted">Current external logins</h6>
+    <ul class="list-unstyled">
+        @if (Model.CurrentLogins?.Any() == true)
+        {
+            foreach (var login in Model.CurrentLogins)
+            {
+                <li class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="font-monospace small">@login.LoginProvider</span>
+                    <form method="post" asp-page-handler="RemoveLogin" class="m-0 p-0">
+                        <input type="hidden" name="loginProvider" value="@login.LoginProvider" />
+                        <input type="hidden" name="providerKey" value="@login.ProviderKey" />
+                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-0">Remove</button>
+                    </form>
+                </li>
+            }
+        }
+        else
+        {
+            <li class="small text-muted">No external logins are linked to your account.</li>
+        }
+    </ul>
+</div>
+
+<div class="mb-4">
+    <h6 class="small text-uppercase text-muted">Available providers</h6>
+    @if (Model.OtherLogins?.Any() == true)
+    {
+        foreach (var provider in Model.OtherLogins)
+        {
+            <form method="post" asp-page-handler="LinkLogin" class="d-inline-block me-2">
+                <button type="submit" class="btn btn-sm btn-outline-primary rounded-0" name="provider" value="@provider.Name">Link @provider.DisplayName</button>
+            </form>
+        }
+    }
+    else
+    {
+        <p class="small text-muted">No external providers are configured.</p>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

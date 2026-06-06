@@ -1,2 +1,40 @@
-﻿<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+﻿<script>
+(function() {
+    // Helper to append a script and fall back on error
+    function loadScript(src, onload, onerror) {
+        var s = document.createElement('script');
+        s.src = src;
+        s.async = false;
+        if (onload) s.onload = onload;
+        if (onerror) s.onerror = onerror;
+        document.head.appendChild(s);
+    }
+
+    function tryLoadLocalThenCdn(localPath, cdnUrl) {
+        loadScript(localPath, null, function() { loadScript(cdnUrl); });
+    }
+
+    var initValidation = function() {
+        if (typeof jQuery === 'undefined') {
+            // jQuery is required for validation; bail and log — layout should load jQuery.
+            console.warn('Validation scripts requested but jQuery is not available.');
+            return;
+        }
+
+        if (typeof jQuery.validator === 'undefined') {
+            // Try local copies first, fall back to CDN on error.
+            tryLoadLocalThenCdn('@Url.Content("~/lib/jquery-validation/dist/jquery.validate.min.js")', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js');
+            tryLoadLocalThenCdn('@Url.Content("~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js")', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js');
+        }
+    };
+
+    // Register with layout's jQuery-ready callback queue so scripts load after jQuery.
+    window._jqueryReadyCallbacks = window._jqueryReadyCallbacks || [];
+    window._jqueryReadyCallbacks.push(initValidation);
+
+    // If jQuery is already present, run immediately (deferred) to preserve ordering.
+    if (typeof jQuery !== 'undefined') {
+        setTimeout(initValidation, 0);
+    }
+})();
+</script>

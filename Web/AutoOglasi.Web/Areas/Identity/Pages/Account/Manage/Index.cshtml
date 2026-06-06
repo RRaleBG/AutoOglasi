@@ -10,17 +10,43 @@
 
 <partial name="_StatusMessage" model="@((string)ViewData["StatusMessage"] ?? (string)TempData["StatusMessage"])" />
 
-<form id="profile-form" method="post">
+<form id="profile-form" method="post" asp-antiforgery="true" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="alert alert-danger border-0 rounded-0 small mb-4" role="alert"></div>
 
+    <div class="row mb-4 align-items-center">
+        <div class="col-auto">
+            @if (!string.IsNullOrEmpty(Model.CurrentProfileImagePath))
+            {
+                <img src="@Model.CurrentProfileImagePath" alt="Avatar" class="rounded-circle" style="width:64px;height:64px;object-fit:cover;" />
+            }
+            else
+            {
+                <img src="~/android-chrome-192x192.png" alt="Avatar" class="rounded-circle" style="width:64px;height:64px;object-fit:cover;" />
+            }
+        </div>
+        <div class="col">
+            <label class="form-label small text-muted">Profile image</label>
+            <input asp-for="Input.ProfileImage" id="profileImageInput" type="file" class="form-control" accept="image/*" />
+            <div class="d-flex gap-2 mt-2 align-items-center">
+                    <button id="removeAvatarButton" type="button" class="btn btn-outline-danger btn-sm">Remove Avatar</button>
+                    <input type="hidden" asp-for="RemoveAvatar" />
+                    <div class="ms-2">
+                        <img id="profilePreview" src="" alt="preview" class="rounded-circle" style="width:48px;height:48px;object-fit:cover;display:none;" />
+                    </div>
+                </div>
+                <span asp-validation-for="Input.ProfileImage" class="text-danger small"></span>
+        </div>
+    </div>
+
     <div class="form-floating mb-3 luxury-form-floating">
-        <input type="text" class="form-control rounded-0 luxury-input-field-disabled" value="@User.Identity?.Name" placeholder="Username" disabled />
-        <label class="text-muted">Username / Identity</label>
+        <input type="text" id="usernameInput" class="form-control rounded-0 luxury-input-field-disabled" value="@User.Identity?.Name" placeholder="Username" readonly />
+        <label for="usernameInput" class="text-muted">Username </label>
     </div>
 
     <div class="form-floating mb-4 luxury-form-floating">
-        <input type="tel" name="Input.PhoneNumber" id="phoneNumberInput" class="form-control rounded-0 font-monospace luxury-input-field" placeholder="Phone Number" />
+        <input asp-for="Input.PhoneNumber" id="phoneNumberInput" class="form-control rounded-0 font-monospace luxury-input-field" inputmode="tel" placeholder="Phone Number" />
         <label for="phoneNumberInput" class="text-muted">Contact Phone Line</label>
+        <span asp-validation-for="Input.PhoneNumber" class="text-danger small"></span>
     </div>
 
     <button id="update-profile-button" type="submit" class="btn text-uppercase py-2.5 px-4 fw-bold border luxury-profile-save-btn">
@@ -30,4 +56,46 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function(){
+            const input = document.getElementById('profileImageInput');
+            const preview = document.getElementById('profilePreview');
+            const removeBtn = document.getElementById('removeAvatarButton');
+            const removeField = document.querySelector('input[name="RemoveAvatar"]');
+
+            if (input) {
+                input.addEventListener('change', function(e){
+                    const file = input.files && input.files[0];
+                    if (!file) {
+                        preview.style.display = 'none';
+                        preview.src = '';
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function(ev){
+                        preview.src = ev.target.result;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+
+                    // Clear remove flag when new file chosen
+                    if(removeField) removeField.value = 'false';
+                });
+            }
+
+            if (removeBtn) {
+                removeBtn.addEventListener('click', function(){
+                    if (confirm('Remove your avatar?')) {
+                        // set hidden RemoveAvatar to true and submit
+                        if(removeField) removeField.value = 'true';
+                        // clear file input and preview
+                        if (input) { input.value = ''; }
+                        if (preview) { preview.src = ''; preview.style.display = 'none'; }
+                        document.getElementById('profile-form').submit();
+                    }
+                });
+            }
+        })();
+    </script>
 }

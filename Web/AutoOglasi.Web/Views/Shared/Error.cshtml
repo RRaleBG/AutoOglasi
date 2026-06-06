@@ -4,27 +4,75 @@
     ViewData["Title"] = "Error";
 }
 
-@if (Model.ShowRequestId)
-{
-    <p class="luxury-error-request">
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
-    </p>
-}
+<div class="d-flex justify-content-center align-items-center py-5">
+    <div class="card luxury-card shadow-lg luxury-auth-card">
+        <div class="card-body p-4 p-md-5">
 
-<div class="text-center luxury-error-container">
-    @if (Model.StatusCode == "401")
-    {
-        <h1 class="luxury-error-code">Error @Model.StatusCode :(</h1>
-        <h2 class="luxury-error-message">Unfortunately, you are NOT authorized to see this page.</h2>
-    }
-    else if (Model.StatusCode == "404")
-    {
-        <h1 class="luxury-error-code">Error @Model.StatusCode :(</h1>
-        <h2 class="luxury-error-message">We are sorry, but the page you requested cannot be found.</h2>
-    }
-    else
-    {
-        <h1 class="luxury-error-code">Ooops, Error :(</h1>
-        <h2 class="luxury-error-message">Unfortunately, an error occurred while processing your request.</h2>
-    }
+            <div class="text-center mb-4">
+                <span class="text-uppercase small font-monospace luxury-gold-sub-text luxury-sub-spacing-sm">
+                    System Notice
+                </span>
+
+                @if (Model.StatusCode == "401")
+                {
+                    <h2 class="fw-light text-uppercase mt-1 text-theme-heading luxury-title-spacing">
+                        Access Restricted
+                    </h2>
+                }
+                else if (Model.StatusCode == "404")
+                {
+                    <h2 class="fw-light text-uppercase mt-1 text-theme-heading luxury-title-spacing">
+                        Page Not Found
+                    </h2>
+                }
+                else
+                {
+                    <h2 class="fw-light text-uppercase mt-1 text-theme-heading luxury-title-spacing">
+                        Service Interrupted
+                    </h2>
+                }
+
+                <div class="mx-auto mt-2 luxury-deco-line-sm"></div>
+            </div>
+
+            <div class="text-center">
+                @if (Model.StatusCode == "401")
+                {
+                    <div class="luxury-error-code">Error @Model.StatusCode</div>
+                    <p class="luxury-error-message">
+                        Unfortunately, you are not authorized to see this page.
+                    </p>
+                }
+                else if (Model.StatusCode == "404")
+                {
+                    <div class="luxury-error-code">Error @Model.StatusCode</div>
+                    <p class="luxury-error-message">
+                        We are sorry, but the page you requested cannot be found.
+                    </p>
+                }
+                else
+                {
+                    <div class="luxury-error-code">Error</div>
+                    <p class="luxury-error-message">
+                        Unfortunately, an error occurred while processing your request.
+                    </p>
+                }
+            </div>
+
+            @if (Model.ShowRequestId)
+            {
+                <div class="luxury-error-request text-center mt-4">
+                    <strong>Request ID:</strong>
+                    <code>@Model.RequestId</code>
+                </div>
+            }
+
+            <div class="text-center mt-4">
+                <a asp-controller="Home" asp-action="Index" class="btn text-uppercase py-3 w-100 fw-bold border mb-2 luxury-btn-gold-outline luxury-btn-size-md luxury-tracking-wide">
+                    Return to Salon
+                </a>
+            </div>
+
+        </div>
+    </div>
 </div>

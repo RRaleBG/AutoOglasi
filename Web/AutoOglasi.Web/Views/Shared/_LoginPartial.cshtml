@@ -9,10 +9,21 @@
 
             @if (SignInManager.IsSignedIn(User))
             {
+                var __user = await UserManager.GetUserAsync(User);
+                var __avatar = __user?.ProfileImagePath;
+
                 <li class="nav-item">
                     <!-- Dugme za Dropdown korisnika -->
-                    <a class="btn btn-outline-secondary bg-transparent border-0 dropdown-toggle luxury-user-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="bi bi-person luxury-user-icon"></span>
+                    <a class="btn btn-outline-secondary bg-transparent border-0 dropdown-toggle d-flex align-items-center gap-2 luxury-user-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        @if (!string.IsNullOrEmpty(__avatar))
+                        {
+                            <img src="@Url.Content(__avatar)" alt="avatar" class="rounded-circle" style="width:36px;height:36px;object-fit:cover;" />
+                        }
+                        else
+                        {
+                            <span class="bi bi-person luxury-user-icon"></span>
+                        }
+
                         <strong class="luxury-username">
                             @User.Identity.Name.ToUpper().Substring(0,1)@User.Identity.Name.Substring(0,User.Identity.Name.IndexOf('@')).ToLower().Substring(1)
                         </strong>
@@ -69,3 +80,6 @@
         </ul>
     </nav>
 </div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

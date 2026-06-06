@@ -69,7 +69,7 @@
 
                 <div class="col">
                     <h6 class="text-uppercase font-monospace pb-2 border-bottom border-secondary border-opacity-10 luxury-search-section-title">Propulsion</h6>
-                    <div class="pt-2">
+                    <div class="pt-2 style-scroll luxury-scroll-container">
                         @foreach (var fuelType in Model.Car.FuelTypes)
                         {
                             <div class="form-check my-2">
@@ -103,3 +103,7 @@
         </form>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

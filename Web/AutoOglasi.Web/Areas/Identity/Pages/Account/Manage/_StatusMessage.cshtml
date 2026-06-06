@@ -1,0 +1,25 @@
+@model string
+
+@if (!string.IsNullOrWhiteSpace(Model))
+{
+    var statusMessageClass = Model.StartsWith("Error", StringComparison.OrdinalIgnoreCase)
+    ? "luxury-status-message-danger"
+    : "luxury-status-message-success";
+
+    <div class="luxury-status-message @statusMessageClass" role="alert">
+        <span class="luxury-status-message-icon">
+            @if (statusMessageClass == "luxury-status-message-danger")
+            {
+                <i class="fas fa-exclamation-triangle"></i>
+            }
+            else
+            {
+                <i class="fas fa-check"></i>
+            }
+        </span>
+
+        <span class="luxury-status-message-text">
+            @Model
+        </span>
+    </div>
+}

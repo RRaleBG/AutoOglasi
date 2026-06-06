@@ -1,10 +1,10 @@
 /* --- LUXURY ELITE GLOBAL STYLES --- */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght=500;700&family=Montserrat:wght=300;400;600&display=swap');
 
 /* ==========================================================================
-   --- ARHITEKTURA BOJA (CSS Promenljive kontrolišu sve) ---
+   --- ARHITEKTURA BOJA
    ========================================================================== */
-:root, [data-bs-theme="dark"] {
+:root,
+[data-bs-theme="dark"] {
     --bg-main: #0b0c10;
     --bg-card: #11141a;
     --bg-navbar: #050508;
@@ -16,10 +16,10 @@
     --text-muted-light: rgba(255, 255, 255, 0.4);
     --border-color: rgba(255, 255, 255, 0.1);
     --gold: #d4af37;
+    --gold-muted: #bfa15f;
+    --card-bg: var(--bg-card);
+    --navbar-bg: var(--bg-navbar);
 }
-
-
-
 
 [data-bs-theme="light"] {
     --bg-main: #f8f9fa;
@@ -33,10 +33,13 @@
     --text-muted-light: #495057;
     --border-color: rgba(0, 0, 0, 0.08);
     --gold: #bfa15f;
+    --gold-muted: #9f8447;
+    --card-bg: var(--bg-card);
+    --navbar-bg: var(--bg-navbar);
 }
 
 /* ==========================================================================
-   --- TIPOGRAFIJA I OSNOVA ---
+   --- TIPOGRAFIJA I OSNOVA
    ========================================================================== */
 body {
     font-family: 'Montserrat', sans-serif;
@@ -44,11 +47,27 @@ body {
     color: var(--text-main) !important;
 }
 
-h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
+img,
+video {
+    max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.text-white,
+.text-theme-heading {
     color: var(--text-title) !important;
 }
 
-.text-muted, small, .font-monospace, .luxury-text-muted, .luxury-card-specs {
+.text-muted,
+small,
+.font-monospace,
+.luxury-text-muted,
+.luxury-card-specs {
     color: var(--text-muted) !important;
 }
 
@@ -58,7 +77,7 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 }
 
 /* ==========================================================================
-   --- PREMIUM HEADER / NAVBAR ---
+   --- PREMIUM HEADER / NAVBAR
    ========================================================================== */
 .luxury-navbar {
     background-color: var(--bg-navbar) !important;
@@ -78,9 +97,9 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     transition: color 0.3s ease;
 }
 
-.luxury-nav-link:hover {
-    color: var(--gold) !important;
-}
+    .luxury-nav-link:hover {
+        color: var(--gold) !important;
+    }
 
 [data-bs-theme="light"] .luxury-navbar .luxury-brand-font,
 [data-bs-theme="light"] .luxury-navbar a:not(.luxury-nav-link),
@@ -88,83 +107,113 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     color: var(--text-title) !important;
 }
 
+.luxury-theme-toggle-icon {
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+    .luxury-theme-toggle-icon:hover {
+        transform: scale(1.1);
+    }
+
+.theme-dark-active {
+    color: var(--gold) !important;
+}
+
+.theme-light-active {
+    color: var(--text-main) !important;
+}
+
+.luxury-navbar-logo {
+    height: 38px;
+    width: auto;
+}
+
+.luxury-dot-gold {
+    color: var(--gold);
+}
 
 /* ==========================================================================
-   --- ELEMENTI I KARTICE (SHOWROOM / INDEX) ---
+   --- ELEMENTI I KARTICE
    ========================================================================== */
 .luxury-card {
     background: var(--bg-card) !important;
     border: 1px solid var(--border-color) !important;
-    border-radius: 0px !important;
+    border-radius: 0 !important;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.luxury-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
-    border-color: var(--gold) !important;
-}
+    .luxury-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+        border-color: var(--gold) !important;
+    }
 
-.luxury-card-header { 
-    background-color: var(--bg-card) !important; /* Koristi varijablu, ne fiksnu boju */
+.luxury-card-header {
+    background-color: var(--bg-card) !important;
     border-bottom: 1px solid var(--border-color);
 }
-.luxury-card-date { 
-    color: var(--text-muted) !important; /* Automatski se prilagođava temi */
-    font-size: 0.75rem; 
+
+.luxury-card-date {
+    color: var(--text-muted) !important;
+    font-size: 0.75rem;
 }
 
-.luxury-card-price, .luxury-price-tag, .luxury-card-location, .luxury-status-active { 
-    color: var(--gold) !important; 
+.luxury-card-price,
+.luxury-price-tag,
+.luxury-card-location,
+.luxury-status-active {
+    color: var(--gold) !important;
 }
 
-.luxury-card-body { 
-    background-color: var(--bg-card) !important; 
+.luxury-card-body {
+    background-color: var(--bg-card) !important;
 }
 
-.luxury-card-title { 
-    color: var(--text-title) !important; 
-    font-size: 1.05rem; 
-    letter-spacing: 1px; 
+.luxury-card-title {
+    color: var(--text-title) !important;
+    font-size: 1.05rem;
+    letter-spacing: 1px;
 }
 
-.luxury-card-model { 
-    color: var(--text-muted) !important; 
-    font-size: 0.9rem; 
+.luxury-card-model {
+    color: var(--text-muted) !important;
+    font-size: 0.9rem;
 }
 
-.luxury-card-link { 
-    color: var(--text-main) !important; 
+.luxury-card-link {
+    color: var(--text-main) !important;
 }
 
-.luxury-card-img-wrapper { 
-    height: 200px; 
-    overflow: hidden; 
-    position: relative; 
+.luxury-card-img-wrapper {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
 }
 
-.luxury-card-img { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    transition: transform 0.6s ease; 
+.luxury-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
 }
 
-.luxury-card:hover .luxury-card-img { 
-    transform: scale(1.05); 
+.luxury-card:hover .luxury-card-img {
+    transform: scale(1.05);
 }
 
 /* ==========================================================================
-   --- HERO SECTION FIX (Poboljšano za telefone) ---
+   --- HERO SECTION
    ========================================================================== */
 .home-hero-container {
-    height: 45vh; /* Manja, responzivna visina za mobilne */
+    height: 45vh;
     position: relative;
 }
 
 @media (min-width: 768px) {
     .home-hero-container {
-        height: 70vh; /* Vraća se na luksuznih 70vh na desktopu */
+        height: 70vh;
     }
 }
 
@@ -179,7 +228,6 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     object-fit: cover;
 }
 
-/* Captions adaptacija za mobilne uređaje */
 .luxury-carousel-caption-bottom {
     bottom: 20px;
 }
@@ -190,286 +238,343 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     }
 }
 
-
-
 /* ==========================================================================
-   --- STRANICA POJEDINAČNOG OGLASA (DETAILS / OFFER) ---
+   --- DETAILS / OFFER
    ========================================================================== */
-.luxury-carousel-container { background: #000; border: 1px solid rgba(255, 255, 255, 0.05); overflow: hidden; }
-.luxury-carousel-img { height: 350px; width: 100%; object-fit: cover; }
-@media (min-width: 768px) { .luxury-carousel-img { height: 500px; } }
-
-.luxury-thumb { height: 75px; object-fit: cover; cursor: pointer; opacity: 0.4; transition: all 0.2s ease; border-bottom: 3px solid transparent; }
-.luxury-thumb:hover { opacity: 1; border-bottom: 3px solid var(--gold); }
-
-.luxury-spec-box { background-color: var(--bg-box) !important; }
-.luxury-spec-label { color: var(--text-muted) !important; }
-.luxury-spec-value { color: var(--text-title) !important; }
-.luxury-story-text { color: var(--text-main) !important; }
-
-.luxury-agent-card { 
-    background-color: var(--bg-black-flat) !important; 
-    border: 1px solid var(--border-color) !important;
-    box-shadow: [data-bs-theme="light"] 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+.luxury-carousel-container {
+    background: #000;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
 }
 
-.luxury-agent-value { color: var(--text-title) !important; }
-.luxury-agent-btn, .luxury-search-btn {
+.luxury-carousel-img {
+    height: 350px;
+    width: 100%;
+    object-fit: cover;
+}
+
+@media (min-width: 768px) {
+    .luxury-carousel-img {
+        height: 500px;
+    }
+}
+
+.luxury-thumb {
+    height: 75px;
+    object-fit: cover;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: all 0.2s ease;
+    border-bottom: 3px solid transparent;
+}
+
+    .luxury-thumb:hover {
+        opacity: 1;
+        border-bottom-color: var(--gold);
+    }
+
+.luxury-spec-box {
+    background-color: var(--bg-box) !important;
+}
+
+.luxury-spec-label {
+    color: var(--text-muted) !important;
+}
+
+.luxury-spec-value {
+    color: var(--text-title) !important;
+}
+
+.luxury-story-text {
+    color: var(--text-main) !important;
+}
+
+.luxury-agent-card {
+    background-color: var(--bg-black-flat) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+[data-bs-theme="light"] .luxury-agent-card {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+}
+
+.luxury-agent-value {
+    color: var(--text-title) !important;
+}
+
+.luxury-agent-btn,
+.luxury-search-btn {
     color: var(--gold) !important;
     border-color: var(--gold) !important;
     background: transparent !important;
     transition: all 0.3s ease;
-    border-radius: 0px !important;
+    border-radius: 0 !important;
 }
-.luxury-agent-btn:hover, .luxury-search-btn:hover { background-color: rgba(191, 161, 95, 0.1) !important; }
+
+    .luxury-agent-btn:hover,
+    .luxury-search-btn:hover {
+        background-color: rgba(191, 161, 95, 0.1) !important;
+    }
 
 /* ==========================================================================
-   --- FORME, POLJA I PRETRAGA (SEARCH ENGINE) ---
+   --- FORME I PRETRAGA
    ========================================================================== */
-.luxury-search-form { background-color: var(--bg-card) !important; }
+.luxury-search-form {
+    background-color: var(--bg-card) !important;
+}
 
-.form-control, .form-select {
-    border-radius: 0px !important;
+.form-control,
+.form-select {
+    border-radius: 0 !important;
     background-color: var(--bg-main) !important;
     color: var(--text-main) !important;
     border: 1px solid var(--border-color) !important;
     transition: all 0.3s ease-in-out !important;
 }
 
-.form-control:focus, .form-select:focus {
-    background-color: var(--bg-main) !important;
-    border-color: var(--gold) !important;
-    box-shadow: 0 0 8px rgba(191, 161, 95, 0.2) !important;
-    color: var(--text-main) !important;
+    .form-control:focus,
+    .form-select:focus {
+        background-color: var(--bg-main) !important;
+        border-color: var(--gold) !important;
+        box-shadow: 0 0 8px rgba(191, 161, 95, 0.2) !important;
+        color: var(--text-main) !important;
+    }
+
+.luxury-checkbox {
+    background-color: transparent !important;
+    border-color: var(--text-muted) !important;
+    border-radius: 0 !important;
 }
 
-.luxury-checkbox { background-color: transparent !important; border-color: var(--text-muted) !important; border-radius: 0px !important;}
-.luxury-checkbox:checked { background-color: var(--gold) !important; border-color: var(--gold) !important; }
+    .luxury-checkbox:checked {
+        background-color: var(--gold) !important;
+        border-color: var(--gold) !important;
+    }
 
-/* Market Insights */
-.luxury-sorting-bar { background-color: var(--bg-card) !important; }
-.luxury-stats-btn { color: var(--text-main) !important; border-color: var(--border-color) !important; background: var(--bg-box) !important; }
-.luxury-stats-box { background-color: var(--bg-main) !important; }
-.luxury-stats-label { color: var(--text-muted) !important; }
-.luxury-stats-value { color: var(--text-title) !important; }
+.luxury-search-btn {
+    letter-spacing: 3px;
+}
 
+.luxury-scroll-container {
+    max-height: 150px;
+    overflow-y: auto;
+}
 
+/* ==========================================================================
+   --- MARKET INSIGHTS
+   ========================================================================== */
+.luxury-sorting-bar {
+    background-color: var(--bg-card) !important;
+}
 
-/* --- REGISTRATION & FORM SPECIFIC TUNING --- */
+.luxury-stats-btn {
+    color: var(--text-main) !important;
+    border-color: var(--border-color) !important;
+    background: var(--bg-box) !important;
+}
+
+.luxury-stats-box {
+    background-color: var(--bg-main) !important;
+}
+
+.luxury-stats-label {
+    color: var(--text-muted) !important;
+}
+
+.luxury-stats-value {
+    color: var(--text-title) !important;
+}
+
+/* ==========================================================================
+   --- REGISTRATION & FORM TUNING
+   ========================================================================== */
 .luxury-gold-sub-text {
     letter-spacing: 4px;
     color: var(--gold) !important;
 }
+
 .luxury-title-spacing {
     letter-spacing: 1px;
 }
+
 .luxury-deco-line {
     width: 40px;
     height: 1px;
     background-color: var(--gold);
 }
+
 .luxury-label-size {
     font-size: 0.75rem;
     letter-spacing: 1px;
 }
+
 .luxury-select-pointer {
     cursor: pointer;
 }
+
 .luxury-agent-header-text {
     font-size: 0.85rem;
     letter-spacing: 2px;
 }
-.luxury-agent-header-text i {
-    color: var(--gold);
-}
+
+    .luxury-agent-header-text i {
+        color: var(--gold);
+    }
+
 .luxury-agent-label-size {
     font-size: 0.7rem;
     letter-spacing: 1px;
 }
-.luxury-search-btn {
-    letter-spacing: 3px;
-}
+
 .luxury-checkbox-label-size {
     font-size: 0.7rem;
     cursor: pointer;
 }
 
-
-
-
-/* --- DETAILS VIEW TYPOGRAPHY TUNING --- */
+/* ==========================================================================
+   --- DETAILS TYPOGRAPHY
+   ========================================================================== */
 .luxury-sub-spacing {
     letter-spacing: 4px;
 }
+
 .luxury-heading-spacing {
     letter-spacing: 2px;
 }
+
 .luxury-label-spacing {
     letter-spacing: 1px;
 }
+
 .luxury-spec-size {
     font-size: 0.75rem;
 }
+
 .luxury-story-custom {
     white-space: pre-line;
     font-size: 0.95rem;
     font-family: monospace;
 }
 
-
-
-
-/* --- SEARCH VIEW SPECIFIC TUNING --- */
-.luxury-scroll-container {
-    max-height: 150px;
-    overflow-y: auto;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* --- LAYOUT & NAVBAR CORE TUNING --- */
-.luxury-theme-toggle-icon {
-    font-size: 1.25rem; /* Menja stari fs-5 */
-    cursor: pointer;
-    transition: transform 0.3s ease, color 0.3s ease;
-}
-.luxury-theme-toggle-icon:hover {
-    transform: scale(1.1);
-}
-.theme-dark-active {
-    color: var(--gold) !important; /* Ili specifična narandžasta/žuta za mesec */
-}
-.theme-light-active {
-    color: var(--text-main) !important; /* Prilagođava se svetlom tekstu/kontrastu */
-}
-.luxury-navbar-logo {
-    height: 38px;
-    width: auto;
-}
-.luxury-dot-gold {
-    color: var(--gold);
-}
-
-/* --- PAGINATION LUXURY TUNING --- */
+/* ==========================================================================
+   --- PAGINATION
+   ========================================================================== */
 .luxury-pagination .page-link {
-    background-color: var(--card-bg, rgba(30, 30, 30, 0.2));
-    border-color: rgba(128, 128, 128, 0.15);
-    color: var(--text-muted, #a0a0a0);
+    color: var(--text-muted) !important;
+    background-color: var(--card-bg) !important;
+    border: 1px solid rgba(128, 128, 128, 0.15) !important;
     transition: all 0.2s ease-in-out;
 }
 
-.luxury-pagination .page-link:hover:not(.luxury-page-active) {
-    background-color: rgba(255, 255, 255, 0.05);
-    color: var(--text-main, #fff);
-    border-color: rgba(255, 255, 255, 0.2);
-}
+    .luxury-pagination .page-link:hover {
+        color: var(--gold) !important;
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        border-color: rgba(128, 128, 128, 0.3) !important;
+    }
 
+.luxury-pagination .page-item.active .page-link,
 .luxury-pagination .luxury-page-active {
-    background-color: rgba(212, 175, 55, 0.15) !important;
-    color: var(--gold, #d4af37) !important;
-    border-color: rgba(212, 175, 55, 0.3) !important;
+    color: var(--gold) !important;
+    background-color: rgba(212, 175, 55, 0.1) !important;
+    border-color: var(--gold) !important;
 }
 
 .luxury-pagination .page-item.disabled .page-link {
-    background-color: rgba(0, 0, 0, 0.1) !important;
-    border-color: rgba(128, 128, 128, 0.05) !important;
-    color: rgba(128, 128, 128, 0.3) !important;
+    color: rgba(128, 128, 128, 0.4) !important;
+    background-color: transparent !important;
+    border-color: rgba(128, 128, 128, 0.08) !important;
+    pointer-events: none;
     cursor: not-allowed;
 }
 
-
-
-/* --- LOGIN PARTIAL & USER DROPDOWN TUNING --- */
+/* ==========================================================================
+   --- LOGIN PARTIAL & USER DROPDOWN
+   ========================================================================== */
 .luxury-user-toggle {
-    color: var(--text-main, #fff) !important;
+    color: var(--text-main) !important;
     transition: color 0.2s ease;
 }
 
-.luxury-user-toggle:hover {
-    color: var(--gold, #d4af37) !important;
-}
+    .luxury-user-toggle:hover {
+        color: var(--gold) !important;
+    }
 
 .luxury-user-icon {
     font-size: 1rem;
-    color: var(--gold, #d4af37); /* Koristi tvoju centralnu zlatnu umesto cornflowerblue */
+    color: var(--gold);
     margin-right: 4px;
 }
 
 .luxury-dropdown-menu {
-    background-color: var(--card-bg, #1a1a1a) !important;
-    border: 1px border-secondary border-opacity-10 !important;
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
 }
 
-.luxury-dropdown-menu .nav-link, 
-.luxury-dropdown-menu .dropdown-item {
-    color: var(--text-main, #fff) !important;
-}
+    .luxury-dropdown-menu .nav-link,
+    .luxury-dropdown-menu .dropdown-item {
+        color: var(--text-main) !important;
+    }
 
-.luxury-dropdown-menu .nav-link:hover, 
-.luxury-dropdown-menu .dropdown-item:hover {
-    color: var(--gold, #d4af37) !important;
-    background-color: rgba(212, 175, 55, 0.05) !important;
-}
+        .luxury-dropdown-menu .nav-link:hover,
+        .luxury-dropdown-menu .dropdown-item:hover {
+            color: var(--gold) !important;
+            background-color: rgba(212, 175, 55, 0.05) !important;
+        }
 
 .luxury-logout-btn {
-    color: #dc3545 !important; /* Elegantna crvena za logout da se jasno razlikuje */
+    color: #dc3545 !important;
     font-weight: 500;
 }
 
-.luxury-logout-btn:hover {
-    background-color: rgba(220, 53, 69, 0.1) !important;
-    color: #dc3545 !important;
-}
+    .luxury-logout-btn:hover {
+        background-color: rgba(220, 53, 69, 0.1) !important;
+        color: #dc3545 !important;
+    }
 
 .luxury-divider {
     border-color: rgba(128, 128, 128, 0.2);
 }
 
-
-/* --- DASHBOARD & SHOWROOM SPECIFIC TUNING --- */
-.luxury-carousel-caption-bottom {
-    bottom: 40px;
-}
+/* ==========================================================================
+   --- DASHBOARD & SHOWROOM
+   ========================================================================== */
 .luxury-gold-link-text {
-    color: var(--gold, #d4af37);
+    color: var(--gold);
     transition: opacity 0.2s ease;
 }
-.luxury-gold-link-text:hover {
-    color: var(--gold, #d4af37);
-    opacity: 0.8;
-}
+
+    .luxury-gold-link-text:hover {
+        color: var(--gold);
+        opacity: 0.8;
+    }
+
 .luxury-link-spacing {
     letter-spacing: 1px;
 }
+
 .luxury-arrow-size {
     font-size: 0.75rem;
 }
 
-
-
-/* --- ADMIN DASHBOARD & TABLE TUNING --- */
+/* ==========================================================================
+   --- ADMIN DASHBOARD & TABLE
+   ========================================================================== */
 .luxury-table-container {
-    background-color: var(--card-bg, rgba(30, 30, 30, 0.2));
+    background-color: var(--card-bg);
+    overflow-x: auto;
 }
 
+    .luxury-table-container table {
+        min-width: 720px;
+    }
+
 .luxury-admin-table {
-    color: var(--text-muted, #a0a0a0) !important;
+    color: var(--text-muted) !important;
 }
 
 .luxury-table-header {
-    background: var(--navbar-bg, rgba(0, 0, 0, 0.4));
-    color: var(--text-main, #fff) !important;
+    background: var(--navbar-bg);
+    color: var(--text-main) !important;
     font-size: 0.8rem;
     letter-spacing: 1px;
 }
@@ -478,15 +583,18 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     transition: background-color 0.2s ease;
 }
 
-.luxury-table-row:hover {
-    background-color: rgba(255, 255, 255, 0.02);
+    .luxury-table-row:hover {
+        background-color: rgba(255, 255, 255, 0.02);
+    }
+
+[data-bs-theme="light"] .luxury-table-row:hover {
+    background-color: rgba(0, 0, 0, 0.03);
 }
 
 .luxury-table-price {
-    color: var(--gold, #d4af37);
+    color: var(--gold);
 }
 
-/* Badges */
 .luxury-badge-active {
     background-color: rgba(40, 167, 69, 0.1);
     color: #28a745;
@@ -503,36 +611,35 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     letter-spacing: 1px;
 }
 
-/* Admin Action Buttons */
-.luxury-admin-btn-hide, 
-.luxury-admin-btn-show, 
-.luxury-admin-btn-edit, 
-.luxury-admin-btn-view, 
+.luxury-admin-btn-hide,
+.luxury-admin-btn-show,
+.luxury-admin-btn-edit,
+.luxury-admin-btn-view,
 .luxury-admin-btn-delete {
     font-size: 0.7rem;
     letter-spacing: 1px;
 }
 
 .luxury-admin-btn-hide {
-    color: var(--text-muted, #c5c6c7);
+    color: var(--text-muted);
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .luxury-admin-btn-show {
-    color: var(--gold, #d4af37);
+    color: var(--gold);
     background: rgba(212, 175, 55, 0.05);
     border: 1px solid rgba(212, 175, 55, 0.2);
 }
 
 .luxury-admin-btn-edit {
-    color: var(--text-main, #fff);
+    color: var(--text-main);
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid transparent;
 }
 
 .luxury-admin-btn-view {
-    color: #bfa15f;
+    color: var(--gold-muted);
     background: transparent;
     border: 1px solid transparent;
 }
@@ -543,33 +650,28 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     border: 1px solid rgba(255, 107, 107, 0.15);
 }
 
-
-
-
-
-/* --- ROLE MANAGEMENT SPECIFIC TUNING --- */
+/* ==========================================================================
+   --- ROLE MANAGEMENT
+   ========================================================================== */
 .luxury-card-header-bg {
-    background-color: var(--navbar-bg, rgba(0, 0, 0, 0.3)) !important;
+    background-color: var(--navbar-bg) !important;
 }
 
 .luxury-btn-gold-outline {
-    color: var(--gold, #d4af37) !important;
-    border-color: var(--gold, #d4af37) !important;
+    color: var(--gold) !important;
+    border-color: var(--gold) !important;
     letter-spacing: 1px;
     font-size: 0.75rem;
     background: transparent;
     transition: all 0.3s ease;
 }
 
-.luxury-btn-gold-outline:hover {
-    background-color: rgba(212, 175, 55, 0.1) !important;
-    transform: translateY(-1px);
-}
+    .luxury-btn-gold-outline:hover {
+        background-color: rgba(212, 175, 55, 0.1) !important;
+        transform: translateY(-1px);
+    }
 
-.luxury-col-width-config {
-    width: 120px;
-}
-
+.luxury-col-width-config,
 .luxury-col-width-auth {
     width: 120px;
 }
@@ -578,24 +680,22 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     font-size: 0.85rem;
 }
 
-
-/* --- ROLE CREATE VIEW TUNING --- */
 .luxury-deco-line-sm {
     width: 30px;
     height: 1px;
-    background-color: var(--gold, #d4af37);
+    background-color: var(--gold);
 }
 
 .luxury-form-floating .luxury-input-field {
-    color: var(--text-main, #fff) !important;
-    background-color: var(--card-bg, rgba(30, 30, 30, 0.2)) !important;
+    color: var(--text-main) !important;
+    background-color: var(--card-bg) !important;
     border-color: rgba(128, 128, 128, 0.25) !important;
 }
 
-.luxury-form-floating .luxury-input-field:focus {
-    border-color: var(--gold, #d4af37) !important;
-    box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.1) !important;
-}
+    .luxury-form-floating .luxury-input-field:focus {
+        border-color: var(--gold) !important;
+        box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.1) !important;
+    }
 
 .luxury-btn-size-sm {
     font-size: 0.8rem;
@@ -603,26 +703,23 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 }
 
 .luxury-btn-cancel {
-    color: var(--text-muted, #c5c6c7) !important;
+    color: var(--text-muted) !important;
     border-color: rgba(128, 128, 128, 0.2) !important;
     background-color: rgba(255, 255, 255, 0.02) !important;
     transition: all 0.3s ease;
 }
 
-.luxury-btn-cancel:hover {
-    background-color: rgba(255, 255, 255, 0.07) !important;
-    color: var(--text-main, #fff) !important;
-}
+    .luxury-btn-cancel:hover {
+        background-color: rgba(255, 255, 255, 0.07) !important;
+        color: var(--text-main) !important;
+    }
 
-
-
-/* --- ROLE UPDATE VIEW TUNING --- */
 .luxury-title-highlight {
-    color: var(--gold, #d4af37);
+    color: var(--gold);
 }
 
 .luxury-card-subtitle {
-    color: var(--text-main, #fff);
+    color: var(--text-main);
     font-size: 0.9rem;
     letter-spacing: 1px;
 }
@@ -641,10 +738,10 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     border-color: rgba(128, 128, 128, 0.3) !important;
 }
 
-.luxury-admin-checkbox:checked {
-    background-color: var(--gold, #d4af37) !important;
-    border-color: var(--gold, #d4af37) !important;
-}
+    .luxury-admin-checkbox:checked {
+        background-color: var(--gold) !important;
+        border-color: var(--gold) !important;
+    }
 
 .luxury-card-footer-bg {
     background-color: rgba(0, 0, 0, 0.1);
@@ -666,10 +763,16 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     letter-spacing: 2px;
 }
 
-
-/* --- IDENTITY & AUTHENTICATION VIEWS TUNING --- */
+/* ==========================================================================
+   --- IDENTITY & AUTHENTICATION
+   ========================================================================== */
 .luxury-auth-card {
     max-width: 420px;
+    width: 100%;
+}
+
+.luxury-register-card {
+    max-width: 480px;
     width: 100%;
 }
 
@@ -678,14 +781,14 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 }
 
 .luxury-forgot-password-link {
-    color: #bfa15f;
+    color: var(--gold-muted);
     font-size: 0.8rem;
     transition: color 0.2s ease;
 }
 
-.luxury-forgot-password-link:hover {
-    color: var(--gold, #d4af37);
-}
+    .luxury-forgot-password-link:hover {
+        color: var(--gold);
+    }
 
 .luxury-auth-btn-register {
     font-size: 0.75rem;
@@ -693,46 +796,29 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 }
 
 .luxury-resend-link {
-    color: var(--text-muted, #888);
+    color: var(--text-muted);
     font-size: 0.75rem;
     transition: color 0.2s ease;
 }
 
-.luxury-resend-link:hover {
-    color: var(--text-main, #fff);
+    .luxury-resend-link:hover {
+        color: var(--text-main);
+    }
+
+.luxury-redirect-text {
+    color: var(--text-muted) !important;
 }
 
-/* --- REGISTER VIEW SPECIFIC TUNING --- */
-.luxury-register-card {
-    max-width: 480px;
-    width: 100%;
-}
-/* --- RECOVERY VAULT CLEANUP (1:1 ORIGINAL PRESETS) --- */
-.autooglasi-recovery-title {
-    letter-spacing: 2px;
-    font-size: 1.6rem;
+.luxury-spinner-gold {
+    color: var(--gold) !important;
 }
 
-.autooglasi-recovery-subtitle {
-    color: #bfa15f !important;
-}
-
-.autooglasi-recovery-btn {
-    color: #d4af37;
-    border-color: #d4af37 !important;
-    letter-spacing: 2px;
-    font-size: 0.85rem;
-    background: transparent;
-    transition: all 0.3s;
-}
-
-.autooglasi-recovery-btn:hover {
-    background: rgba(212, 175, 55, 0.1) !important;
-    color: #d4af37 !important;
-}
-/* --- RECOVERY VAULT COMPLETE TUNING --- */
-.autooglasi-recovery-box {
-    background-color: var(--card-bg, rgba(33, 37, 41, 0.25)) !important;
+/* ==========================================================================
+   --- RECOVERY / DENIED / PROFILE / MANAGE
+   ========================================================================== */
+.autooglasi-recovery-box,
+.autooglasi-denied-box {
+    background-color: var(--card-bg) !important;
 }
 
 .autooglasi-recovery-title {
@@ -741,46 +827,45 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 }
 
 .autooglasi-recovery-subtitle {
-    color: var(--gold-muted, #bfa15f) !important;
+    color: var(--gold-muted) !important;
 }
 
-.autooglasi-recovery-btn {
-    color: var(--gold, #d4af37) !important;
-    border-color: var(--gold, #d4af37) !important;
+.autooglasi-recovery-btn,
+.luxury-profile-save-btn {
+    color: var(--gold) !important;
+    border-color: var(--gold) !important;
     letter-spacing: 2px;
     font-size: 0.85rem;
     background: transparent;
     transition: all 0.3s ease-in-out;
 }
 
-.autooglasi-recovery-btn:hover {
-    background-color: rgba(212, 175, 55, 0.1) !important;
-    color: var(--gold, #d4af37) !important;
-}
-/* --- MANAGEMENT SIDE NAVIGATION (1:1 SEPARATED) --- */
+    .autooglasi-recovery-btn:hover,
+    .luxury-profile-save-btn:hover {
+        background-color: rgba(212, 175, 55, 0.1) !important;
+        color: var(--gold) !important;
+    }
+
 .luxury-manage-nav {
     letter-spacing: 1px;
 }
 
-.luxury-manage-nav .nav-link {
-    color: var(--text-main, #fff) !important;
-    transition: all 0.3s ease;
-}
+    .luxury-manage-nav .nav-link {
+        color: var(--text-main) !important;
+        transition: all 0.3s ease;
+    }
 
-.luxury-manage-nav .nav-link.active {
-    background-color: rgba(212, 175, 55, 0.1) !important;
-    color: var(--gold, #d4af37) !important;
-    border-left: 2px solid var(--gold, #d4af37) !important;
-}
+        .luxury-manage-nav .nav-link.active {
+            background-color: rgba(212, 175, 55, 0.1) !important;
+            color: var(--gold) !important;
+            border-left: 2px solid var(--gold) !important;
+        }
 
-.luxury-manage-nav .nav-link:hover:not(.active) {
-    background-color: rgba(255, 255, 255, 0.03) !important;
-    color: var(--gold, #d4af37) !important;
-}
+        .luxury-manage-nav .nav-link:hover:not(.active) {
+            background-color: rgba(255, 255, 255, 0.03) !important;
+            color: var(--gold) !important;
+        }
 
-
-
-/* --- MANAGEMENT LAYOUT TUNING --- */
 .luxury-manage-sub-spacing {
     letter-spacing: 4px;
 }
@@ -788,36 +873,21 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 .luxury-manage-title-spacing {
     letter-spacing: 1px;
 }
-/* --- PROFILE EDIT VIEW TUNING --- */
+
 .luxury-profile-section-title {
     font-size: 1.1rem;
     letter-spacing: 1px;
-    color: var(--gold-muted, #bfa15f) !important;
+    color: var(--gold-muted) !important;
 }
 
 .luxury-input-field-disabled {
-    color: var(--text-muted, rgba(255, 255, 255, 0.5)) !important;
-    background-color: var(--card-bg, rgba(30, 30, 30, 0.1)) !important;
+    color: var(--text-muted) !important;
+    background-color: var(--card-bg) !important;
     border-color: rgba(128, 128, 128, 0.25) !important;
 }
 
 .luxury-profile-save-btn {
-    color: var(--gold, #d4af37) !important;
-    border-color: var(--gold, #d4af37) !important;
-    letter-spacing: 2px;
     font-size: 0.8rem;
-    background: transparent;
-    transition: all 0.3s ease-in-out;
-}
-
-.luxury-profile-save-btn:hover {
-    background-color: rgba(212, 175, 55, 0.1) !important;
-    color: var(--gold, #d4af37) !important;
-}
-
-/* --- ACCESS DENIED VIEW TUNING --- */
-.autooglasi-denied-box {
-    background-color: var(--card-bg, rgba(33, 37, 41, 0.25)) !important;
 }
 
 .autooglasi-denied-icon {
@@ -835,11 +905,11 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 }
 
 .autooglasi-denied-text {
-    color: var(--text-muted, #888) !important;
+    color: var(--text-muted) !important;
 }
 
 .autooglasi-denied-btn {
-    color: var(--text-muted, #c5c6c7) !important;
+    color: var(--text-muted) !important;
     border-color: rgba(128, 128, 128, 0.2) !important;
     background-color: rgba(255, 255, 255, 0.02) !important;
     font-size: 0.8rem;
@@ -847,22 +917,15 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
     transition: all 0.3s ease-in-out;
 }
 
-.autooglasi-denied-btn:hover {
-    background-color: rgba(255, 255, 255, 0.07) !important;
-    color: var(--text-main, #fff) !important;
-    border-color: var(--gold, #d4af37) !important;
-}
+    .autooglasi-denied-btn:hover {
+        background-color: rgba(255, 255, 255, 0.07) !important;
+        color: var(--text-main) !important;
+        border-color: var(--gold) !important;
+    }
 
-
-/* --- EXTERNAL LOGIN VIEW TUNING --- */
-.luxury-redirect-text {
-    color: var(--text-muted, #888) !important;
-}
-
-.luxury-spinner-gold {
-    color: var(--gold, #d4af37) !important;
-}
-/* --- ABOUT VIEW TUNING --- */
+/* ==========================================================================
+   --- ABOUT
+   ========================================================================== */
 .luxury-about-wrapper {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
@@ -875,40 +938,17 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 .luxury-about-title-spacing {
     letter-spacing: 1px;
 }
-/* --- LUXURY PAGINATION SYSTEM --- */
-.luxury-pagination .page-link {
-    color: var(--text-muted, #a0a0a0) !important;
-    background-color: var(--card-bg, rgba(30, 30, 30, 0.2)) !important;
-    border: 1px solid rgba(128, 128, 128, 0.15) !important;
-    transition: all 0.2s ease-in-out;
-}
 
-.luxury-pagination .page-link:hover {
-    color: var(--gold, #d4af37) !important;
-    background-color: rgba(255, 255, 255, 0.05) !important;
-    border-color: rgba(128, 128, 128, 0.3) !important;
-}
-
-.luxury-pagination .page-item.active .page-link {
-    color: var(--gold, #d4af37) !important;
-    background-color: rgba(212, 175, 55, 0.1) !important;
-    border-color: var(--gold, #d4af37) !important;
-}
-
-.luxury-pagination .page-item.disabled .page-link {
-    color: rgba(128, 128, 128, 0.4) !important;
-    background-color: transparent !important;
-    border-color: rgba(128, 128, 128, 0.08) !important;
-    pointer-events: none;
-}
-
-/* --- GLOBAL ERROR VIEW TUNING --- */
+/* ==========================================================================
+   --- GLOBAL ERROR VIEW
+   ========================================================================== */
 .luxury-error-request {
     margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
     font-family: var(--font-monospace, monospace);
-    font-size: 0.85rem;
-    color: var(--text-muted, #888);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    word-break: break-word;
 }
 
 .luxury-error-container {
@@ -917,20 +957,239 @@ h1, h2, h3, h4, h5, h6, .text-white, .text-theme-heading {
 }
 
 .luxury-error-code {
-    margin-top: 3rem;
-    margin-bottom: 3rem;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
     font-weight: 300;
     text-transform: uppercase;
-    color: #ff6b6b; /* Zadržana crvena, ali kontrolisana samo za kôd greške */
+    color: #ff6b6b;
     letter-spacing: 2px;
+    font-size: 0.85rem;
 }
 
 .luxury-error-message {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    font-size: 1.25rem;
+    margin: 0;
+    font-size: 0.95rem;
     font-weight: 300;
-    color: var(--text-main, #fff);
+    color: var(--text-main);
     letter-spacing: 1px;
+    line-height: 1.7;
+}
+/* ==========================================================================
+   --- STATUS MESSAGE
+   ========================================================================== */
+.luxury-status-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid transparent;
+    background-color: rgba(255, 255, 255, 0.03);
+    font-size: 0.8rem;
+    line-height: 1.5;
 }
 
+.luxury-status-message-icon {
+    flex: 0 0 auto;
+    margin-top: 0.1rem;
+    font-size: 0.9rem;
+}
+
+.luxury-status-message-text {
+    color: var(--text-main);
+}
+
+.luxury-status-message-success {
+    border-color: rgba(40, 167, 69, 0.25);
+    background-color: rgba(40, 167, 69, 0.08);
+}
+
+    .luxury-status-message-success .luxury-status-message-icon {
+        color: #28a745;
+    }
+
+.luxury-status-message-danger {
+    border-color: rgba(255, 107, 107, 0.25);
+    background-color: rgba(255, 107, 107, 0.08);
+}
+
+    .luxury-status-message-danger .luxury-status-message-icon {
+        color: #ff6b6b;
+    }
+
+[data-bs-theme="light"] .luxury-status-message {
+    background-color: rgba(0, 0, 0, 0.025);
+}
+
+[data-bs-theme="light"] .luxury-status-message-success {
+    background-color: rgba(40, 167, 69, 0.07);
+}
+
+[data-bs-theme="light"] .luxury-status-message-danger {
+    background-color: rgba(255, 107, 107, 0.08);
+}
+/* ==========================================================================
+   --- QR DISPLAY & RESPONSIVE SIZING (nano-compact to fit one screen)
+   ========================================================================== */
+.auth-qr-wrapper {
+    max-width: 96px;
+    margin: 0 auto;
+}
+
+.auth-qr-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    padding: 0.06rem;
+    box-shadow: none;
+}
+
+.auth-qr-img {
+    width: 100%;
+    max-width: 84px;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+@media (min-width: 576px) {
+    .auth-qr-wrapper {
+        max-width: 110px;
+    }
+
+    .auth-qr-img {
+        max-width: 96px;
+    }
+}
+
+@media (min-width: 992px) {
+    .auth-qr-wrapper {
+        max-width: 140px;
+    }
+
+    .auth-qr-img {
+        max-width: 120px;
+    }
+}
+
+/* ==========================================================================
+   --- ENABLE AUTHENTICATOR PAGE: nano-compact single-screen layout
+   ========================================================================== */
+.enable-auth-compact {
+    padding: 0.04rem 0.08rem;
+}
+
+.enable-auth-compact .luxury-profile-section-title {
+    font-size: 0.72rem;
+    margin-bottom: 0.1rem;
+}
+
+.enable-auth-compact .mb-3 {
+    margin-bottom: 0.1rem !important;
+}
+
+.enable-auth-compact .font-monospace {
+    font-size: 0.62rem;
+}
+
+.enable-auth-compact .form-floating {
+    margin-bottom: 0.1rem;
+}
+
+.enable-auth-compact .luxury-input-field {
+    font-size: 0.75rem;
+    padding: 0.18rem 0.28rem;
+}
+
+.enable-auth-compact label[for] {
+    font-size: 0.65rem;
+}
+
+.enable-auth-compact .luxury-profile-save-btn {
+    padding: 0.18rem 0.32rem;
+    font-size: 0.58rem;
+}
+
+.enable-auth-compact .small.text-muted {
+    font-size: 0.6rem;
+}
+
+@media (max-height: 700px) {
+    .enable-auth-compact .auth-qr-img {
+        max-width: 72px;
+    }
+
+    .enable-auth-compact .luxury-profile-section-title {
+        font-size: 0.66rem;
+    }
+
+    .enable-auth-compact .luxury-profile-save-btn {
+        padding: 0.14rem 0.28rem;
+    }
+}
+
+
+
+.enable-auth-compact .auth-qr-img {
+    max-width: 180px;
+}
+
+@media (max-height: 700px) {
+    .enable-auth-compact .auth-qr-img {
+        max-width: 160px;
+    }
+
+    .enable-auth-compact .luxury-profile-section-title {
+        font-size: 0.9rem;
+    }
+
+    .enable-auth-compact .luxury-profile-save-btn {
+        padding: 0.3rem 0.6rem;
+    }
+}
+
+/* ==========================================================================
+   --- MOBILE TUNING
+   ========================================================================== */
+@media (max-width: 575.98px) {
+    .luxury-brand-font {
+        letter-spacing: 1px;
+    }
+
+    .luxury-sub-spacing,
+    .luxury-about-sub-spacing,
+    .luxury-manage-sub-spacing {
+        letter-spacing: 2px;
+    }
+
+    .luxury-gold-sub-text {
+        letter-spacing: 2px;
+    }
+
+    .luxury-search-btn {
+        letter-spacing: 1.5px;
+    }
+
+    .luxury-nav-link {
+        letter-spacing: 1px;
+    }
+
+    .luxury-carousel-img {
+        height: 300px;
+    }
+
+    .luxury-card-img-wrapper {
+        height: 180px;
+    }
+
+    .autooglasi-recovery-title {
+        font-size: 1.35rem;
+    }
+
+    .luxury-error-message {
+        font-size: 1.1rem;
+    }
+}

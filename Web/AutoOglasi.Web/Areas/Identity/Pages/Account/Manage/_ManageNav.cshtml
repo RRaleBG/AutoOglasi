@@ -1,21 +1,39 @@
-@using AutoOglasi.Data.Models
-@inject SignInManager<ApplicationUser> SignInManager
-
 @{
     var currentPath = ViewContext.ActionDescriptor.DisplayName ?? string.Empty;
 }
 
 <ul class="nav nav-pills flex-column font-monospace small text-uppercase luxury-manage-nav">
     <li class="nav-item mb-1">
-        <a class="nav-link rounded-0 text-start py-2.5 @(currentPath.Contains("Index") ? "active" : string.Empty)" 
-           id="profile" asp-page="./Index">
+        <a class="nav-link rounded-0 text-start py-2.5 @(currentPath.Contains("Index") ? "active" : string.Empty)" id="profile" asp-area="Identity" asp-page="/Account/Manage/Index">
             <i class="fas fa-user-edit me-2 opacity-50"></i> Profile
         </a>
     </li>
     <li class="nav-item mb-1">
-        <a class="nav-link rounded-0 text-start py-2.5 @(currentPath.Contains("ChangePassword") ? "active" : string.Empty)" 
-           id="change-password" asp-page="./ChangePassword">
-            <i class="fas fa-key me-2 opacity-50"></i> Password
+        <a class="nav-link rounded-0 text-start py-2.5 @(currentPath.Contains("ChangePassword") ? "active" : string.Empty)" id="change-password" asp-area="Identity" asp-page="/Account/Manage/ChangePassword">
+            <i class="fas fa-key me-2 opacity-50"></i> Change Password
+        </a>
+    </li>
+    <li class="nav-item mb-1">
+        <a class="nav-link rounded-0 text-start py-2.5 @(currentPath.Contains("ExternalLogins") ? "active" : string.Empty)" id="external-logins" asp-area="Identity" asp-page="/Account/Manage/ExternalLogins">
+            <i class="fas fa-share-alt me-2 opacity-50"></i> External Logins
+        </a>
+    </li>
+    <li class="nav-item mb-1">
+        <a class="nav-link rounded-0 text-start py-2.5 @(currentPath.Contains("TwoFactorAuthentication") ? "active" : string.Empty)" id="twofactor" asp-area="Identity" asp-page="/Account/Manage/TwoFactorAuthentication">
+            <i class="fas fa-shield-alt me-2 opacity-50"></i> Two-factor Authentication
+        </a>
+    </li>
+    <li class="nav-item mb-1">
+        <a class="nav-link rounded-0 text-start py-2.5 @(currentPath.Contains("GenerateRecoveryCodes") ? "active" : string.Empty)" id="recovery-codes" asp-area="Identity" asp-page="/Account/Manage/GenerateRecoveryCodes">
+            <i class="fas fa-list-ol me-2 opacity-50"></i> Recovery Codes
+        </a>
+    </li>
+    <li class="nav-item mb-1">
+        <a class="nav-link rounded-0 text-start py-2.5 @(currentPath.Contains("ResendEmailConfirmation") ? "active" : string.Empty)" id="resend-email" asp-area="Identity" asp-page="/Account/ResendEmailConfirmation">
+            <i class="fas fa-envelope me-2 opacity-50"></i> Resend Email Confirmation
         </a>
     </li>
 </ul>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

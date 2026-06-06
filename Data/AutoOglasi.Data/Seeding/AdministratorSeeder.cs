@@ -29,8 +29,8 @@
 
             await roleManager.CreateAsync(adminRole);
 
-            const string adminEmail = "admin@admin.com";
-            const string adminPassword = "Admin123";
+            const string adminEmail = "admin@admin.rs";
+            const string adminPassword = "Admin123@@";
 
             var adminUser = new ApplicationUser()
             {

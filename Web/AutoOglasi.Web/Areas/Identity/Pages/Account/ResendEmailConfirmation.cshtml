@@ -1,7 +1,7 @@
 @page
-@model dynamic
+@model AutoOglasi.Web.Areas.Identity.Pages.Account.ResendEmailConfirmationModel
 @{
-    ViewData["Title"] = "Forgot your password?";
+    ViewData["Title"] = "Resend email confirmation";
 }
 
 <div class="d-flex justify-content-center align-items-center py-5">
@@ -9,13 +9,13 @@
         <div class="card-body p-4 p-md-5">
 
             <div class="text-center mb-4">
-                <span class="text-uppercase small font-monospace luxury-gold-sub-text luxury-sub-spacing-sm">Recovery Vault</span>
-                <h2 class="fw-light text-uppercase mt-1 text-theme-heading luxury-title-spacing">Reset Access</h2>
+                <span class="text-uppercase small font-monospace luxury-gold-sub-text luxury-sub-spacing-sm">Account</span>
+                <h2 class="fw-light text-uppercase mt-1 text-theme-heading luxury-title-spacing">Resend Confirmation</h2>
                 <div class="mx-auto mt-2 luxury-deco-line-sm"></div>
             </div>
 
             <p class="text-center small font-monospace mb-4 autooglasi-recovery-subtitle">
-                Enter your email to reset credentials
+                Enter your registered email and we'll resend the account confirmation link.
             </p>
 
             <partial name="_StatusMessage" model="@((string)ViewData["StatusMessage"] ?? (string)TempData["StatusMessage"])" />
@@ -24,12 +24,12 @@
                 <div asp-validation-summary="All" class="alert alert-danger border-0 rounded-0 small" role="alert"></div>
 
                 <div class="form-floating mb-4 luxury-form-floating">
-                    <input type="email" name="Input.Email" id="emailInput" class="form-control rounded-0 luxury-input-field" autocomplete="email" aria-required="true" placeholder="name@example.com" />
+                    <input asp-for="Input.Email" id="emailInput" class="form-control rounded-0 luxury-input-field" autocomplete="email" placeholder="name@example.com" />
                     <label for="emailInput" class="text-muted">Registered Email Address</label>
                 </div>
 
                 <button type="submit" class="btn text-uppercase py-3 w-100 fw-bold border mb-2 luxury-btn-gold-outline luxury-btn-size-md luxury-tracking-wide">
-                    Send Reset Link
+                    Resend Confirmation
                 </button>
             </form>
 

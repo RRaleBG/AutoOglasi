@@ -1,0 +1,29 @@
+@page
+@model Microsoft.AspNetCore.Identity.UI.Pages.Account.Manage.Internal.GenerateRecoveryCodesModel
+@{
+    ViewData["Title"] = "Recovery Codes";
+}
+
+<h4 class="text-uppercase font-monospace mb-4 luxury-profile-section-title">Recovery Codes</h4>
+
+<partial name="_StatusMessage" model="@((string)ViewData["StatusMessage"] ?? (string)TempData["StatusMessage"])" />
+
+@if (Model.RecoveryCodes?.Any() == true)
+{
+    <p class="small text-muted">Store these recovery codes in a safe place. Each code can be used once to access your account if you lose your authenticator device.</p>
+
+    <ul class="list-unstyled font-monospace">
+        @foreach (var code in Model.RecoveryCodes)
+        {
+            <li class="mb-1">@code</li>
+        }
+    </ul>
+
+    <div class="mt-3">
+        <a asp-page="./TwoFactorAuthentication" class="btn btn-sm btn-outline-secondary rounded-0">Back to two-factor</a>
+    </div>
+}
+else
+{
+    <div class="small text-muted">No recovery codes are available.</div>
+}

@@ -34,6 +34,12 @@ if (string.IsNullOrWhiteSpace(defaultConnection) || defaultConnection.Contains("
         "ConnectionStrings:DefaultConnection is not configured. Set a real SQL Server connection string in user secrets, environment variables, or appsettings.Development.json before starting the application.");
 }
 
+// AZURE_SQL_CONNECTIONSTRING from user secrets if it exists, and override DefaultConnection
+
+    
+
+
+
 builder.Services.AddDbContext<AutoOglasiDbContext>(options =>
 {
     var mainAssembly = typeof(AutoOglasiDbContext).Assembly.FullName;
@@ -44,27 +50,6 @@ builder.Services.AddDbContext<AutoOglasiDbContext>(options =>
     options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
 });
 
-//builder.Services.AddDbContext<AutoOglasiDbContext>(options =>
-//{
-//    var mainAssembly = typeof(AutoOglasiDbContext).Assembly.FullName;
-
-//    // 1. Ako je na Azure produkciji (PostgreSQL)
-//    if (dbProvider?.Equals("AZURE_POSTGRESQL_CONNECTIONSTRING", StringComparison.OrdinalIgnoreCase) == true)
-//    {
-//        options.UseNpgsql(defaultConnection, b => b.MigrationsAssembly(mainAssembly));
-//    }
-//    // 2. Ako je na lokalu (Development okruženje - SqlServer)
-//    else
-//    {
-//        options.UseSqlServer(defaultConnection, b => b.MigrationsAssembly(mainAssembly));
-//    }
-
-//    // Isključujemo striktnu proveru modela za različite provajdere u runtime-u
-//    options.ConfigureWarnings(warnings =>
-//    {
-//        warnings.Ignore(RelationalEventId.PendingModelChangesWarning);
-//    });
-//});
 
 builder.Services.AddAutoMapper(_ => { }, typeof(CarsProfile).Assembly);
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -129,6 +114,18 @@ if (!string.IsNullOrWhiteSpace(githubClientId) && !string.IsNullOrWhiteSpace(git
     {
         options.ClientId = githubClientId;
         options.ClientSecret = githubClientSecret;
+    });
+}
+
+var microsoftClientId = builder.Configuration["Microsoft:ClientId"];
+var microsoftClientSecret = builder.Configuration["Microsoft:ClientSecret"];
+
+if (!string.IsNullOrWhiteSpace(microsoftClientId) && !string.IsNullOrWhiteSpace(microsoftClientSecret))
+{
+    authenticationBuilder.AddMicrosoftAccount(options =>
+    {
+        options.ClientId = microsoftClientId;
+        options.ClientSecret = microsoftClientSecret;
     });
 }
 

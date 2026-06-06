@@ -1,0 +1,72 @@
+@page
+@model Microsoft.AspNetCore.Identity.UI.Pages.Account.Manage.Internal.EnableAuthenticatorModel
+@{
+    ViewData["Title"] = "Authenticator App";
+}
+
+<h4 class="text-uppercase font-monospace mb-4 luxury-profile-section-title">Authenticator App</h4>
+
+<partial name="_StatusMessage" model="@((string)ViewData["StatusMessage"] ?? (string)TempData["StatusMessage"])" />
+
+<div class="enable-auth-compact">
+    <div class="mb-3">
+    <p class="small text-muted">Use an authenticator app (like Microsoft Authenticator or Google Authenticator) to generate verification codes for two-factor authentication.</p>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.SharedKey))
+{
+    <div class="enable-auth-layout d-flex align-items-start">
+        <div class="auth-column me-2">
+            <div class="auth-qr-wrapper">
+                <div class="auth-qr-card text-center">
+                    @if (!string.IsNullOrEmpty(Model.QrCodeImageUrl))
+                    {
+                        <img alt="QR code" src="@Model.QrCodeImageUrl" class="auth-qr-img" />
+                    }
+                    else if (!string.IsNullOrEmpty(Model.AuthenticatorUriEncoded))
+                    {
+                        <img alt="QR code" src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=@Model.AuthenticatorUriEncoded" class="auth-qr-img" />
+                    }
+                    else
+                    {
+                        <p class="small text-muted">Unable to render QR code.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="form-column flex-grow-1">
+            <div class="mb-1">
+                <h6 class="small text-uppercase text-muted">Setup Key</h6>
+                <p class="font-monospace small mb-0">@Model.SharedKey</p>
+            </div>
+
+            <div class="mb-1">
+                <div class="form-floating">
+                    <input asp-for="Input.Code" class="form-control rounded-0 luxury-input-field" autocomplete="one-time-code" placeholder="Enter code" />
+                    <label asp-for="Input.Code" class="text-muted">Verification code</label>
+                    <span asp-validation-for="Input.Code" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center">
+                <button type="submit" class="btn text-uppercase py-1 px-3 fw-bold border luxury-profile-save-btn">Verify</button>
+                <small class="text-muted ms-2">Use code from your authenticator app</small>
+            </div>
+        </div>
+    </div>
+}
+
+<form method="post" asp-antiforgery="true">
+    <div class="form-floating mb-3 luxury-form-floating">
+        <input asp-for="Input.Code" class="form-control rounded-0 luxury-input-field" autocomplete="one-time-code" placeholder="Enter verification code" />
+        <label asp-for="Input.Code" class="text-muted">Verification code</label>
+        <span asp-validation-for="Input.Code" class="text-danger small"></span>
+    </div>
+
+    <button type="submit" class="btn text-uppercase py-2.5 px-4 fw-bold border luxury-profile-save-btn">Verify & Enable</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

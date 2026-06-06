@@ -43,6 +43,22 @@
                 </button>
             </form>
 
+            @if ((Model.ExternalLogins?.Count ?? 0) > 0)
+            {
+                <hr class="my-4 border-secondary opacity-10" />
+                <div class="text-center mb-3">
+                    <p class="mb-3 text-muted small">Or sign in with</p>
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="d-grid gap-2">
+                        @foreach (var provider in Model.ExternalLogins)
+                        {
+                            <button type="submit" class="btn btn-outline-secondary py-2 text-uppercase small" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                @provider.DisplayName
+                            </button>
+                        }
+                    </form>
+                </div>
+            }
+
             <hr class="my-4 border-secondary opacity-10" />
 
             <div class="text-center">

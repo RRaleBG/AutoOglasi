@@ -23,13 +23,13 @@
             <div class="row g-3 mb-4">
                 <div class="col-12 col-md-6">
                     <label asp-for="@Model.Car.Make" class="form-label text-uppercase small font-monospace text-muted tracking-wider luxury-label-size"></label>
-                    <input asp-for="@Model.Car.Make" class="form-control py-2.5 rounded-0" placeholder="e.g., Porsche, Ferrari, Aston Martin...">
+                    <input asp-for="@Model.Car.Make" class="form-control py-2.5 rounded-0 @(ViewData.ModelState["Car.Make"]?.Errors.Count > 0 ? "is-invalid" : "")" aria-invalid="@(ViewData.ModelState["Car.Make"]?.Errors.Count > 0 ? "true" : "false")" placeholder="e.g., Porsche, Ferrari, Aston Martin...">
                     <span asp-validation-for="@Model.Car.Make" class="text-danger small"></span>
                 </div>
 
                 <div class="col-12 col-md-6">
                     <label asp-for="@Model.Car.Model" class="form-label text-uppercase small font-monospace text-muted tracking-wider luxury-label-size"></label>
-                    <input asp-for="@Model.Car.Model" class="form-control py-2.5 rounded-0" placeholder="e.g., 911 Turbo S, SF90, Vantage...">
+                    <input asp-for="@Model.Car.Model" class="form-control py-2.5 rounded-0 @(ViewData.ModelState["Car.Model"]?.Errors.Count > 0 ? "is-invalid" : "")" aria-invalid="@(ViewData.ModelState["Car.Model"]?.Errors.Count > 0 ? "true" : "false")" placeholder="e.g., 911 Turbo S, SF90, Vantage...">
                     <span asp-validation-for="@Model.Car.Model" class="text-danger small"></span>
                 </div>
             </div>
@@ -38,7 +38,7 @@
             <div class="row g-3 mb-4">
                 <div class="col-12 col-md-4">
                     <label asp-for="@Model.Car.CategoryId" class="form-label text-uppercase small font-monospace text-muted tracking-wider luxury-label-size">Category</label>
-                    <select asp-for="@Model.Car.CategoryId" class="form-select py-2.5 rounded-0 luxury-select-pointer" asp-items="@(new SelectList(Model.Car.Categories, "Id", "Name"))">
+                    <select asp-for="@Model.Car.CategoryId" class="form-select py-2.5 rounded-0 luxury-select-pointer @(ViewData.ModelState["Car.CategoryId"]?.Errors.Count > 0 ? "is-invalid" : "")" aria-invalid="@(ViewData.ModelState["Car.CategoryId"]?.Errors.Count > 0 ? "true" : "false")" asp-items="@(new SelectList(Model.Car.Categories, "Id", "Name"))">
                         <option disabled selected hidden>Select category</option>
                     </select>
                     <span asp-validation-for="@Model.Car.CategoryId" class="text-danger small"></span>
@@ -46,7 +46,7 @@
 
                 <div class="col-12 col-md-4">
                     <label asp-for="@Model.Car.FuelTypeId" class="form-label text-uppercase small font-monospace text-muted tracking-wider luxury-label-size">Propulsion</label>
-                    <select asp-for="@Model.Car.FuelTypeId" class="form-select py-2.5 rounded-0 luxury-select-pointer" asp-items="@(new SelectList(Model.Car.FuelTypes, "Id", "Name"))">
+                    <select asp-for="@Model.Car.FuelTypeId" class="form-select py-2.5 rounded-0 luxury-select-pointer @(ViewData.ModelState["Car.FuelTypeId"]?.Errors.Count > 0 ? "is-invalid" : "")" aria-invalid="@(ViewData.ModelState["Car.FuelTypeId"]?.Errors.Count > 0 ? "true" : "false")" asp-items="@(new SelectList(Model.Car.FuelTypes, "Id", "Name"))">
                         <option disabled selected hidden>Select fuel type</option>
                     </select>
                     <span asp-validation-for="@Model.Car.FuelTypeId" class="text-danger small"></span>
@@ -54,7 +54,7 @@
 
                 <div class="col-12 col-md-4">
                     <label asp-for="@Model.Car.TransmissionTypeId" class="form-label text-uppercase small font-monospace text-muted tracking-wider luxury-label-size">Transmission</label>
-                    <select asp-for="@Model.Car.TransmissionTypeId" class="form-select py-2.5 rounded-0 luxury-select-pointer" asp-items="@(new SelectList(Model.Car.TransmissionTypes, "Id", "Name"))">
+                    <select asp-for="@Model.Car.TransmissionTypeId" class="form-select py-2.5 rounded-0 luxury-select-pointer @(ViewData.ModelState["Car.TransmissionTypeId"]?.Errors.Count > 0 ? "is-invalid" : "")" aria-invalid="@(ViewData.ModelState["Car.TransmissionTypeId"]?.Errors.Count > 0 ? "true" : "false")" asp-items="@(new SelectList(Model.Car.TransmissionTypes, "Id", "Name"))">
                         <option disabled selected hidden>Select transmission</option>
                     </select>
                     <span asp-validation-for="@Model.Car.TransmissionTypeId" class="text-danger small"></span>
@@ -65,19 +65,19 @@
             <div class="row g-3 mb-4">
                 <div class="col-12 col-md-4">
                     <label asp-for="@Model.Car.Year" class="form-label text-uppercase small font-monospace text-muted tracking-wider luxury-label-size"></label>
-                    <input asp-for="@Model.Car.Year" min="1900" max="@DateTime.UtcNow.Year + 1" class="form-control py-2.5 rounded-0 font-monospace" placeholder="Year">
+                    <input asp-for="@Model.Car.Year" min="1900" max="@DateTime.UtcNow.Year + 1" class="form-control py-2.5 rounded-0 font-monospace @(ViewData.ModelState["Car.Year"]?.Errors.Count > 0 ? "is-invalid" : "")" aria-invalid="@(ViewData.ModelState["Car.Year"]?.Errors.Count > 0 ? "true" : "false")" placeholder="Year">
                     <span asp-validation-for="@Model.Car.Year" class="text-danger small"></span>
                 </div>
 
                 <div class="col-12 col-md-4">
                     <label asp-for="@Model.Car.Kilometers" class="form-label text-uppercase small font-monospace text-muted tracking-wider luxury-label-size">Mileage (KM)</label>
-                    <input asp-for="@Model.Car.Kilometers" min="0" class="form-control py-2.5 rounded-0 font-monospace" placeholder="Kilometers">
+                    <input asp-for="@Model.Car.Kilometers" min="0" class="form-control py-2.5 rounded-0 font-monospace @(ViewData.ModelState["Car.Kilometers"]?.Errors.Count > 0 ? "is-invalid" : "")" aria-invalid="@(ViewData.ModelState["Car.Kilometers"]?.Errors.Count > 0 ? "true" : "false")" placeholder="Kilometers">
                     <span asp-validation-for="@Model.Car.Kilometers" class="text-danger small"></span>
                 </div>
 
                 <div class="col-12 col-md-4">
                     <label asp-for="@Model.Car.Horsepower" class="form-label text-uppercase small font-monospace text-muted tracking-wider luxury-label-size">Output (BHP)</label>
-                    <input asp-for="@Model.Car.Horsepower" min="0" class="form-control py-2.5 rounded-0 font-monospace" placeholder="Horsepower">
+                    <input asp-for="@Model.Car.Horsepower" min="0" class="form-control py-2.5 rounded-0 font-monospace @(ViewData.ModelState["Car.Horsepower"]?.Errors.Count > 0 ? "is-invalid" : "")" aria-invalid="@(ViewData.ModelState["Car.Horsepower"]?.Errors.Count > 0 ? "true" : "false")" placeholder="Horsepower">
                     <span asp-validation-for="@Model.Car.Horsepower" class="text-danger small"></span>
                 </div>
             </div>
@@ -86,13 +86,13 @@
             <div class="row g-3 mb-4">
                 <div class="col-12 col-md-4">
                     <label asp-for="@Model.Car.Price" class="form-label text-uppercase small font-monospace text-muted tracking-wider luxury-label-size">Requested Valuation (€)</label>
-                    <input asp-for="@Model.Car.Price" min="0" class="form-control py-2.5 rounded-0 font-monospace" placeholder="Price (€)">
+                    <input asp-for="@Model.Car.Price" min="0" class="form-control py-2.5 rounded-0 font-monospace @(ViewData.ModelState["Car.Price"]?.Errors.Count > 0 ? "is-invalid" : "")" aria-invalid="@(ViewData.ModelState["Car.Price"]?.Errors.Count > 0 ? "true" : "false")" placeholder="Price (€)">
                     <span asp-validation-for="@Model.Car.Price" class="text-danger small"></span>
                 </div>
 
                 <div class="col-12 col-md-8">
                     <label asp-for="@Model.Car.Images" class="form-label text-uppercase small font-monospace text-muted tracking-wider luxury-label-size">Media Assets Gallery</label>
-                    <input asp-for="@Model.Car.Images" class="form-control py-2 rounded-0 small" />
+                    <input asp-for="@Model.Car.Images" class="form-control py-2 rounded-0 small @(ViewData.ModelState["Car.Images"]?.Errors.Count > 0 ? "is-invalid" : "")" aria-invalid="@(ViewData.ModelState["Car.Images"]?.Errors.Count > 0 ? "true" : "false")" />
                     <span asp-validation-for="@Model.Car.Images" class="text-danger small d-block mt-1"></span>
                     <span class="text-danger small d-block mt-1">@Html.ValidationMessage("CustomError")</span>
                 </div>
@@ -102,13 +102,13 @@
             <div class="row g-3 mb-4">
                 <div class="col-12 col-md-6">
                     <label asp-for="@Model.Car.LocationCountry" class="form-label text-uppercase small font-monospace text-muted tracking-wider luxury-label-size">Country</label>
-                    <input asp-for="@Model.Car.LocationCountry" class="form-control py-2.5 rounded-0" placeholder="Country location">
+                    <input asp-for="@Model.Car.LocationCountry" class="form-control py-2.5 rounded-0 @(ViewData.ModelState["Car.LocationCountry"]?.Errors.Count > 0 ? "is-invalid" : "")" aria-invalid="@(ViewData.ModelState["Car.LocationCountry"]?.Errors.Count > 0 ? "true" : "false")" placeholder="Country location">
                     <span asp-validation-for="@Model.Car.LocationCountry" class="text-danger small"></span>
                 </div>
 
                 <div class="col-12 col-md-6">
                     <label asp-for="@Model.Car.LocationCity" class="form-label text-uppercase small font-monospace text-muted tracking-wider luxury-label-size">City / Region</label>
-                    <input asp-for="@Model.Car.LocationCity" class="form-control py-2.5 rounded-0" placeholder="City location">
+                    <input asp-for="@Model.Car.LocationCity" class="form-control py-2.5 rounded-0 @(ViewData.ModelState["Car.LocationCity"]?.Errors.Count > 0 ? "is-invalid" : "")" aria-invalid="@(ViewData.ModelState["Car.LocationCity"]?.Errors.Count > 0 ? "true" : "false")" placeholder="City location">
                     <span asp-validation-for="@Model.Car.LocationCity" class="text-danger small"></span>
                 </div>
             </div>
@@ -116,7 +116,7 @@
             <!-- Detaljan opis -->
             <div class="mb-5">
                 <label asp-for="@Model.Car.Description" class="form-label text-uppercase small font-monospace text-muted tracking-wider luxury-label-size">Detailed Overview</label>
-                <textarea asp-for="@Model.Car.Description" class="form-control rounded-0" rows="4" placeholder="Provide an exclusive description of technical packages, service history, and vehicle status..."></textarea>
+                <textarea asp-for="@Model.Car.Description" class="form-control rounded-0 @(ViewData.ModelState["Car.Description"]?.Errors.Count > 0 ? "is-invalid" : "")" rows="4" placeholder="Provide an exclusive description of technical packages, service history, and vehicle status..."></textarea>
                 <span asp-validation-for="@Model.Car.Description" class="text-danger small"></span>
             </div>
 
@@ -128,13 +128,13 @@
                 <div class="row g-3">
                     <div class="col-12 col-md-6">
                         <label asp-for="@Model.SellerName" class="form-label text-uppercase small font-monospace text-muted tracking-wider luxury-agent-label-size">Full Name / Agent Title</label>
-                        <input asp-for="@Model.SellerName" class="form-control py-2.5 rounded-0" placeholder="Your name">
+                        <input asp-for="@Model.SellerName" class="form-control py-2.5 rounded-0 @(ViewData.ModelState["SellerName"]?.Errors.Count > 0 ? "is-invalid" : "")" aria-invalid="@(ViewData.ModelState["SellerName"]?.Errors.Count > 0 ? "true" : "false")" placeholder="Your name">
                         <span asp-validation-for="@Model.SellerName" class="text-danger small"></span>
                     </div>
 
                     <div class="col-12 col-md-6">
                         <label asp-for="@Model.SellerPhoneNumber" class="form-label text-uppercase small font-monospace text-muted tracking-wider luxury-agent-label-size">Secure Direct Line</label>
-                        <input asp-for="@Model.SellerPhoneNumber" class="form-control py-2.5 rounded-0 font-monospace" placeholder="+381...">
+                        <input asp-for="@Model.SellerPhoneNumber" class="form-control py-2.5 rounded-0 font-monospace @(ViewData.ModelState["SellerPhoneNumber"]?.Errors.Count > 0 ? "is-invalid" : "")" aria-invalid="@(ViewData.ModelState["SellerPhoneNumber"]?.Errors.Count > 0 ? "true" : "false")" placeholder="+381...">
                         <span asp-validation-for="@Model.SellerPhoneNumber" class="text-danger small"></span>
                     </div>
                 </div>
@@ -150,3 +150,7 @@
         </form>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

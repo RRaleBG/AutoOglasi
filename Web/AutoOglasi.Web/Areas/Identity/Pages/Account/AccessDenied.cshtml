@@ -4,29 +4,36 @@
     ViewData["Title"] = "Access Denied";
 }
 
-<div class="container d-flex justify-content-center align-items-center min-vh-100">
-    <div class="col-12 col-md-6 col-lg-5 p-4 border border-secondary border-opacity-10 shadow-lg autooglasi-denied-box">
-        
-        <div class="text-center mb-4">
-            <div class="mb-3">
-                <i class="fas fa-ban autooglasi-denied-icon"></i>
+<div class="d-flex justify-content-center align-items-center py-5">
+    <div class="card luxury-card shadow-md luxury-auth-card">
+        <div class="card-body p-4 p-md-5">
+
+            <div class="text-center mb-4">
+                <div class="mb-3">
+                    <i class="fas fa-ban autooglasi-denied-icon"></i>              
+                </div>
+
+                <span class="text-uppercase small font-monospace luxury-gold-sub-text luxury-sub-spacing-sm">
+                    Security Alert
+                </span>
+
+                <h2 class="fw-light text-uppercase mt-1 text-theme-heading luxury-title-spacing">
+                    @ViewData["Title"]
+                </h2>
+
+                <div class="mx-auto mt-2 luxury-deco-line-sm"></div>
             </div>
-            <span class="text-uppercase small font-monospace luxury-gold-sub-text autooglasi-denied-sub-spacing">Security Alert</span>
-            <h2 class="fw-light text-uppercase mt-1 text-theme-heading autooglasi-denied-title">
-                @ViewData["Title"]
-            </h2>
-            <div class="mx-auto mt-2 luxury-deco-line-sm"></div>
+
+            <p class="text-center font-monospace small mb-4 autooglasi-denied-text">
+                You do not have the required privileges to access this secure resource.
+            </p>
+
+            <div class="text-center">
+                <a asp-area="" asp-page="/Index" class="btn text-uppercase py-3 w-100 fw-bold border mb-2 luxury-btn-gold-outline luxury-btn-size-md luxury-tracking-wide">
+                    Return to Salon
+                </a>
+            </div>
+
         </div>
-
-        <p class="text-center font-monospace small mb-4 autooglasi-denied-text">
-            You do not have the required privileges to access this secure resource.
-        </p>
-
-        <div class="text-center">
-            <a asp-area="" asp-page="/Index" class="btn text-uppercase py-2.5 px-4 rounded-0 border autooglasi-denied-btn">
-                Return to Salon
-            </a>
-        </div>
-
     </div>
 </div>
