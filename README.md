@@ -125,6 +125,7 @@ dotnet test
     │   ├── AutoOglasi.Data
     │   ├── AutoOglasi.Data.Common
     │   └── AutoOglasi.Data.Models
+    |
     ├── Infrastructure
     │   ├── AutoOglasi.CustomAttributes
     │   └── AutoOglasi.GlobalConstants
