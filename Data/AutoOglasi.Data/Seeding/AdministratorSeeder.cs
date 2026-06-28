@@ -1,11 +1,10 @@
 ﻿namespace AutoOglasi.Data.Seeding
 {
-    using System;
-    using System.Threading.Tasks;
+    using AutoOglasi.Data.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
-    using Models;
-
+    using System;
+    using System.Threading.Tasks;
     using static GlobalConstants.GlobalConstants;
 
     public class AdministratorSeeder : ISeeder

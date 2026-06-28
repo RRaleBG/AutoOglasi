@@ -6,10 +6,6 @@
     <Optimize>True</Optimize>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Infrastructure\AutoOglasi.GlobalConstants\AutoOglasi.GlobalConstants.csproj" />
-    <ProjectReference Include="..\AutoOglasi.Data.Models\AutoOglasi.Data.Models.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
       <PrivateAssets>all</PrivateAssets>
@@ -20,6 +16,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AutoOglasi.Data.Models\AutoOglasi.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\AutoOglasi.GlobalConstants\AutoOglasi.GlobalConstants.csproj" />
   </ItemGroup>
 </Project>

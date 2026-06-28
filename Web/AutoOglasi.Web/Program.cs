@@ -34,11 +34,6 @@ if (string.IsNullOrWhiteSpace(defaultConnection) || defaultConnection.Contains("
         "ConnectionStrings:DefaultConnection is not configured. Set a real SQL Server connection string in user secrets, environment variables, or appsettings.Development.json before starting the application.");
 }
 
-// AZURE_SQL_CONNECTIONSTRING from user secrets if it exists, and override DefaultConnection
-
-    
-
-
 
 builder.Services.AddDbContext<AutoOglasiDbContext>(options =>
 {
@@ -93,9 +88,9 @@ builder.Services.AddTransient<IImagesService, ImagesService>();
 builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 
 var authenticationBuilder = builder.Services.AddAuthentication();
+
 var googleClientId = builder.Configuration["Google:ClientId"];
 var googleClientSecret = builder.Configuration["Google:ClientSecret"];
-
 if (!string.IsNullOrWhiteSpace(googleClientId) && !string.IsNullOrWhiteSpace(googleClientSecret))
 {
     authenticationBuilder.AddGoogle(options =>
@@ -107,7 +102,6 @@ if (!string.IsNullOrWhiteSpace(googleClientId) && !string.IsNullOrWhiteSpace(goo
 
 var githubClientId = builder.Configuration["GitHub:ClientId"];
 var githubClientSecret = builder.Configuration["GitHub:ClientSecret"];
-
 if (!string.IsNullOrWhiteSpace(githubClientId) && !string.IsNullOrWhiteSpace(githubClientSecret))
 {
     authenticationBuilder.AddGitHub(options =>
@@ -119,7 +113,6 @@ if (!string.IsNullOrWhiteSpace(githubClientId) && !string.IsNullOrWhiteSpace(git
 
 var microsoftClientId = builder.Configuration["Microsoft:ClientId"];
 var microsoftClientSecret = builder.Configuration["Microsoft:ClientSecret"];
-
 if (!string.IsNullOrWhiteSpace(microsoftClientId) && !string.IsNullOrWhiteSpace(microsoftClientSecret))
 {
     authenticationBuilder.AddMicrosoftAccount(options =>
@@ -133,7 +126,6 @@ builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
-// Pokretanje automatskih migracija i seedovanja podataka
 await app.InitializeDatabaseAsync();
 
 if (app.Environment.IsDevelopment())

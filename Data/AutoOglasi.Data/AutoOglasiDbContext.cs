@@ -31,27 +31,22 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
-            // Ako koristimo SQL Server (na lokalu), eksplicitno osiguravamo tipove za Identity tabele
-            if (Database.IsSqlServer())
+            // SQL Server eksplicitne konfiguracije tipova za Identity tabele
+            builder.Entity<IdentityRole>(entity =>
             {
-                // SQL Server ne trpi 'text' ili pogrešne ključeve za Identity Role i User tabele
-                builder.Entity<IdentityRole>(entity =>
-                {
-                    entity.Property(m => m.Id).HasMaxLength(450);
-                    entity.Property(m => m.Name).HasMaxLength(256);
-                    entity.Property(m => m.NormalizedName).HasMaxLength(256);
-                });
+                entity.Property(m => m.Id).HasMaxLength(450);
+                entity.Property(m => m.Name).HasMaxLength(256);
+                entity.Property(m => m.NormalizedName).HasMaxLength(256);
+            });
 
-                builder.Entity<ApplicationUser>(entity =>
-                {
-                    entity.Property(m => m.Id).HasMaxLength(450);
-                    entity.Property(m => m.UserName).HasMaxLength(256);
-                    entity.Property(m => m.NormalizedUserName).HasMaxLength(256);
-                    entity.Property(m => m.Email).HasMaxLength(256);
-                    entity.Property(m => m.NormalizedEmail).HasMaxLength(256);
-                });
-            }
+            builder.Entity<ApplicationUser>(entity =>
+            {
+                entity.Property(m => m.Id).HasMaxLength(450);
+                entity.Property(m => m.UserName).HasMaxLength(256);
+                entity.Property(m => m.NormalizedUserName).HasMaxLength(256);
+                entity.Property(m => m.Email).HasMaxLength(256);
+                entity.Property(m => m.NormalizedEmail).HasMaxLength(256);
+            });
 
             builder
                 .Entity<Car>()
