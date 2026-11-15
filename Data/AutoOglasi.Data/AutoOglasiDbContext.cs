@@ -31,7 +31,26 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            // SQL Server eksplicitne konfiguracije tipova za Identity tabele
+            // --- EKSPLICITNO MAPIRANJE TABELA ---
+            builder.Entity<Car>().ToTable("Car");
+            builder.Entity<Post>().ToTable("Posts");
+            builder.Entity<Category>().ToTable("Categories");
+            builder.Entity<Extra>().ToTable("Extras");
+            builder.Entity<ExtraType>().ToTable("ExtraTypes");
+            builder.Entity<CarExtra>().ToTable("CarExtras");
+            builder.Entity<FuelType>().ToTable("FuelTypes");
+            builder.Entity<TransmissionType>().ToTable("TransmissionTypes");
+            builder.Entity<Image>().ToTable("Images");
+            builder.Entity<IdentityRole>().ToTable("AspNetRoles");
+            builder.Entity<ApplicationUser>().ToTable("AspNetUsers");
+            builder.Entity<IdentityUserRole<string>>().ToTable("AspNetUserRoles");
+            builder.Entity<IdentityUserClaim<string>>().ToTable("AspNetUserClaims");
+            builder.Entity<IdentityUserLogin<string>>().ToTable("AspNetUserLogins");
+            builder.Entity<IdentityRoleClaim<string>>().ToTable("AspNetRoleClaims");
+            builder.Entity<IdentityUserToken<string>>().ToTable("AspNetUserTokens");
+
+
+            // Postojeće Identity konfiguracije...
             builder.Entity<IdentityRole>(entity =>
             {
                 entity.Property(m => m.Id).HasMaxLength(450);
@@ -48,77 +67,64 @@
                 entity.Property(m => m.NormalizedEmail).HasMaxLength(256);
             });
 
-            builder
-                .Entity<Car>()
-                .ToTable("Car");
 
-            builder
-                .Entity<Car>()
+            // Konfiguracije relacija
+            builder.Entity<Car>()
                 .HasOne(c => c.Category)
                 .WithMany(c => c.Cars)
                 .HasForeignKey(c => c.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder
-                .Entity<Car>()
+            builder.Entity<Car>()
                 .HasOne(c => c.FuelType)
                 .WithMany(ft => ft.Cars)
                 .HasForeignKey(c => c.FuelTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder
-                .Entity<Car>()
+            builder.Entity<Car>()
                 .HasOne(c => c.TransmissionType)
                 .WithMany(tt => tt.Cars)
                 .HasForeignKey(c => c.TransmissionTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder
-                .Entity<Car>()
+            builder.Entity<Car>()
                 .HasOne(c => c.Post)
                 .WithOne(p => p.Car)
                 .HasForeignKey<Post>(p => p.CarId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder
-                .Entity<Car>()
+            builder.Entity<Car>()
                 .Property(c => c.Price)
-                .HasColumnType("decimal(18,2)");
+                .HasPrecision(18, 2);
 
-            builder
-                .Entity<Post>()
+            builder.Entity<Post>()
                 .HasOne(p => p.Creator)
                 .WithMany(u => u.Posts)
                 .HasForeignKey(p => p.CreatorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder
-                .Entity<ApplicationUser>()
+            builder.Entity<ApplicationUser>()
                 .HasMany(u => u.Posts)
                 .WithOne(p => p.Creator)
                 .HasForeignKey(p => p.CreatorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder
-                .Entity<Extra>()
+            builder.Entity<Extra>()
                 .HasOne(e => e.Type)
                 .WithMany(et => et.Extras)
                 .HasForeignKey(e => e.TypeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder
-                .Entity<CarExtra>()
+            builder.Entity<CarExtra>()
                 .HasKey(ce => new { ce.CarId, ce.ExtraId });
 
-            builder
-                .Entity<CarExtra>()
+            builder.Entity<CarExtra>()
                 .HasOne(ce => ce.Car)
                 .WithMany(c => c.CarExtras)
                 .HasForeignKey(ce => ce.CarId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder
-                .Entity<CarExtra>()
+            builder.Entity<CarExtra>()
                 .HasOne(ce => ce.Extra)
                 .WithMany(e => e.CarExtras)
                 .HasForeignKey(ce => ce.ExtraId)

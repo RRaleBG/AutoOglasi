@@ -21,7 +21,7 @@
    <img src="https://img.shields.io/badge/C%23-256860?style=flat&logo=c-sharp&logoColor=white"/>
     <img src="https://img.shields.io/badge/ASP.NET_Core-512BD4?style=flat&logo=dotnet&logoColor=white" alt="ASP.NET Core">
     <img src="https://img.shields.io/badge/Entity_Framework_Core-512BD4?style=flat&logo=dotnet&logoColor=white" alt="EF Core">
-    <img src="https://img.shields.io/badge/Microsoft_SQL_Server-CC2927?style=flat&logo=microsoft-sql-server&logoColor=white"/>
+    <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white" alt="PostgreSQL">
     <img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat&logo=JavaScript&logoColor=black" alt="JavaScript">
     <img src="https://img.shields.io/badge/xUnit-5E5E5E?style=flat&logo=dotnet&logoColor=white" alt="xUnit">
 </p>
@@ -46,7 +46,7 @@
 Ensure you have the following dependencies installed on your system:
 
 * **.NET SDK**: `10.0`
-* **Database**: SQL Server-compatible connection for the web application
+* **Database**: PostgreSQL 12 or newer
 
 ### 🏗️ Architecture at a Glance
 
@@ -82,7 +82,13 @@ dotnet build
 
 - Keep the checked-in `Web/AutoOglasi.Web/appsettings.json` file sample-safe.
 - Store local secrets in `appsettings.Development.json`, environment variables, or user secrets.
-- Set a valid `ConnectionStrings:DefaultConnection` for your SQL Server instance.
+- Set a valid `ConnectionStrings:DefaultConnection` for your PostgreSQL instance.
+
+  **Example PostgreSQL connection string:**
+  ```
+  Host=localhost;Port=5432;Database=autooglasi;Username=postgres;Password=YOUR_PASSWORD
+  ```
+
 - Optional external login providers are configuration-driven:
   - `Google:ClientId`
   - `Google:ClientSecret`
@@ -90,6 +96,12 @@ dotnet build
   - `GitHub:ClientSecret`
 
 Use placeholder values in repository files and only supply real credentials in local, non-committed configuration.
+
+5. Apply database migrations:
+
+```sh
+dotnet ef database update --project Data/AutoOglasi.Data --startup-project Web/AutoOglasi.Web
+```
 
 The application applies EF Core migrations and seed data during startup.
 
@@ -217,6 +229,27 @@ Contributions are welcome! Here are several ways you can contribute:
 Once your PR is reviewed and approved, it will be merged into the main branch.
 
 </details>
+
+---
+
+## 🔄 Migration from SQL Server to PostgreSQL
+
+This application has been migrated from SQL Server to PostgreSQL. Key changes:
+
+### What Changed:
+1. **Database Provider**: Replaced `Microsoft.EntityFrameworkCore.SqlServer` with `Npgsql.EntityFrameworkCore.PostgreSQL` (version 10.0.2)
+2. **DbContext Configuration**: Changed `UseSqlServer()` to `UseNpgsql()` in `Program.cs`
+3. **Decimal Precision**: Replaced SQL Server-specific `HasColumnType("decimal(18,2)")` with cross-platform `HasPrecision(18, 2)`
+4. **Migrations**: All migrations regenerated for PostgreSQL with proper Npgsql annotations
+5. **Connection Strings**: Updated to PostgreSQL format: `Host=...;Port=5432;Database=...;Username=...;Password=...`
+
+### For Existing Users:
+If you were using the SQL Server version:
+1. Export your existing data
+2. Update to the latest code
+3. Create a new PostgreSQL database
+4. Apply the new migrations: `dotnet ef database update --project Data/AutoOglasi.Data --startup-project Web/AutoOglasi.Web`
+5. Import your data into PostgreSQL
 
 ---
 

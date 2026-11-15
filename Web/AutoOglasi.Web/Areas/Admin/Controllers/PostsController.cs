@@ -1,12 +1,13 @@
 ﻿namespace AutoOglasi.Web.Areas.Admin.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using AutoMapper;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Services.Posts;
     using Services.Posts.Models;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
     using ViewModels.Posts;
     using static AdminConstants;
 
@@ -61,9 +62,22 @@
 
         public async Task<IActionResult> ChangeVisibility(int id)
         {
-            await postsService.ChangeVisibilityAsync(id);
+            var isPublic = await postsService.ChangeVisibilityAsync(id);
+
+            if (isPublic)
+            {
+                await this.NotifyUsersAboutPublishedPostAsync(id);
+            }
 
             return RedirectToAction("All");
+        }
+
+        private async Task NotifyUsersAboutPublishedPostAsync(int postId)
+        {
+            var postUrl = Url.Action("Offer", "Posts", new { area = string.Empty, id = postId }, Request.Scheme)
+                ?? throw new InvalidOperationException("Unable to generate the post URL.");
+
+            await this.postsService.NotifyUsersAboutPublishedPostAsync(postId, postUrl);
         }
     }
 }

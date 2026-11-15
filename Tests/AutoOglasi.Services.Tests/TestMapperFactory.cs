@@ -14,11 +14,16 @@ internal static class TestMapperFactory
         var configuration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<BaseCarDTO, BaseCarViewModel>();
+                cfg.CreateMap<BaseCarSpecificationServiceModel, BaseCarSpecificationViewModel>();
+                cfg.CreateMap<CarExtrasServiceModel, CarExtrasViewModel>();
                 cfg.CreateMap<CarByUserDTO, CarByUserViewModel>();
+                cfg.CreateMap<CarFormInputModelDTO, CarFormInputModel>().ReverseMap();
                 cfg.CreateMap<CarInListDTO, CarInListViewModel>();
+                cfg.CreateMap<SearchCarInputModelDTO, SearchCarInputModel>().ReverseMap();
                 cfg.CreateMap<SingleCarDTO, SingleCarViewModel>();
                 cfg.CreateMap<PostByUserDTO, PostByUserViewModel>();
                 cfg.CreateMap<PostInListDTO, PostInListViewModel>();
+                cfg.CreateMap<SearchPostDTO, SearchPostInputModel>().ReverseMap();
                 cfg.CreateMap<SinglePostDTO, SinglePostViewModel>();
                 cfg.CreateMap<BasePostInListDTO, PostInAdminAreaViewModel>();
             },

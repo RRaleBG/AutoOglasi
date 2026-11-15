@@ -11,6 +11,15 @@ using Microsoft.Extensions.Logging.Abstractions;
 public class CarsServiceLookupTests
 {
     [Fact]
+    public async Task FillInputCarBasePropertiesAsync_ThrowsArgumentNullException_WhenInputIsNull()
+    {
+        await using var data = TestDbContextFactory.Create("cars-service-tests");
+        var service = CreateService(data);
+
+        await Assert.ThrowsAsync<ArgumentNullException>(() => service.FillInputCarBasePropertiesAsync(null!));
+    }
+
+    [Fact]
     public async Task GetAllCategoriesAsync_ReturnsMappedCategories()
     {
         await using var data = TestDbContextFactory.Create("cars-service-tests");

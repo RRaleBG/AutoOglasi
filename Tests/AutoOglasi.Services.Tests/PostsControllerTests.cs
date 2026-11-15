@@ -29,6 +29,23 @@ public class PostsControllerTests
     }
 
     [Fact]
+    public async Task All_ReturnsSearchView_WhenSearchCarIsNullAndAnErrorOccurs()
+    {
+        var controller = CreateController(
+            postsService: new StubPostsService
+            {
+                MatchingPostsExceptionToThrow = new InvalidOperationException("boom"),
+            });
+
+        var result = await controller.All(new SearchPostInputModel(), 1);
+
+        var viewResult = Assert.IsType<ViewResult>(result);
+        Assert.Equal("Search", viewResult.ViewName);
+        var model = Assert.IsType<SearchPostInputModel>(viewResult.Model);
+        Assert.NotNull(model.Car);
+    }
+
+    [Fact]
     public async Task Mine_ReturnsNotFound_WhenPageIsInvalid()
     {
         var controller = CreateController();
@@ -229,9 +246,16 @@ public class PostsControllerTests
 
         public string? CreatorIdToReturn { get; init; }
 
+        public Exception? MatchingPostsExceptionToThrow { get; init; }
+
         public bool DeleteWasCalled { get; private set; }
 
-        public Task ChangeVisibilityAsync(int postId)
+        public Task<bool> ChangeVisibilityAsync(int postId)
+        {
+            throw new NotSupportedException();
+        }
+
+        public Task NotifyUsersAboutPublishedPostAsync(int postId, string postUrl)
         {
             throw new NotSupportedException();
         }
@@ -274,7 +298,12 @@ public class PostsControllerTests
 
         public Task<IEnumerable<PostInListDTO>> GetMatchingPostsAsync(SearchPostDTO searchInputModel, int sortingNumber)
         {
-            throw new NotSupportedException();
+            if (this.MatchingPostsExceptionToThrow != null)
+            {
+                throw this.MatchingPostsExceptionToThrow;
+            }
+
+            return Task.FromResult(Enumerable.Empty<PostInListDTO>());
         }
 
         public Task<EditPostDTO> GetPostFormInputModelByIdAsync(int postId)
@@ -302,7 +331,7 @@ public class PostsControllerTests
             return Task.FromResult(this.SinglePostToReturn)!;
         }
 
-        public Task UpdateAsync(int postId, EditPostDTO input, bool isPublic)
+        public Task<bool> UpdateAsync(int postId, EditPostDTO input, bool isPublic)
         {
             throw new NotSupportedException();
         }

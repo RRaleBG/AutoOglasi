@@ -79,44 +79,45 @@
 
         
 
-public async Task<IActionResult> Update(string id)
-{
-    if (string.IsNullOrEmpty(id))
-    {
-        return NotFound();
-    }
-
-    IdentityRole role = await roleManager.FindByIdAsync(id);
-
-    if (role == null)
-    {
-        return NotFound();
-    }
-
-    List<ApplicationUser> members = new();
-    List<ApplicationUser> nonMembers = new();
-
-    var users = await userManager.Users.ToListAsync();
-
-    foreach (var user in users)
-    {
-        if (await userManager.IsInRoleAsync(user, role.Name))
+        
+        public async Task<IActionResult> Update(string id)
         {
-            members.Add(user);
-        }
-        else
-        {
-            nonMembers.Add(user);
-        }
-    }
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
 
-    return View(new RoleEdit
-    {
-        Role = role,
-        Members = members,
-        NonMembers = nonMembers
-    });
-}
+            IdentityRole role = await roleManager.FindByIdAsync(id);
+
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            List<ApplicationUser> members = new();
+            List<ApplicationUser> nonMembers = new();
+
+            var users = await userManager.Users.ToListAsync();
+
+            foreach (var user in users)
+            {
+                if (await userManager.IsInRoleAsync(user, role.Name))
+                {
+                    members.Add(user);
+                }
+                else
+                {
+                    nonMembers.Add(user);
+                }
+            }
+
+            return View(new RoleEdit
+            {
+                Role = role,
+                Members = members,
+                NonMembers = nonMembers
+            });
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]

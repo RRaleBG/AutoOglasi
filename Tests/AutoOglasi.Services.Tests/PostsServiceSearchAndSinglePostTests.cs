@@ -7,6 +7,9 @@ using AutoOglasi.Services.Cars.Models;
 using AutoOglasi.Services.Images;
 using AutoOglasi.Services.Posts;
 using AutoOglasi.Services.Posts.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Logging.Abstractions;
 
 public class PostsServiceSearchAndSinglePostTests
 {
@@ -114,7 +117,7 @@ public class PostsServiceSearchAndSinglePostTests
 
     private static PostsService CreateService(AutoOglasiDbContext data)
     {
-        return new PostsService(data, new StubCarsService(), new ImagesService(data));
+        return new PostsService(data, new StubCarsService(), new ImagesService(data), new StubEmailSender(), NullLogger<PostsService>.Instance);
     }
 
     private static Post CreatePost(
@@ -168,6 +171,14 @@ public class PostsServiceSearchAndSinglePostTests
             IsPublic = isPublic,
             IsDeleted = isDeleted,
         };
+    }
+
+    private sealed class StubEmailSender : IEmailSender
+    {
+        public Task SendEmailAsync(string email, string subject, string htmlMessage)
+        {
+            return Task.CompletedTask;
+        }
     }
 
     private sealed class StubCarsService : ICarsService

@@ -81,6 +81,11 @@ namespace AutoOglasi.Web.Controllers
             {
                 var car = await this.carsService.GetCarFromInputModelAsync(inputCarDTO, selectedExtrasIds, userId, imagePath);
                 postId = await this.postsService.CreateAsync(inputPostDTO, car, userId, isAdmin);
+
+                if (isAdmin)
+                {
+                    await this.NotifyUsersAboutPublishedPostAsync(postId);
+                }
             }
             catch (Exception ex)
             {
@@ -148,7 +153,7 @@ namespace AutoOglasi.Web.Controllers
             {
                 TempData[WebConstants.ErrorMessageKey] = ex.Message;
 
-                var searchCarInputModel = searchPostInputModel.Car;
+                var searchCarInputModel = searchPostInputModel.Car ?? new SearchCarInputModel();
                 var searchCarInputModelDTO = this.mapper.Map<SearchCarInputModelDTO>(searchCarInputModel);
 
                 await this.carsService.FillInputCarBasePropertiesAsync(searchCarInputModelDTO);
@@ -271,7 +276,12 @@ namespace AutoOglasi.Web.Controllers
             try
             {
                 await this.carsService.UpdateCarDataFromInputModelAsync(editedPostDTO.CarId, editedPostDTO.Car, selectedExtrasIds, deletedImagesIds, userId, imagePath, editedPost.SelectedCoverImageId);
-                await this.postsService.UpdateAsync(id, editedPostDTO, isAdmin);
+                var becamePublic = await this.postsService.UpdateAsync(id, editedPostDTO, isAdmin);
+
+                if (becamePublic)
+                {
+                    await this.NotifyUsersAboutPublishedPostAsync(id);
+                }
             }
             catch (Exception ex)
             {
@@ -343,6 +353,14 @@ namespace AutoOglasi.Web.Controllers
             }
 
             return RedirectToAction("Mine");
+        }
+
+        private async Task NotifyUsersAboutPublishedPostAsync(int postId)
+        {
+            var postUrl = Url.Action("Offer", "Posts", new { id = postId }, Request.Scheme)
+                ?? throw new InvalidOperationException("Unable to generate the post URL.");
+
+            await this.postsService.NotifyUsersAboutPublishedPostAsync(postId, postUrl);
         }
 
         private string GetCurrentUserId()

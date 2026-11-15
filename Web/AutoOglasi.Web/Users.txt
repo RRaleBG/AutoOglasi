@@ -3,7 +3,7 @@
  Master:
  --------------------------
  1.
- username: "master@maser.rs"
+ username: "rados@rajcicrados.rs"
  password: "Master123"
 
  2.
@@ -16,7 +16,7 @@
  Administrators:
  --------------------------
  1. 
- username = "admin@admin.rs";
+ username = "rados@rajcicrados.rs";
  password = "Admin123";
  
  2.
@@ -29,7 +29,7 @@
  Users
 ---------------------------
  1.
- ccdousername = 'user@user.sr'
+ ccdousername = 'rados@rajcicrados.rs'
  password = 'User123'
 
  2.

@@ -60,7 +60,7 @@ namespace AutoOglasi.Web.Areas.Identity.Pages.Account
             {
                 // If the user does not have an account, then ask the user to create an account.
                 var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-                var user = new ApplicationUser { UserName = email, Email = email };
+                var user = new ApplicationUser { UserName = email, Email = email, EmailConfirmed = true };
                 var identityResult = await _userManager.CreateAsync(user);
                 if (identityResult.Succeeded)
                 {

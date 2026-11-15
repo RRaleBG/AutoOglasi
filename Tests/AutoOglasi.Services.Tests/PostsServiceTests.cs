@@ -8,6 +8,8 @@ using AutoOglasi.Services.Images.Models;
 using AutoOglasi.Services.Posts;
 using AutoOglasi.Services.Posts.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Logging.Abstractions;
 
 public class PostsServiceTests
 {
@@ -69,9 +71,67 @@ public class PostsServiceTests
         Assert.Equal(4, result[0]);
     }
 
-    private static PostsService CreateService(AutoOglasiDbContext data)
+
+    [Fact]
+    public async Task NotifyUsersAboutPublishedPostAsync_SendsThemedEmailToConfirmedUsers()
     {
-        return new PostsService(data, new StubCarsService(), new StubImagesService());
+        await using var data = TestDbContextFactory.Create("posts-service-tests-notify");
+        var confirmedUser = new ApplicationUser
+        {
+            Id = "user-1",
+            Email = "confirmed@example.com",
+            EmailConfirmed = true,
+            UserName = "confirmed@example.com",
+        };
+        var unconfirmedUser = new ApplicationUser
+        {
+            Id = "user-2",
+            Email = "unconfirmed@example.com",
+            EmailConfirmed = false,
+            UserName = "unconfirmed@example.com",
+        };
+        data.Users.AddRange(confirmedUser, unconfirmedUser);
+
+        var post = new Post
+        {
+            Car = new Car
+            {
+                Make = "Audi",
+                Model = "A4",
+                Category = new Category { Name = "Category" },
+                FuelType = new FuelType { Name = "Fuel" },
+                TransmissionType = new TransmissionType { Name = "Transmission" },
+                Year = 2020,
+                Kilometers = 100000,
+                Horsepower = 150,
+                Price = 10000,
+                LocationCountry = "Serbia",
+                LocationCity = "Belgrade",
+            },
+            CreatorId = confirmedUser.Id,
+            SellerName = "Seller One",
+            SellerPhoneNumber = "123456",
+            IsPublic = true,
+            IsDeleted = false,
+        };
+        data.Posts.Add(post);
+        await data.SaveChangesAsync();
+
+        var emailSender = new StubEmailSender();
+        var service = CreateService(data, emailSender);
+
+        await service.NotifyUsersAboutPublishedPostAsync(post.Id, "https://example.com/posts/1");
+
+        Assert.Single(emailSender.SentEmails);
+        Assert.Equal("confirmed@example.com", emailSender.SentEmails[0].To);
+        Assert.Equal("New listing published: Audi A4", emailSender.SentEmails[0].Subject);
+        Assert.Contains("https://example.com/posts/1", emailSender.SentEmails[0].Body);
+        Assert.DoesNotContain("unconfirmed@example.com", emailSender.SentEmails[0].Body);
+    }
+
+    private static PostsService CreateService(AutoOglasiDbContext data, IEmailSender? emailSender = null)
+    {
+        return new PostsService(data, new StubCarsService(), new StubImagesService(), emailSender ?? new StubEmailSender(), NullLogger<PostsService>.Instance);
     }
     private sealed class StubCarsService : ICarsService
     {
@@ -143,4 +203,17 @@ public class PostsServiceTests
             throw new NotSupportedException();
         }
     }
+
+    private sealed class StubEmailSender : IEmailSender
+    {
+        public List<SentEmail> SentEmails { get; } = new();
+
+        public Task SendEmailAsync(string email, string subject, string htmlMessage)
+        {
+            this.SentEmails.Add(new SentEmail(email, subject, htmlMessage));
+            return Task.CompletedTask;
+        }
+    }
+
+    private sealed record SentEmail(string To, string Subject, string Body);
 }

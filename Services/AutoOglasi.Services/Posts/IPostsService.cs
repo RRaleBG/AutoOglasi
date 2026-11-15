@@ -10,6 +10,8 @@
     {
         Task<int> CreateAsync(PostFormInputModelDTO inputPost, Car car, string userId, bool isPublic);
 
+        Task NotifyUsersAboutPublishedPostAsync(int postId, string postUrl);
+
         Task<IEnumerable<PostInListDTO>> GetMatchingPostsAsync(SearchPostDTO searchInputModel, int sortingNumber);
 
         Task<IEnumerable<BasePostInListDTO>> GetAllPostsBaseInfoAsync(int page, int postsPerPage);
@@ -26,9 +28,9 @@
 
         Task<IEnumerable<PostInLatestListDTO>> GetLatestAsync(int count);
 
-        Task UpdateAsync(int postId, EditPostDTO input, bool isPublic);
+        Task<bool> UpdateAsync(int postId, EditPostDTO input, bool isPublic);
 
-        Task ChangeVisibilityAsync(int postId);
+        Task<bool> ChangeVisibilityAsync(int postId);
 
         Task<IEnumerable<ImageInfoDTO>> GetCurrentDbImagesForAPostAsync(int postId);
 

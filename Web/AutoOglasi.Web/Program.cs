@@ -9,39 +9,45 @@ using AutoOglasi.Web.Constants;
 using AutoOglasi.Web.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore.Infrastructure; // Dodato za IMigrationsAssembly
-using Microsoft.EntityFrameworkCore.Migrations; // Dodato za IMigrationsAssembly
-using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Npgsql;
 using System;
-using System.Linq;
-using System.Reflection;
+using System.IO;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var dbProvider = builder.Configuration["DbProvider"];
-var defaultConnection = builder.Configuration.GetConnectionString("DefaultConnection");
+var defaultConnection = ResolvePostgreSqlConnectionString(builder.Configuration);
 
-if (string.IsNullOrWhiteSpace(defaultConnection) || defaultConnection.Contains("YOUR_SQL_SERVER", StringComparison.Ordinal))
+if (string.IsNullOrWhiteSpace(defaultConnection) || defaultConnection.Contains("YOUR_PASSWORD", StringComparison.Ordinal))
 {
     throw new InvalidOperationException(
-        "ConnectionStrings:DefaultConnection is not configured. Set a real SQL Server connection string in user secrets, environment variables, or appsettings.Development.json before starting the application.");
+        "A PostgreSQL connection string is not configured. Set either DefaultConnection or ConnectionStrings:DefaultConnection in user secrets, environment variables, or appsettings.Development.json before starting the application.");
 }
 
+ValidatePostgreSqlConnectionString(defaultConnection);
+
+var allowedCorsOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
+var permitLimit = builder.Configuration.GetValue<int?>("RateLimiting:PermitLimit") ?? 120;
+var windowSeconds = builder.Configuration.GetValue<int?>("RateLimiting:WindowSeconds") ?? 60;
+var queueLimit = builder.Configuration.GetValue<int?>("RateLimiting:QueueLimit") ?? 0;
 
 builder.Services.AddDbContext<AutoOglasiDbContext>(options =>
 {
     var mainAssembly = typeof(AutoOglasiDbContext).Assembly.FullName;
-       
-    options.UseSqlServer(defaultConnection, b =>
+
+    options.UseNpgsql(defaultConnection, b =>
             b.MigrationsAssembly(mainAssembly));
-    
+
     options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
 });
 
@@ -49,8 +55,61 @@ builder.Services.AddDbContext<AutoOglasiDbContext>(options =>
 builder.Services.AddAutoMapper(_ => { }, typeof(CarsProfile).Assembly);
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.KnownProxies.Clear();
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("DefaultCorsPolicy", policy =>
+    {
+        if (allowedCorsOrigins.Length > 0)
+        {
+            policy.WithOrigins(allowedCorsOrigins)
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        }
+    });
+});
+
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
+    {
+        var requestPath = context.Request.Path;
+        if (requestPath.StartsWithSegments("/health", StringComparison.OrdinalIgnoreCase)
+            || requestPath.StartsWithSegments("/css", StringComparison.OrdinalIgnoreCase)
+            || requestPath.StartsWithSegments("/js", StringComparison.OrdinalIgnoreCase)
+            || requestPath.StartsWithSegments("/lib", StringComparison.OrdinalIgnoreCase)
+            || requestPath.StartsWithSegments("/images", StringComparison.OrdinalIgnoreCase)
+            || requestPath.StartsWithSegments("/favicon.ico", StringComparison.OrdinalIgnoreCase)
+            || requestPath.StartsWithSegments("/bootstrap-icons", StringComparison.OrdinalIgnoreCase)
+            || Path.HasExtension(requestPath.Value))
+        {
+            return RateLimitPartition.GetNoLimiter("excluded-path");
+        }
+
+        var clientAddress = context.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+
+        return RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: clientAddress,
+            factory: _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = permitLimit,
+                Window = TimeSpan.FromSeconds(windowSeconds),
+                QueueLimit = queueLimit,
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                AutoReplenishment = true
+            });
+    });
+});
+
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
+    options.SignIn.RequireConfirmedAccount = true;
     options.Password.RequireNonAlphanumeric = false;
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
 })
@@ -86,6 +145,7 @@ builder.Services.AddTransient<ICarsService, CarsService>();
 builder.Services.AddTransient<IPostsService, PostsService>();
 builder.Services.AddTransient<IImagesService, ImagesService>();
 builder.Services.AddTransient<IStatisticsService, StatisticsService>();
+builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
 
 var authenticationBuilder = builder.Services.AddAuthentication();
 
@@ -140,10 +200,13 @@ else
     app.UseHsts();
 }
 
+app.UseForwardedHeaders();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseCookiePolicy();
 app.UseRouting();
+app.UseCors("DefaultCorsPolicy");
+app.UseRateLimiter();
 
 app.MapHealthChecks("/health");
 
@@ -158,5 +221,32 @@ app.MapDefaultControllerRoute();
 app.MapRazorPages();
 
 await app.RunAsync();
+
+static void ValidatePostgreSqlConnectionString(string connectionString)
+{
+    ArgumentException.ThrowIfNullOrWhiteSpace(connectionString);
+
+    try
+    {
+        _ = new NpgsqlConnectionStringBuilder(connectionString);
+    }
+    catch (ArgumentException ex)
+    {
+        throw new InvalidOperationException(
+            "ConnectionStrings:DefaultConnection is not a valid PostgreSQL connection string. Check appsettings, environment variables, and user secrets for invalid or overridden values.",
+            ex);
+    }
+}
+
+static string? ResolvePostgreSqlConnectionString(IConfiguration configuration)
+{
+    var directConnectionString = configuration["DefaultConnection"];
+    if (!string.IsNullOrWhiteSpace(directConnectionString))
+    {
+        return directConnectionString;
+    }
+
+    return configuration.GetConnectionString("DefaultConnection");
+}
 
 public partial class Program;

@@ -234,6 +234,8 @@
 
         public async Task FillInputCarBasePropertiesAsync(BaseCarInputModelDTO inputCar)
         {
+            ArgumentNullException.ThrowIfNull(inputCar);
+
             inputCar.Categories = await this.GetAllCategoriesAsync();
             inputCar.FuelTypes = await this.GetAllFuelTypesAsync();
             inputCar.TransmissionTypes = await this.GetAllTransmissionTypesAsync();

@@ -115,7 +115,12 @@ public class HomeControllerTests
             this.latestPosts = latestPosts;
         }
 
-        public Task ChangeVisibilityAsync(int postId)
+        public Task<bool> ChangeVisibilityAsync(int postId)
+        {
+            throw new NotSupportedException();
+        }
+
+        public Task NotifyUsersAboutPublishedPostAsync(int postId, string postUrl)
         {
             throw new NotSupportedException();
         }
@@ -185,7 +190,7 @@ public class HomeControllerTests
             throw new NotSupportedException();
         }
 
-        public Task UpdateAsync(int postId, EditPostDTO input, bool isPublic)
+        public Task<bool> UpdateAsync(int postId, EditPostDTO input, bool isPublic)
         {
             throw new NotSupportedException();
         }

@@ -1,17 +1,20 @@
 ﻿namespace AutoOglasi.Services.Posts
 {
     using System;
-    using System.Linq;
-    using System.Globalization;
-    using System.Threading.Tasks;
     using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using AutoOglasi.Services.Email;
     using Cars;
     using Cars.Models;
     using Data;
     using Data.Models;
     using Images;
     using Images.Models;
+    using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using Models;
 
     public class PostsService : IPostsService
@@ -19,12 +22,21 @@
         private readonly AutoOglasiDbContext data;
         private readonly ICarsService carsService;
         private readonly IImagesService imagesService;
+        private readonly IEmailSender emailSender;
+        private readonly ILogger<PostsService> logger;
 
-        public PostsService(AutoOglasiDbContext data, ICarsService carsService, IImagesService imagesService)
+        public PostsService(
+            AutoOglasiDbContext data,
+            ICarsService carsService,
+            IImagesService imagesService,
+            IEmailSender emailSender,
+            ILogger<PostsService> logger)
         {
             this.data = data;
             this.carsService = carsService;
             this.imagesService = imagesService;
+            this.emailSender = emailSender;
+            this.logger = logger;
         }
 
         public async Task<int> CreateAsync(PostFormInputModelDTO inputPost, Car car, string userId, bool isPublic)
@@ -43,6 +55,51 @@
             await this.data.SaveChangesAsync();
 
             return post.Id;
+        }
+
+        public async Task NotifyUsersAboutPublishedPostAsync(int postId, string postUrl)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(postUrl);
+
+            var publication = await this.data.Posts
+                .Where(p => p.Id == postId && !p.IsDeleted)
+                .Select(p => new
+                {
+                    p.Car.Make,
+                    p.Car.Model,
+                })
+                .FirstOrDefaultAsync();
+
+            if (publication == null)
+            {
+                throw new Exception("Unfortunately, we cannot find such post in our system!");
+            }
+
+            var postTitle = $"{publication.Make} {publication.Model}";
+            var recipients = await this.data.Users
+                .Where(user => user.EmailConfirmed && user.Email != null)
+                .Select(user => user.Email)
+                .ToListAsync();
+
+            if (!recipients.Any())
+            {
+                return;
+            }
+
+            var subject = $"New listing published: {postTitle}";
+            var message = EmailTemplateBuilder.BuildNewPostNotificationEmail(postTitle, postUrl);
+
+            foreach (var recipient in recipients)
+            {
+                try
+                {
+                    await this.emailSender.SendEmailAsync(recipient!, subject, message);
+                }
+                catch (Exception ex)
+                {
+                    this.logger.LogWarning(ex, "Failed to send publication notification to {Email}.", recipient);
+                }
+            }
         }
 
         public IEnumerable<T> GetPostsByPage<T>(IEnumerable<T> posts, int page, int postsPerPage)
@@ -350,7 +407,7 @@
                 .ToListAsync();
         }
 
-        public async Task UpdateAsync(int postId, EditPostDTO editedPost, bool isPublic)
+        public async Task<bool> UpdateAsync(int postId, EditPostDTO editedPost, bool isPublic)
         {
             var post = await this.GetDbPostByIdAsync(postId);
 
@@ -359,15 +416,19 @@
                 throw new Exception("Unfortunately, we cannot find such post in our system!");
             }
 
+            var wasPublic = post.IsPublic;
+
             post.ModifiedOn = DateTime.UtcNow;
             post.SellerName = editedPost.SellerName;
             post.SellerPhoneNumber = editedPost.SellerPhoneNumber;
             post.IsPublic = isPublic;
 
             await this.data.SaveChangesAsync();
+
+            return !wasPublic && post.IsPublic;
         }
 
-        public async Task ChangeVisibilityAsync(int postId)
+        public async Task<bool> ChangeVisibilityAsync(int postId)
         {
             var post = await this.GetDbPostByIdAsync(postId);
 
@@ -379,6 +440,8 @@
             post.IsPublic = !post.IsPublic;
 
             await this.data.SaveChangesAsync();
+
+            return post.IsPublic;
         }
 
         public async Task<PostByUserDTO> GetBasicPostInformationByIdAsync(int postId)
